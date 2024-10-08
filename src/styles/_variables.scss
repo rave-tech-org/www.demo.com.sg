@@ -1,0 +1,33 @@
+$primary-color: #117dc2;
+$secondary-color: #1e1e1e;
+$accent-color: #ff4081;
+$background-color: #f8f9fa;
+$text-color: #333;
+$muted-text-color: #6c757d;
+$border-color: #e0e0e0;
+
+$base-font-size: 16px;
+$heading-font-weight: 700;
+$text-font-weight: 400;
+$line-height: 1.5;
+
+$spacing-unit: 8px;
+$spacing-sm: $spacing-unit * 0.5;
+$spacing-md: $spacing-unit;
+$spacing-lg: $spacing-unit * 2;
+
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+
+$z-index-dropdown: 1000;
+$z-index-modal: 1050;
+$z-index-tooltip: 1100;
+
+$transition-duration: 0.3s;
+$transition-timing: ease-in-out;

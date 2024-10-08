@@ -1,0 +1,12 @@
+@import '@rave-ui/elements/drawer/styles.scss';
+@import '@rave-ui/elements/select/styles.scss';
+
+.rotate-element {
+  transition: transform 0.2s ease;
+  transform: rotate(0deg);
+}
+
+.rotate-element.on {
+  transition: transform 0.2s ease;
+  transform: rotate(180deg);
+}

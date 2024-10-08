@@ -1,0 +1,3 @@
+[submodule "rave-ui"]
+	path = rave-ui
+	url = git@gitlab.com:travel-click/rave-ui.git

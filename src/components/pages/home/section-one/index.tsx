@@ -1,0 +1,39 @@
+'use client';
+
+import Drawer from '@rave-ui/elements/drawer';
+import Select from '@rave-ui/elements/select';
+import { useState } from 'react';
+
+function HomeSectionOne() {
+  const menuItems = [
+    { label: 'Home', value: 'home', onClickItem: () => console.log('Home clicked') },
+    { label: 'About', value: 'about', onClickItem: () => console.log('About clicked') },
+    { label: 'Contact', value: 'contact', onClickItem: () => console.log('Contact clicked') },
+  ];
+
+  const selectOptions = [
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <section id="home-section-one">
+      <Select items={menuItems} trigger={<button>Menu</button>} />
+
+      <Select items={selectOptions} isSelect />
+
+      <div>
+        <button onClick={() => setIsOpen(true)}>Open Drawer</button>
+        <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} position="bottom" width="400px">
+          <h2>Drawer Content</h2>
+          <p>This is the content of the drawer.</p>
+        </Drawer>
+      </div>
+    </section>
+  );
+}
+
+export default HomeSectionOne;
