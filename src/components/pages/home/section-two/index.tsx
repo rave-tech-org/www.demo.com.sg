@@ -1,7 +1,9 @@
+import BannerCarousel from "@/components/elements/banner-carousel";
+
 function HomeSectionTwo() {
   return (
     <section id="home-section-two">
-      <h1>Home Section Two</h1>
+      <BannerCarousel />
     </section>
   );
 }

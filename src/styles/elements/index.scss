@@ -1,5 +1,8 @@
 @import '@rave-ui/elements/drawer/styles.scss';
 @import '@rave-ui/elements/select/styles.scss';
+@import '@elements/banner-carousel/styles.scss';
+
+@import 'swiper/scss';
 
 .rotate-element {
   transition: transform 0.2s ease;
