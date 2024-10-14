@@ -1,5 +1,5 @@
-import BannerCarousel from "@/components/elements/banner-carousel";
-import DestinationCarousel from "@/components/elements/destination-carousel";
+import BannerCarousel from '@/elements/banner-carousel';
+import DestinationCarousel from '@/elements/destination-carousel';
 
 function HomeSectionTwo() {
   return (

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,31 +19,29 @@ const bannerSwiperSetting: SwiperOptions = {
   loop: true,
   breakpoints: {
     320: {
-      slidesPerView: 1.25
+      slidesPerView: 1.25,
     },
     480: {
-      slidesPerView: 2.5
+      slidesPerView: 2.5,
     },
   },
-  spaceBetween: 20
-}
+  spaceBetween: 20,
+};
 
 const BannerCarousel: React.FC = () => {
   return (
     <div className="lago-banner-carousel-wrapper">
-      <Swiper
-        {...bannerSwiperSetting}
-      >
+      <Swiper {...bannerSwiperSetting}>
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
             <div
               style={{
                 backgroundImage: `url(${slide})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                width: "100%",
-                height: "40vw",
-                borderRadius: "10px",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                width: '100%',
+                height: '40vw',
+                borderRadius: '10px',
               }}
             />
           </SwiperSlide>

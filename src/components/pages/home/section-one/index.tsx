@@ -2,7 +2,7 @@
 
 import Drawer from '@rave-ui/elements/drawer';
 import Select from '@rave-ui/elements/select';
-import Collapse from "@/components/elements/collapse";
+import Collapse from '@/elements/collapse';
 import { useState } from 'react';
 
 function HomeSectionOne() {

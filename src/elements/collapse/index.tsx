@@ -5,10 +5,7 @@ import { useSpring, animated, config } from '@react-spring/web';
 import useMeasure from 'react-use-measure';
 import { CollapseProps } from './type';
 
-export default function Collapse({
-  children,
-  controlLabel = 'Expand',
-}: CollapseProps) {
+export default function Collapse({ children, controlLabel = 'Expand' }: CollapseProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [measureRef, { height }] = useMeasure();
 

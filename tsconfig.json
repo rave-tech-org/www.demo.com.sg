@@ -19,8 +19,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@page-components/*": ["./src/components/pages/*"],
-      "@elements/*": ["./src/components/elements/*"],
+      "@components/*": ["./src/components/pages/*"],
+      "@elements/*": ["./src/elements/*"],
       "@routes/*": ["./src/app/*"],
       "@rave-ui/*": ["./rave-ui/src/*"]
     }

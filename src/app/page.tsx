@@ -1,5 +1,5 @@
-import HomeSectionOne from '@page-components/home/section-one';
-import HomeSectionTwo from '@page-components/home/section-two';
+import HomeSectionOne from '@components/home/section-one';
+import HomeSectionTwo from '@components/home/section-two';
 
 export default function Home() {
   return (
