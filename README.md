@@ -25,3 +25,23 @@ src/
 ```
 
 # Elements (Generic Components)
+
+
+# Update new changes from rave-ui using git submodule
+
+If this is your first time interacting with the submodule or you just cloned the main repository:
+
+```
+git submodule update --init --recursive
+```
+
+If the submodule already exists and you want to pull the latest changes:
+
+```
+git submodule update --remote --merge
+
+git add rave-ui
+git commit -m "feat: Update rave-ui submodule to latest version"
+git push
+
+```
