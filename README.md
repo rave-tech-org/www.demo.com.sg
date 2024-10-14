@@ -24,9 +24,6 @@ src/
     └── *.(scss|css)
 ```
 
-# Elements (Generic Components)
-
-
 # Update new changes from rave-ui using git submodule
 
 If this is your first time interacting with the submodule or you just cloned the main repository:
@@ -40,8 +37,16 @@ If the submodule already exists and you want to pull the latest changes:
 ```
 git submodule update --remote --merge
 
-git add rave-ui
-git commit -m "feat: Update rave-ui submodule to latest version"
-git push
+```
 
+# Potential issues with gitsubmodule
+
+If you accidentally touch or changed inside rave-ui(gitsubmodule), you need to clear your changes.
+
+```
+cd rave-ui
+
+git status
+
+git checkout .
 ```

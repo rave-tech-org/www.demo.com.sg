@@ -4,31 +4,75 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 16px;
-    padding-bottom: 16px;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    @media (max-width: $breakpoint-lg) {
+      justify-content: space-around;
+    }
   }
   .top-navigation {
     border-bottom: 1px solid #e3e3e3;
     .contacts {
       display: flex;
       flex-wrap: wrap;
-      gap: 32px;
+      gap: 2rem;
       a {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 0.5rem;
       }
     }
 
     .socials {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
     }
   }
 
   .bottom-navigation-menu {
-  
+    nav {
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+    }
+
+    .action-menu {
+      display: flex;
+      gap: 1rem;
+      a {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        color: #8b8b8b;
+      }
+    }
+
+    #generic-select {
+      .select-control {
+        width: 100%;
+        h3 {
+          text-transform: uppercase;
+          font-weight: $heading-font-weight;
+        }
+        svg {
+          color: $primary-color;
+          margin-bottom: 2px;
+        }
+      }
+    }
+  }
+}
+
+// portal panel element
+#generic-select-panel {
+  .select-panel {
+    width: 12.5rem;
+    margin-top: 0.5rem;
   }
 }

@@ -22,7 +22,7 @@ function HomeSectionOne() {
 
   return (
     <section id="home-section-one">
-      <Select items={menuItems} trigger={<button>Menu</button>} />
+      <Select items={menuItems} label={<button>Menu</button>} />
 
       <Select items={selectOptions} isSelect />
 

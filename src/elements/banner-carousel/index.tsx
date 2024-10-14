@@ -13,19 +13,19 @@ const slides = [
 ];
 
 const bannerSwiperSetting: SwiperOptions = {
-  slidesPerView: 2.5,
+  slidesPerView: 2.4,
   loopAdditionalSlides: 1,
   initialSlide: 2,
   loop: true,
   breakpoints: {
     320: {
-      slidesPerView: 1.25,
+      slidesPerView: 1.2,
     },
     480: {
-      slidesPerView: 2.5,
+      slidesPerView: 2.4,
     },
   },
-  spaceBetween: 20,
+  spaceBetween: 8,
 };
 
 const BannerCarousel: React.FC = () => {
