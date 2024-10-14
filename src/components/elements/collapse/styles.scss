@@ -1,0 +1,16 @@
+#generic-collapse-container {
+  .generic-collapse-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+  }
+  .generic-collapse-panel {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+}

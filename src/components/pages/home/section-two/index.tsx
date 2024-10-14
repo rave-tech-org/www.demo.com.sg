@@ -10,6 +10,9 @@ function HomeSectionTwo() {
       <br />
 
       <DestinationCarousel />
+
+      <br />
+      <br />
     </section>
   );
 }

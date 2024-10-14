@@ -2,6 +2,7 @@
 
 import Drawer from '@rave-ui/elements/drawer';
 import Select from '@rave-ui/elements/select';
+import Collapse from "@/components/elements/collapse";
 import { useState } from 'react';
 
 function HomeSectionOne() {
@@ -27,9 +28,15 @@ function HomeSectionOne() {
 
       <div>
         <button onClick={() => setIsOpen(true)}>Open Drawer</button>
-        <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} position="bottom" width="400px">
-          <h2>Drawer Content</h2>
-          <p>This is the content of the drawer.</p>
+        <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} position="right" width="400px">
+          <Collapse controlLabel="PLAN MY TRIP">
+            <span>MY Leisure Trip</span>
+            <span>MY M.I.C.E Trip</span>
+          </Collapse>
+          <Collapse controlLabel="DISCOVER">
+            <span>MY Leisure Trip</span>
+            <span>MY M.I.C.E Trip</span>
+          </Collapse>
         </Drawer>
       </div>
     </section>
