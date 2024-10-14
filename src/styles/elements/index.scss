@@ -11,9 +11,8 @@
 .rotate-element {
   transition: transform 0.2s ease;
   transform: rotate(0deg);
-}
-
-.rotate-element.on {
-  transition: transform 0.2s ease;
-  transform: rotate(180deg);
+  &.on {
+    transition: transform 0.2s ease;
+    transform: rotate(180deg);
+  }
 }

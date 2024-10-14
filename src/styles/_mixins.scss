@@ -51,16 +51,19 @@
   box-shadow: $shadow;
 }
 
-// Transition Mixin
-// Usage: @include transition(all, 0.3s);
-@mixin transition($property: all, $duration: $transition-duration, $timing: $transition-timing) {
-  transition: $property $duration $timing;
-}
-
 // Border Radius Mixin
 // Usage: @include border-radius(4px);
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   border-radius: $radius;
+}
+
+// Container center Mixin
+// Usage: @include container-center;
+@mixin container-center {
+  max-width: $breakpoint-lg;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
