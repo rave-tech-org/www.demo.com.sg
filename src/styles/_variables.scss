@@ -28,7 +28,10 @@ $border-radius-sm: 4px;
 $border-radius-md: 0.5rem;
 $border-radius-lg: 1rem;
 
-$z-index-ground: 1000;
+$z-index-basement-one: -1;
+$z-index-ground: 0;
+$z-index-floor-one: 1;
+$z-index-floor-two: 2;
 
 $transition-duration: 0.3s;
 $transition-timing: ease-in-out;
