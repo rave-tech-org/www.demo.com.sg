@@ -47,6 +47,9 @@ const BannerCarousel: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      <button className="primary-button">
+        <p>VIEW ALL TOURS</p>
+      </button>
     </div>
   );
 };

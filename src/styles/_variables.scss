@@ -1,3 +1,5 @@
+@import '@rave-ui/styles/_variables.scss';
+
 $primary-color: #117dc2;
 $secondary-color: #1e1e1e;
 $accent-color: #ff4081;
@@ -26,9 +28,7 @@ $border-radius-sm: 4px;
 $border-radius-md: 0.5rem;
 $border-radius-lg: 1rem;
 
-$z-index-dropdown: 1000;
-$z-index-modal: 1050;
-$z-index-tooltip: 1100;
+$z-index-ground: 1000;
 
 $transition-duration: 0.3s;
 $transition-timing: ease-in-out;

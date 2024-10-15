@@ -20,11 +20,9 @@
     "swiper": "^11.1.14"
   },
   "devDependencies": {
-    "@types/lodash.clamp": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/react-transition-group": "^4.4.11",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.7",
     "eslint-config-prettier": "^9.1.0",

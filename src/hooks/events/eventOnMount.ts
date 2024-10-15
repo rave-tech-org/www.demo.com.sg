@@ -1,4 +1,4 @@
-const triggerEventOnMount = (eventName: string, fn: () => void): (() => void) => {
+const eventOnMount = (eventName: string, fn: () => void): (() => void) => {
   const handleFn = () => {
     fn();
   };
@@ -10,4 +10,4 @@ const triggerEventOnMount = (eventName: string, fn: () => void): (() => void) =>
   };
 };
 
-export default triggerEventOnMount;
+export default eventOnMount;

@@ -1,5 +1,13 @@
 .lago-banner-carousel-wrapper {
+  position: relative;
   .swiper-wrapper {
     padding-left: 8%;
+  }
+  .primary-button {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: -25px;
+    z-index: $z-index-ground;
   }
 }

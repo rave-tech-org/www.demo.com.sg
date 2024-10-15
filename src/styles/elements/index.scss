@@ -4,9 +4,24 @@
 @import '@elements/banner-carousel/styles.scss';
 @import '@elements/destination-carousel/styles.scss';
 @import '@elements/collapse/styles.scss';
+@import '@elements/skeleton-loader/styles.scss';
 
 @import 'swiper/scss';
 @import 'swiper/css/navigation';
+
+.primary-button {
+  background-color: $primary-color;
+  color: #fff;
+  border-radius: 8px;
+  padding: 14px 24px 12px 24px;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 10px 16px 8px 16px;
+  }
+  p {
+    font-weight: $bold-font-weight;
+  }
+}
 
 .rotate-element {
   transition: transform 0.2s ease;
