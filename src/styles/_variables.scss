@@ -2,11 +2,18 @@
 
 $primary-color: #117dc2;
 $secondary-color: #1e1e1e;
-$accent-color: #ff4081;
-$background-color: #f8f9fa;
+$accent-color: #1b75bb;
+$background-color: #fff;
 $text-color: #333;
-$muted-text-color: #6c757d;
+$muted-text-color: #888888;
 $border-color: #e0e0e0;
+$text-danger: #ec1c24;
+$tag-success: rgba(0,254,30,0.2);
+$tag-primary: rgba(0,254,251,0.2);
+$tag-special: rgba(236,28,36,0.2);
+$rating-color: #FFC107;
+$book-now-color: #C3996B;
+$circle-image-border: #dadada;
 
 $base-font-size: 1rem;
 $heading-font-weight: 900;
@@ -43,3 +50,5 @@ $font-h4: clamp(1.125rem, 2vw, 1.625rem);
 $font-h5: clamp(1rem, 1.75vw, 1.375rem);
 $font-h6: clamp(0.875rem, 1.5vw, 1.125rem);
 $font-body: clamp(0.85rem, 1.5vw, 1rem);
+$font-small: clamp(0.75rem, 1.25vw, 0.875rem);  
+$font-xs: clamp(0.625rem, 1vw, 0.75rem); 

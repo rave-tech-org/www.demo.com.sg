@@ -5,20 +5,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
 import HotDealsCard from '@elements/hot-deals-card';
+import { Pagination } from 'swiper/modules';
 
 const slides = [
-  'https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/4016596/pexels-photo-4016596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/351265/pexels-photo-351265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
 ];
 
 const hotDealsSwiperSetting: SwiperOptions = {
+  modules: [Pagination],
+  pagination: {
+    clickable: true
+  },
   centeredSlides: false,
   loop: true,
+  slidesPerGroup: 4,
   breakpoints: {
     320: {
       slidesPerView: 1,
@@ -37,6 +41,8 @@ const HotDealsCarousel: React.FC = () => {
   return (
     <div className="lago-hot-deals-carousel-wrapper">
       <div className="wrapper">
+        <h5>Fresh out of our adventure even!</h5>
+        <h3>Piping Hot Deals</h3>
         <Swiper {...hotDealsSwiperSetting}>
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>

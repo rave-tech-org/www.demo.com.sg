@@ -1,7 +1,6 @@
 .lago-hot-deals-card-wrapper {
-  // width: 160px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   .card-image-container {
     overflow: hidden;
     position: relative;
@@ -21,11 +20,78 @@
     }
 
     .special-card-label {
+      width: 64px;
+      height: 64px;
       position: absolute;
       z-index: $z-index-floor-two;
     }
   }
   .card-content {
-    padding: 1.25rem;
+    padding: .75rem;
+
+    .location-label {
+      display: flex;
+      align-items: center;
+      margin-left: -.25rem;
+      span {
+        color: $text-danger;
+      }
+    }
+
+    .tags {
+      visibility: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+
+      span {
+        padding-left: .5rem;
+        padding-right: .5rem;
+        border-radius: 1rem;
+        background: $tag-primary;
+        color: $accent-color;
+        &.success {
+          background: $tag-success;
+        }
+        &.special {
+          background: $tag-special;
+        }
+      }
+
+      &.visible {
+        visibility: visible;
+        margin-top: .75rem;
+        margin-bottom: .75rem;
+      }
+
+    }
+
+    .pricing {
+      .original-price {
+        display: flex;
+        color: $muted-text-color;
+        text-decoration: line-through;
+        line-height: .8rem;
+      }
+      .current-price {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        color: $accent-color;
+      }
+      .rating {
+        display: flex;
+        align-items: center;
+        p {
+          color: $rating-color;
+          font-weight: $bold-font-weight;
+        }
+      }
+      .book-now-info {
+        color: $book-now-color;
+        line-height: .8rem;
+      }
+    }
   }
 }

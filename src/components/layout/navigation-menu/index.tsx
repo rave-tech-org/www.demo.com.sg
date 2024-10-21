@@ -28,12 +28,12 @@ const NavigationMenu = () => {
         <div className="wrapper">
           <div className="contacts">
             <Link href="">
-              <Image src="/assets/images/header/icon-mail.svg" width={16} height={16} alt="icon mail" />
+              <Image src="/assets/images/header/icon-mail.svg" width={0} height={0} alt="icon mail" style={{ width: 16, height: 16 }} />
               <span>info@lagotravel.com</span>
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/header/icon-phone.svg" width={16} height={16} alt="icon phone" />
+              <Image src="/assets/images/header/icon-phone.svg" alt="icon phone" width={0} height={0} style={{ width: 16, height: 16 }}/>
               <span>+6583586388</span>
             </Link>
           </div>
@@ -64,7 +64,7 @@ const NavigationMenu = () => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="">
-            <Image src="/assets/images/header/logo-header.svg" width={160} height={160} alt="lago logo" />
+            <Image src="/assets/images/header/logo-header.svg" width={0} height={0} alt="lago logo" style={{ width: 160, height: 160 }} />
           </Link>
           <nav>
             <ul>
