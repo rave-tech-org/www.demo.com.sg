@@ -1,7 +1,7 @@
 'use client';
 
+import NextImage from '@/elements/next-image';
 import Select from '@rave-ui/elements/select';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const NavigationMenu = () => {
@@ -28,34 +28,34 @@ const NavigationMenu = () => {
         <div className="wrapper">
           <div className="contacts">
             <Link href="">
-              <Image src="/assets/images/header/icon-mail.svg" width={0} height={0} alt="icon mail" style={{ width: 16, height: 16 }} />
+              <NextImage src="/assets/images/header/icon-mail.svg" width={16} height={16} alt="icon mail" />
               <span>info@lagotravel.com</span>
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/header/icon-phone.svg" alt="icon phone" width={0} height={0} style={{ width: 16, height: 16 }}/>
+              <NextImage src="/assets/images/header/icon-phone.svg" width={16} height={16} alt="icon phone" />
               <span>+6583586388</span>
             </Link>
           </div>
           <div className="socials">
             <Link href="">
-              <Image src="/assets/images/socials/icon-facebook.svg" width={24} height={24} alt="icon facebook" />
+              <NextImage src="/assets/images/socials/icon-facebook.svg" width={24} height={24} alt="icon facebook" />
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/socials/icon-instagram.svg" width={24} height={24} alt="icon instagram" />
+              <NextImage src="/assets/images/socials/icon-instagram.svg" width={24} height={24} alt="icon instagram" />
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/socials/icon-tiktok.svg" width={24} height={24} alt="icon tiktok" />
+              <NextImage src="/assets/images/socials/icon-tiktok.svg" width={24} height={24} alt="icon tiktok" />
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/socials/icon-whatsapp.svg" width={24} height={24} alt="icon whatsapp" />
+              <NextImage src="/assets/images/socials/icon-whatsapp.svg" width={24} height={24} alt="icon whatsapp" />
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/socials/icon-wechat.svg" width={24} height={24} alt="icon wechat" />
+              <NextImage src="/assets/images/socials/icon-wechat.svg" width={24} height={24} alt="icon wechat" />
             </Link>
           </div>
         </div>
@@ -64,7 +64,7 @@ const NavigationMenu = () => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="">
-            <Image src="/assets/images/header/logo-header.svg" width={0} height={0} alt="lago logo" style={{ width: 160, height: 160 }} />
+            <NextImage src="/assets/images/header/logo-header.svg" width={160} height={160} alt="lago logo" />
           </Link>
           <nav>
             <ul>
@@ -85,12 +85,12 @@ const NavigationMenu = () => {
 
           <div className="action-menu">
             <Link href="">
-              <Image src="/assets/images/header/icon-search.svg" width={24} height={24} alt="icon search" />
+              <NextImage src="/assets/images/header/icon-search.svg" width={24} height={24} alt="icon search" />
               <span>FIND</span>
             </Link>
 
             <Link href="">
-              <Image src="/assets/images/header/icon-globe-lang.svg" width={24} height={24} alt="icon globe lang" />
+              <NextImage src="/assets/images/header/icon-globe-lang.svg" width={24} height={24} alt="icon globe lang" />
               <Select items={languageOptions} isSelect />
             </Link>
           </div>

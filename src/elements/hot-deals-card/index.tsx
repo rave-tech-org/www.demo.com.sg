@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import { useState } from 'react';
 import AspectRatioImage from "@elements/aspect-ratio-image";
 import { animated, useSpring } from '@react-spring/web';
 import RatingStar from '@elements/icons/rating-star';
+import NextImage from '@elements/next-image';
 
 const HotDealsCard = () => {
   const [hovered, setHovered] = useState(false);
@@ -39,7 +39,7 @@ const HotDealsCard = () => {
 
       <div className="card-content">
         <div className="location-label">
-          <Image
+          <NextImage
             src="/assets/images/tour/icon-location.svg"
             width={24}
             height={24}
