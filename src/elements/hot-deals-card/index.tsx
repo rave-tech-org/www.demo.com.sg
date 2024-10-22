@@ -19,7 +19,7 @@ const HotDealsCard = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="card-image-container">
+      <div className="card-image-container black-opacity-background">
         <AspectRatioImage
           src="/assets/images/tour/tour-default.webp"
           alt="Default Tour Image"

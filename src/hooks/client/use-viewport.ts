@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import eventOnMount from '@/hooks/events/eventOnMount';
 
 type ViewportProps = {
@@ -7,9 +7,12 @@ type ViewportProps = {
 };
 
 const useViewport = (): ViewportProps => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState(0);
 
-  eventOnMount('resize', () => setWidth(window.innerWidth));
+  useEffect(() => {
+    setWidth(window.innerWidth)
+    eventOnMount('resize', () => setWidth(window.innerWidth));
+  }, [])
 
   return {
     isMobile: width <= 480,

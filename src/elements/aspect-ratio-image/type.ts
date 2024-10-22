@@ -4,4 +4,5 @@ export interface AspectRatioImageProps extends Omit<ImageProps, 'width' | 'heigh
   aspectRatio?: string;
   priority?: boolean;
   objFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  hasBlackOpacityBackground?: boolean
 }

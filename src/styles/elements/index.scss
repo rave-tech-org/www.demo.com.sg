@@ -10,6 +10,7 @@
 @import '@elements/skeleton-loader/styles.scss';
 @import '@elements/travel-interest-group/styles.scss';
 @import '@elements/travel-interest-card/styles.scss';
+@import '@elements/content-background/styles.scss';
 
 .primary-button {
   background-color: $primary-color;
@@ -45,5 +46,19 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+  }
+}
+
+.black-opacity-background {
+  &::before {
+    content: '';
+    background-color: #000;
+    opacity: .1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    z-index: $z-index-floor-one;
   }
 }

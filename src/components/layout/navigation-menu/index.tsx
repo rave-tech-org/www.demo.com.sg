@@ -64,7 +64,7 @@ const NavigationMenu = () => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="">
-            <NextImage src="/assets/images/header/logo-header.svg" width={160} height={160} alt="lago logo" />
+            <NextImage src="/assets/images/header/logo-header.svg" width={160} height={80} alt="lago logo" />
           </Link>
           <nav>
             <ul>

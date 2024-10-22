@@ -8,6 +8,7 @@ const AspectRatioImage: React.FC<AspectRatioImageProps> = ({
   priority = false,
   objFit = 'cover',
   sizes = '(max-width: 768px) 100vw, 50vw',
+  hasBlackOpacityBackground = false,
   ...props
 }) => {
   const [width, height] = aspectRatio.split('/').map(Number);
@@ -15,7 +16,7 @@ const AspectRatioImage: React.FC<AspectRatioImageProps> = ({
 
   return (
     <div
-      className="aspect-ratio-container"
+      className={`aspect-ratio-container ${hasBlackOpacityBackground ? 'black-opacity-background' : ''}`}
       style={{
         position: 'relative',
         width: '100%',
@@ -25,7 +26,6 @@ const AspectRatioImage: React.FC<AspectRatioImageProps> = ({
       <Image
         src={src}
         alt={alt}
-        width={0}
         fill
         priority={priority}
         sizes={sizes}

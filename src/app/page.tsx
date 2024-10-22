@@ -4,6 +4,7 @@ import SkeletonLoader from '@/elements/skeleton-loader';
 import HotDealsCarousel from '@/elements/hot-deals-carousel';
 import DestinationCarousel from '@/elements/destination-carousel';
 import TravelInterestGroup from '@/elements/travel-interest-group';
+import ContentBackground from '@/elements/content-background';
 
 export default function Home() {
   return (
@@ -22,6 +23,10 @@ export default function Home() {
 
       <Suspense fallback={<SkeletonLoader />}>
         <TravelInterestGroup />
+      </Suspense>
+
+      <Suspense fallback={<SkeletonLoader />}>
+        <ContentBackground />
       </Suspense>
     </main>
   );
