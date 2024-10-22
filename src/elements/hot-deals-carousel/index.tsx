@@ -7,18 +7,12 @@ import { SwiperOptions } from 'swiper/types';
 import HotDealsCard from '@elements/hot-deals-card';
 import { Pagination } from 'swiper/modules';
 
-const slides = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-];
+const slides = ['1', '2', '3', '4', '5'];
 
 const hotDealsSwiperSetting: SwiperOptions = {
   modules: [Pagination],
   pagination: {
-    clickable: true
+    clickable: true,
   },
   centeredSlides: false,
   loop: true,

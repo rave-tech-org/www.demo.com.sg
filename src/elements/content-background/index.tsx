@@ -1,11 +1,11 @@
-"use client"
+'use client';
 
-import useViewport from "@/hooks/client/use-viewport"
-import AspectRatioImage from "@elements/aspect-ratio-image"
+import useViewport from '@/hooks/client/use-viewport';
+import AspectRatioImage from '@elements/aspect-ratio-image';
 
 const ContentBackground = () => {
-  const { isTablet } = useViewport()
-  const aspectRatio = isTablet ? '2/1': '3/1'
+  const { isTablet } = useViewport();
+  const aspectRatio = isTablet ? '2/1' : '3/1';
   return (
     <div className="lago-content-background">
       <AspectRatioImage
@@ -20,7 +20,7 @@ const ContentBackground = () => {
         <h3>Tailoring MY Tour Experience</h3>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ContentBackground
+export default ContentBackground;

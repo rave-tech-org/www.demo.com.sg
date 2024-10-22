@@ -6,7 +6,7 @@
   border-radius: 15px;
   border: 1px solid $border-color;
   cursor: pointer;
-  transition: .5s;
+  transition: 0.5s;
   .content {
     max-width: 248px;
     p {
@@ -15,7 +15,7 @@
   }
   &:hover {
     background-color: $accent-color;
-    .content{
+    .content {
       p {
         font-weight: $bold-font-weight;
         color: #fff;

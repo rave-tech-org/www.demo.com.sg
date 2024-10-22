@@ -10,9 +10,9 @@ const useViewport = (): ViewportProps => {
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    setWidth(window.innerWidth)
+    setWidth(window.innerWidth);
     eventOnMount('resize', () => setWidth(window.innerWidth));
-  }, [])
+  }, []);
 
   return {
     isMobile: width <= 480,

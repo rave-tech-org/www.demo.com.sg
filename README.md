@@ -50,3 +50,7 @@ git status
 
 git checkout .
 ```
+
+# Sanity
+
+to run sanity make sure to install sanity cli first.

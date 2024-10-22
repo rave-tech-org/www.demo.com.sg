@@ -5,7 +5,7 @@ export const overpass = Overpass({
   weight: ['400', '500', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: "--font-overpass",
+  variable: '--font-overpass',
 });
 
 export const kapelka = localFont({
@@ -16,5 +16,5 @@ export const kapelka = localFont({
       style: 'normal',
     },
   ],
-  variable: "--font-kapelka",
-})
+  variable: '--font-kapelka',
+});

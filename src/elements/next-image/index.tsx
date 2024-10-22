@@ -6,14 +6,7 @@ interface NextImageProps extends Omit<ImageProps, 'width' | 'height'> {
 }
 
 const NextImage: React.FC<NextImageProps> = ({ width, height, ...props }) => {
-  return (
-    <Image 
-      width={0}
-      height={0}
-      style={{ width, height }}
-      {...props}
-    />
-  );
+  return <Image width={0} height={0} style={{ width, height }} {...props} />;
 };
 
 export default NextImage;

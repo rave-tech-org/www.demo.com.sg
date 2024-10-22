@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "next lint .",
     "lint:fix": "next lint . --fix",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "sanity-dev": "npx sanity dev"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.5",
+    "@sanity/icons": "^3.4.0",
     "@sanity/image-url": "1",
     "@sanity/vision": "3",
     "@use-gesture/react": "^10.3.1",

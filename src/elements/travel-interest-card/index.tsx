@@ -1,9 +1,9 @@
 import AspectRatioImage from '../aspect-ratio-image';
 
 interface TravelInterestCard {
-  title: string
-  desc: string
-  imageUrl?: string
+  title: string;
+  desc: string;
+  imageUrl?: string;
 }
 
 const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCard) => {
@@ -11,7 +11,7 @@ const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCard) => {
     <div className="lago-travel-interest-card">
       <div className="image-circle-wrapper">
         <AspectRatioImage
-          src={imageUrl || "/assets/images/tour/tour-default.webp"}
+          src={imageUrl || '/assets/images/tour/tour-default.webp'}
           alt="Default Tour Image"
           aspectRatio="1/1"
           priority
@@ -22,7 +22,7 @@ const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCard) => {
         <span className="text-ellipsis">{desc}</span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TravelInterestCard
+export default TravelInterestCard;

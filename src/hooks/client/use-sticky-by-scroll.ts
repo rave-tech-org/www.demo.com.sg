@@ -14,7 +14,7 @@ const useStickyByScroll = (menuHeight: number): boolean => {
 
   useEffect(() => {
     eventOnMount('scroll', () => handleScroll);
-  }, [])
+  }, []);
 
   return isSticky;
 };
