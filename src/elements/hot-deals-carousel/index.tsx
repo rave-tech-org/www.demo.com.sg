@@ -6,6 +6,7 @@ import { SwiperOptions } from 'swiper/types';
 
 import HotDealsCard from '@elements/hot-deals-card';
 import { Pagination } from 'swiper/modules';
+import { ContentBlock } from '@/sanity/sanity.types';
 
 const slides = ['1', '2', '3', '4', '5'];
 
@@ -31,7 +32,7 @@ const hotDealsSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const HotDealsCarousel: React.FC = () => {
+const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
   return (
     <div className="lago-hot-deals-carousel-wrapper">
       <div className="wrapper">

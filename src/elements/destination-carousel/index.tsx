@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
 import { Navigation } from 'swiper/modules';
+import { ContentBlock } from '@/sanity/sanity.types';
 
 const slides = [
   'https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
@@ -33,7 +34,7 @@ const destinationSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const DestinationCarousel: React.FC = () => {
+const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
   return (
     <div className="lago-destination-carousel-wrapper">
       <Swiper {...destinationSwiperSetting}>

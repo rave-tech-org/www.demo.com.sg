@@ -9,6 +9,9 @@
     "lint": "next lint .",
     "lint:fix": "next lint . --fix",
     "sanity-dev": "npx sanity dev",
+    "sanity-schema-extract": "npx sanity schema extract",
+    "sanity-typegen-extract": "npx sanity typegen generate",
+    "sanity-type": "pnpm run sanity-schema-extract && pnpm run sanity-typegen-extract",
     "prepare": "husky"
   },
   "dependencies": {
@@ -24,7 +27,8 @@
     "react-use-measure": "^2.1.1",
     "sanity": "3",
     "styled-components": "^6.1",
-    "swiper": "^11.1.14"
+    "swiper": "^11.1.14",
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",

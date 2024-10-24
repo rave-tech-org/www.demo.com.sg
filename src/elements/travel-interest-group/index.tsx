@@ -1,6 +1,7 @@
+import { ContentBlock } from '@/sanity/sanity.types';
 import TravelInterestCard from '@elements/travel-interest-card';
 
-const TravelInterestGroup = () => {
+const TravelInterestGroup = ({ block }: { block: ContentBlock }) => {
   const cards = [
     {
       title: 'Adventure Travel',

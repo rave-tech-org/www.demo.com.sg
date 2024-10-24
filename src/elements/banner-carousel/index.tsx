@@ -1,5 +1,6 @@
 'use client';
 
+import { ContentBlock } from '@/sanity/sanity.types';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
@@ -28,7 +29,8 @@ const bannerSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const BannerCarousel: React.FC = () => {
+const BannerCarousel = ({ block }: { block: ContentBlock }) => {
+  console.log({ block });
   return (
     <div className="lago-banner-carousel-wrapper">
       <Swiper {...bannerSwiperSetting}>

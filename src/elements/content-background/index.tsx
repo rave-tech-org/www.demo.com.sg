@@ -1,9 +1,10 @@
 'use client';
 
 import useViewport from '@/hooks/client/use-viewport';
+import { ContentBlock } from '@/sanity/sanity.types';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 
-const ContentBackground = () => {
+const ContentBackground = ({ block }: { block: ContentBlock }) => {
   const { isTablet } = useViewport();
   const aspectRatio = isTablet ? '2/1' : '3/1';
   return (
