@@ -15,7 +15,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@rave-ui/elements": "workspace:*",
     "@react-spring/web": "^9.7.5",
     "@sanity/icons": "^3.4.0",
     "@sanity/image-url": "1",

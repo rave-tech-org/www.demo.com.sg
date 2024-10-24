@@ -1,7 +1,7 @@
 'use client';
 
-import NextImage from '@/elements/next-image';
-import Select from '@rave-ui/elements/select';
+import NextImage from '@elements/next-image';
+import Select from '@elements/select';
 import Link from 'next/link';
 
 const NavigationMenu = () => {

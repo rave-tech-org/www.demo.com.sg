@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import eventOnMount from '@/hooks/events/eventOnMount';
+import eventOnMount from '@/hooks/events/event-on-mount';
 
 type ViewportProps = {
   isMobile: boolean;

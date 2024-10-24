@@ -1,6 +1,3 @@
-@import '@rave-ui/elements/drawer/styles.scss';
-@import '@rave-ui/elements/select/styles.scss';
-
 @import '@elements/banner-carousel/styles.scss';
 @import '@elements/destination-carousel/styles.scss';
 @import '@elements/hot-deals-carousel/styles.scss';
@@ -11,6 +8,8 @@
 @import '@elements/travel-interest-group/styles.scss';
 @import '@elements/travel-interest-card/styles.scss';
 @import '@elements/content-background/styles.scss';
+@import '@elements/select/styles.scss';
+@import '@elements/drawer/styles.scss';
 
 .primary-button {
   background-color: $primary-color;
