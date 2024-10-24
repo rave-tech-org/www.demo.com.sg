@@ -53,4 +53,22 @@ git checkout .
 
 # Sanity
 
-to run sanity make sure to install sanity cli first.
+To run sanity make sure to install sanity cli first.
+
+
+# Migration content data
+
+Make sure to setup sanity client with targeted projectId
+
+To export project
+```
+cd to-path-file
+sanity dataset export production ./<to-path-file>.tar.gz production 
+```
+
+To import project
+
+```
+cd to-path-file
+sanity dataset import ./<to-path-file>.tar.gz production 
+```
