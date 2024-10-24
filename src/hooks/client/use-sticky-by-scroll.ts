@@ -4,17 +4,17 @@ import eventOnMount from '@/hooks/events/eventOnMount';
 const useStickyByScroll = (menuHeight: number): boolean => {
   const [isSticky, setIsSticky] = useState(false);
 
-  const handleScroll = () => {
-    if (window.scrollY > menuHeight) {
-      setIsSticky(true);
-    } else {
-      setIsSticky(false);
-    }
-  };
-
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > menuHeight) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
     eventOnMount('scroll', () => handleScroll);
-  }, []);
+  }, [menuHeight]);
 
   return isSticky;
 };

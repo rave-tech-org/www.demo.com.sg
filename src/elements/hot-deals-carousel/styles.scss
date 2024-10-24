@@ -1,4 +1,18 @@
 .lago-hot-deals-carousel-wrapper {
+  h3 {
+    font-weight: $bold-font-weight;
+    color: $accent-color;
+    text-align: center;
+  }
+  h5 {
+    font-family: $secondary-font;
+    font-weight: $text-font-weight;
+    text-align: center;
+  }
+  .swiper {
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+  }
   .swiper-slide {
     transition: transform 0.3s ease;
   }
@@ -8,7 +22,6 @@
       position: relative;
       background: #fff;
 
-      // Default bullet style
       &::before,
       &::after {
         content: '';
@@ -17,7 +30,6 @@
         z-index: $z-index-floor-one;
       }
 
-      // Background circle
       &::before {
         width: 1rem;
         height: 1rem;
@@ -26,7 +38,6 @@
         background: $border-color;
       }
 
-      // White outer circle
       &::after {
         width: 1.75rem;
         height: 1.75rem;
@@ -36,13 +47,11 @@
         z-index: $z-index-ground;
       }
 
-      // Style for inactive bullets
       &:not(.swiper-pagination-bullet-active) {
         opacity: 1;
         background: $border-color;
       }
 
-      // Style for active bullet
       &.swiper-pagination-bullet-active {
         &::before {
           background: $accent-color;
@@ -50,7 +59,6 @@
       }
     }
 
-    // Separator line after pagination bullets
     &::after {
       content: '';
       height: 0.5px;
