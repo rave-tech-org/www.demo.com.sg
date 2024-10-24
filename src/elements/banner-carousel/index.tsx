@@ -30,7 +30,6 @@ const bannerSwiperSetting: SwiperOptions = {
 };
 
 const BannerCarousel = ({ block }: { block: ContentBlock }) => {
-  console.log({ block });
   return (
     <div className="lago-banner-carousel-wrapper">
       <Swiper {...bannerSwiperSetting}>
