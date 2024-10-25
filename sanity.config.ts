@@ -7,17 +7,14 @@ import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import { apiVersion } from './src/sanity/env';
+import { apiVersion, dataset, projectId } from './src/sanity/env';
 import { schemaTypes } from './src/sanity/schemaTypes';
 import { structure } from './src/sanity/structure';
 
-console.log('Sanity config Project ID:', process.env.SANITY_STUDIO_SANITY_PROJECT_ID);
-console.log('Sanity config Dataset:', process.env.SANITY_STUDIO_SANITY_DATASET);
-
 export default defineConfig({
   basePath: '/studio',
-  projectId: 'oytcbhek',
-  dataset: 'production',
+  projectId,
+  dataset,
   schema: {
     types: schemaTypes,
   },
