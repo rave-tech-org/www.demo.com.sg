@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * This configuration is used to for the Sanity Studio that’s mounted on the `/app/studio/[[...tool]]/page.tsx` route
  */
@@ -18,8 +16,8 @@ console.log('Sanity config Dataset:', process.env.SANITY_STUDIO_SANITY_DATASET);
 
 export default defineConfig({
   basePath: '/studio',
-  projectId,
-  dataset,
+  projectId: 'oytcbhek',
+  dataset: 'production',
   schema: {
     types: schemaTypes,
   },
