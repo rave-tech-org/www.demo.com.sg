@@ -10,6 +10,8 @@ import { sanityFetch } from '@/sanity/lib/client';
 import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
 import SkeletonLoader from '../skeleton-loader';
 import { HotDealsBlock, ModifiedProduct } from './type';
+import { ContentBlock } from '@/sanity/sanity.types';
+import ViewIn from '@elements/view-in';
 
 const hotDealsSwiperSetting: SwiperOptions = {
   modules: [Pagination],
@@ -35,8 +37,9 @@ const hotDealsSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const HotDealsCarousel = ({ block }: { block: HotDealsBlock }) => {
-  const categorySlugs = block.categories?.map((category) => category.slug.current) || ['hot-deals'];
+const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
+  const { categories } = block as HotDealsBlock;
+  const categorySlugs = categories?.map((category) => category.slug.current) || ['hot-deals'];
   const [products, setProducts] = useState<ModifiedProduct[] | null>(null);
 
   useEffect(() => {
@@ -58,19 +61,21 @@ const HotDealsCarousel = ({ block }: { block: HotDealsBlock }) => {
   }
 
   return (
-    <div className="lago-hot-deals-carousel-wrapper">
-      <div className="wrapper">
-        <h5>Fresh out of our adventure even!</h5>
-        <h3>Piping Hot Deals</h3>
-        <Swiper {...hotDealsSwiperSetting}>
-          {products.map((product, index) => (
-            <SwiperSlide key={index}>
-              <HotDealsCard {...product} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+    <ViewIn variant="slideUp" delay={200}>
+      <div className="lago-hot-deals-carousel-wrapper">
+        <div className="wrapper">
+          <h5>Fresh out of our adventure even!</h5>
+          <h3>Piping Hot Deals</h3>
+          <Swiper {...hotDealsSwiperSetting}>
+            {products.map((product, index) => (
+              <SwiperSlide key={index}>
+                <HotDealsCard {...product} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
-    </div>
+    </ViewIn>
   );
 };
 

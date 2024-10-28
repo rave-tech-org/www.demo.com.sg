@@ -21,12 +21,14 @@ export const GET_HOME_PAGE = `
       title,
       description,
       image,
+      "imageUrl": image.asset->url,
       customAttributes,
       listItems[]{
         title,
         slug,
         description,
-        image
+        image,
+        "imageUrl": image.asset->url,
       },
       "categories": categoryBlock[]->{
         _id,
