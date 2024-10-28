@@ -8,7 +8,7 @@ export const structure: StructureResolver = (S) =>
     .items([
       // CMS (Pages) Group
       S.listItem()
-        .title('CMS (Testing for preview mode)')
+        .title('CMS')
         .icon(DocumentIcon)
         .child(
           S.list()

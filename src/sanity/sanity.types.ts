@@ -305,6 +305,12 @@ export type Category = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: 'category';
   };
+  customAttributes?: Array<{
+    key?: string;
+    value?: string;
+    _type: 'attribute';
+    _key: string;
+  }>;
 };
 
 export type Product = {
@@ -324,6 +330,12 @@ export type Product = {
     [internalGroqTypeReferenceTo]?: 'category';
   }>;
   price?: number;
+  customPrices?: Array<{
+    key?: string;
+    value?: string;
+    _type: 'price';
+    _key: string;
+  }>;
   availableDate?: string;
   duration?: string;
   description?: Array<{
@@ -356,7 +368,12 @@ export type Product = {
     _type: 'image';
   };
   bookingUrl?: string;
-  features?: Array<string>;
+  features?: Array<{
+    key?: string;
+    value?: string;
+    _type: 'feature';
+    _key: string;
+  }>;
 };
 
 export type SanityImageCrop = {

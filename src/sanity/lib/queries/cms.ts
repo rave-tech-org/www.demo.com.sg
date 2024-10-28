@@ -27,6 +27,10 @@ export const GET_HOME_PAGE = `
         slug,
         description,
         image
+      },
+      "categories": categoryBlock[]->{
+        _id,
+        slug,
       }
     },
     variants[]->{
@@ -34,5 +38,47 @@ export const GET_HOME_PAGE = `
       title,
       slug
     }
+  }
+`;
+
+export const GET_CATEGORIES_BY_PARENT_CATEGORY = (slug: string) => `
+  *[_type == "category" && parentCategory->slug.current == "${slug}"] {
+    _id,
+    name,
+    slug,
+    description
+  }
+`;
+
+export const GET_CATEGORIES_BY_PARENT_CATEGORIES = (slugs: string[]) => `
+  *[_type == "category" && parentCategory->slug.current in ${JSON.stringify(slugs)}] {
+    _id,
+    name,
+    slug,
+    description,
+    parentCategory-> {
+      _id,
+      slug,
+    }
+  }
+`;
+
+export const GET_PRODUCTS_BY_PARENT_CATEGORIES = (slugs: string[]) => `
+  *[_type == "product" && references(
+    *[_type == "category" && parentCategory->slug.current in ${JSON.stringify(slugs)}]._id
+  )] {
+    _id,
+    name,
+    slug,
+    price,
+    "imageUrl": image.asset->url,
+    categories[]-> {
+      _id,
+      name,
+      slug,
+      customAttributes
+    },
+    features,
+    customPrices
   }
 `;

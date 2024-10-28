@@ -58,6 +58,44 @@ export const productType = defineType({
     }),
 
     defineField({
+      name: 'customPrices',
+      title: 'Custom Prices',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'price',
+          title: 'Price',
+          fields: [
+            {
+              name: 'key',
+              title: 'Key',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              key: 'key',
+              value: 'value',
+            },
+            prepare({ key, value }) {
+              return {
+                title: `${key}: ${value}`,
+              };
+            },
+          },
+        },
+      ],
+    }),
+
+    defineField({
       name: 'availableDate',
       title: 'Available Date',
       type: 'datetime',
@@ -96,7 +134,38 @@ export const productType = defineType({
       name: 'features',
       title: 'Features',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [
+        {
+          type: 'object',
+          name: 'feature',
+          title: 'Feature',
+          fields: [
+            {
+              name: 'key',
+              title: 'Key',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              key: 'key',
+              value: 'value',
+            },
+            prepare({ key, value }) {
+              return {
+                title: `${key}: ${value}`,
+              };
+            },
+          },
+        },
+      ],
     }),
   ],
   preview: {

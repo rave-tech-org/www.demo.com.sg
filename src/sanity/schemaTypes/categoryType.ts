@@ -35,5 +35,43 @@ export const categoryType = defineType({
       to: [{ type: 'category' }],
       description: 'Select the parent category if this is a subcategory',
     }),
+
+    defineField({
+      name: 'customAttributes',
+      title: 'Custom Attributes',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'attribute',
+          title: 'Attribute',
+          fields: [
+            {
+              name: 'key',
+              title: 'Key',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'value',
+              title: 'Value',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              key: 'key',
+              value: 'value',
+            },
+            prepare({ key, value }) {
+              return {
+                title: `${key}: ${value}`,
+              };
+            },
+          },
+        },
+      ],
+    }),
   ],
 });

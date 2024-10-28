@@ -4,7 +4,11 @@ import { animated, useSpring } from '@react-spring/web';
 import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';
 
-const HotDealsCard = () => {
+import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
+import { ModifiedProduct } from '@elements/hot-deals-carousel/type';
+import { formatCurrency, transformObject } from '@/utils';
+
+const HotDealsCard = (props: ModifiedProduct) => {
   const [hovered, setHovered] = useState(false);
 
   const springStyle = useSpring({
@@ -12,6 +16,10 @@ const HotDealsCard = () => {
     top: hovered ? 16 : 32,
     config: { tension: 100, friction: 20 },
   });
+  const { name, features, customPrices: prices, categories, price, imageUrl } = props;
+
+  const customFeature = transformObject<CustomFeatures>(features);
+  const customPrices = transformObject<CustomPrices>(prices);
 
   return (
     <div
@@ -20,12 +28,7 @@ const HotDealsCard = () => {
       onMouseLeave={() => setHovered(false)}
     >
       <div className="card-image-container black-opacity-background">
-        <AspectRatioImage
-          src="/assets/images/tour/tour-default.webp"
-          alt="Default Tour Image"
-          aspectRatio="1/1"
-          priority
-        />
+        <AspectRatioImage src={imageUrl} alt="Default Tour Image" aspectRatio="1/1" priority />
         <animated.div className="special-card-label" style={springStyle}>
           <AspectRatioImage
             src="/assets/images/tour/special-card-label.webp"
@@ -40,27 +43,34 @@ const HotDealsCard = () => {
       <div className="card-content">
         <div className="location-label">
           <NextImage src="/assets/images/tour/icon-location.svg" width={24} height={24} alt="icon location pin" />
-          <span>Tioman Island</span>
+          <span>{customFeature?.['pin-location']}</span>
         </div>
 
-        <h6 className="text-ellipsis">
-          3D2N Berjaya Tioman Resort Full Board Package 3D2N Berjaya Tioman Resort Full Board Package
-        </h6>
+        <h6 className="text-ellipsis">{name}</h6>
 
-        <div className="tags visible">
-          <span>Min. 2-to-go</span>
-          <span className="success">Guaranteed Stay</span>
-          <span className="special">Seasoned Sepcial</span>
+        <div className="tags">
+          {categories?.map((category, key) => {
+            const custom = transformObject<CustomCategoryAttributes>(category?.customAttributes);
+            return (
+              <span key={`hot-deals-tag-${key}`} className={custom.className}>
+                {category.name}
+              </span>
+            );
+          })}
         </div>
 
         <div className="pricing">
-          <p className="original-price">S$719</p>
+          {customPrices['discount-price'] && price && (
+            <p className="original-price">{formatCurrency(price - Number(customPrices['discount-price']))}</p>
+          )}
           <div className="current-price">
-            <h6>Fr. S$619</h6>
-            <div className="rating">
-              <RatingStar percentage={(4.5 / 5) * 100} />
-              <p>4.5</p>
-            </div>
+            <h6>Fr. {formatCurrency(price)}</h6>
+            {customFeature?.rating && (
+              <div className="rating">
+                <RatingStar percentage={(parseInt(customFeature.rating) / 5) * 100} />
+                <p>{customFeature.rating}</p>
+              </div>
+            )}
           </div>
           <p className="book-now-info">Book now to save S$100</p>
         </div>
