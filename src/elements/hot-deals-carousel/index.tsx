@@ -54,7 +54,7 @@ const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
       }));
       setProducts(removedParentCategoryProducts);
     })();
-  }, []);
+  }, [categorySlugs]);
 
   if (!products) {
     return <SkeletonLoader />;
