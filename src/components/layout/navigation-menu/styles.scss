@@ -41,6 +41,13 @@
       }
     }
 
+    h6 {
+      color: $text-color;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
     .action-menu {
       display: flex;
       gap: 1rem;

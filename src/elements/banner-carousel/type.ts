@@ -1,8 +1,8 @@
 import { ContentBlock } from '@/sanity/sanity.types';
 
-type ListItemType = NonNullable<ContentBlock['listItems']>[number];
+export type ListItemType = NonNullable<ContentBlock['listItems']>[number];
 
-export type BannerBlock = Omit<ContentBlock, 'listItems'> & {
+export type ListItemBlock = Omit<ContentBlock, 'listItems'> & {
   listItems: Array<ListItemType & { imageUrl: string }>;
 };
 

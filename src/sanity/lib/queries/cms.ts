@@ -43,6 +43,32 @@ export const GET_HOME_PAGE = `
   }
 `;
 
+export const GET_MENU_LAYOUT = `
+  *[_type == "page" && slug.current == "menu-layout"][0] {
+    _id,
+    title,
+    slug,
+    description,
+    layout[]->{
+      _id,
+      slug,
+      blockType,
+      title,
+      description,
+      image,
+      "imageUrl": image.asset->url,
+      customAttributes,
+      listItems[]{
+        title,
+        slug,
+        description,
+        image,
+        "imageUrl": image.asset->url,
+      },
+    }
+  }
+`;
+
 export const GET_CATEGORIES_BY_PARENT_CATEGORY = (slug: string) => `
   *[_type == "category" && parentCategory->slug.current == "${slug}"] {
     _id,

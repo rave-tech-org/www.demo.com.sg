@@ -2,7 +2,14 @@
 
 import { usePathname } from 'next/navigation';
 import MainLayoutProps from './type';
-import NavigationMenu from '@components/layout/navigation-menu';
+import { Suspense } from 'react';
+import SkeletonLoader from '@/elements/skeleton-loader';
+import dynamic from 'next/dynamic';
+
+const NavigationMenu = dynamic(() => import('@components/layout/navigation-menu'), {
+  ssr: false,
+  loading: () => <SkeletonLoader />,
+});
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
@@ -14,7 +21,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div id="main-layout">
-      <NavigationMenu />
+      <Suspense fallback={<SkeletonLoader />}>
+        <NavigationMenu />
+      </Suspense>
       <main className="main-layout-content">{children}</main>
     </div>
   );

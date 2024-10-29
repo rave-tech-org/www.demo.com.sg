@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
@@ -39,7 +39,10 @@ const hotDealsSwiperSetting: SwiperOptions = {
 
 const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
   const { categories } = block as HotDealsBlock;
-  const categorySlugs = categories?.map((category) => category.slug.current) || ['hot-deals'];
+  const categorySlugs = useMemo(
+    () => categories?.map((category) => category.slug.current) || ['hot-deals'],
+    [categories]
+  );
   const [products, setProducts] = useState<ModifiedProduct[] | null>(null);
 
   useEffect(() => {

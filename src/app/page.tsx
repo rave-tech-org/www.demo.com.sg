@@ -16,7 +16,7 @@ import TravelInterestGroup from '@/elements/travel-interest-group';
 import ContentBackground from '@/elements/content-background';
 import { Metadata } from 'next';
 import { ContentBlock, Page } from '@/sanity/sanity.types';
-import ViewIn from '@/elements/view-in';
+import { PageType } from '@/components/layout/main-layout/type';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
@@ -29,8 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: homePage.metaDescription || 'Lago Travel',
   };
 }
-
-type PageType = Omit<Page, 'layout'> & { layout: ContentBlock[] };
 
 export default async function Home() {
   const homePage = await sanityFetch<PageType>({

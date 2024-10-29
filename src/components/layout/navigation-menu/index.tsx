@@ -1,62 +1,109 @@
 'use client';
 
+import { sanityFetch } from '@/sanity/lib/client';
+import { GET_MENU_LAYOUT } from '@/sanity/lib/queries/cms';
 import NextImage from '@elements/next-image';
 import Select from '@elements/select';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { buildMenu } from '@/utils/build-menu';
+import { PageType } from '@/components/layout/main-layout/type';
+import { ListItemBlock } from '@/elements/banner-carousel/type';
+import SkeletonLoader from '@/elements/skeleton-loader';
+import { NAVIGATION_MENU, NAVIGATION_MENU_FIND, NAVIGATION_MENU_LANGUAGE, SOCIAL_LINK } from '@/resources/constant';
 
 const NavigationMenu = () => {
-  const malaysiaMenuItems = [
-    { label: 'Home Home Home', value: 'home', onClickItem: () => console.log('Home clicked') },
-    { label: 'About', value: 'about', onClickItem: () => console.log('About clicked') },
-    { label: 'Contact', value: 'contact', onClickItem: () => console.log('Contact clicked') },
-  ];
+  const [menuLayout, setMenuLayout] = useState<PageType | null>(null);
 
-  const interestsMenuItems = [
-    { label: 'Home', value: 'home', onClickItem: () => console.log('Home clicked') },
-    { label: 'About', value: 'about', onClickItem: () => console.log('About clicked') },
-    { label: 'Contact', value: 'contact', onClickItem: () => console.log('Contact clicked') },
-  ];
+  useEffect(() => {
+    (async () => {
+      const menuLayout = await sanityFetch<PageType>({
+        query: GET_MENU_LAYOUT,
+        tags: [`layout.menu`],
+      });
+      setMenuLayout(menuLayout);
+    })();
+  }, []);
 
-  const languageOptions = [
-    { label: 'EN', value: 'en' },
-    { label: 'CN', value: 'cn' },
-  ];
+  if (!menuLayout) {
+    return <SkeletonLoader />;
+  }
+
+  // header left side
+  const navigationMenuBlock = menuLayout?.layout?.find((m) => m.slug?.current === NAVIGATION_MENU);
+  const navigationMenu = buildMenu(navigationMenuBlock?.description);
+
+  const navigationMenuItems = navigationMenu?.map((item) => {
+    return {
+      text: item.text,
+      marks: item?.marks,
+      subMenu: item.subMenu.map((sub) => ({
+        label: sub.text,
+        value: sub.text,
+        onClickItem: () => {
+          // todo: implement more reliable approach
+          window.location.href = sub.marks?.href || '/';
+        },
+      })),
+    };
+  });
+
+  // header right side
+  const { listItems } = navigationMenuBlock as ListItemBlock;
+
+  const findElement = listItems?.find((item) => item.slug?.current === NAVIGATION_MENU_FIND) || listItems[0];
+  const languageElement = listItems.find((item) => item.slug?.current === NAVIGATION_MENU_LANGUAGE);
+
+  const findDesc = buildMenu(findElement?.description)?.[0];
+  const languageMenu = buildMenu(languageElement?.description);
+  const languageOptions =
+    languageMenu?.map((item) => {
+      return {
+        label: item.text,
+        value: item.text,
+        onClickItem: () => {},
+      };
+    }) || [];
+
+  // social
+  const socialBlock = menuLayout?.layout?.find((m) => m.slug?.current === SOCIAL_LINK);
+  const { listItems: socialListItems } = socialBlock as ListItemBlock;
+  const socials = socialListItems.map((item) => {
+    const social = buildMenu(item.description, 'normal')?.[0];
+    return {
+      slug: item.slug?.current,
+      imageUrl: item.imageUrl,
+      href: social?.marks?.href || '',
+      text: social?.text || '',
+    };
+  });
+
+  const getSocials = (chunks: string[]) =>
+    socials.filter((social) => chunks.some((chunk) => social.slug?.includes(chunk)));
+
+  const leftSocials = getSocials(['phone', 'email']);
+  const rightSocials = getSocials(['facebook', 'instagram', 'tiktok', 'wechat', 'whatsapp']);
+
+  console.log({ leftSocials, rightSocials });
 
   return (
     <div className="navigation-menu-wrapper">
       <div className="top-navigation">
         <div className="wrapper">
           <div className="contacts">
-            <Link href="">
-              <NextImage src="/assets/images/header/icon-mail.svg" width={16} height={16} alt="icon mail" />
-              <span>info@lagotravel.com</span>
-            </Link>
-
-            <Link href="">
-              <NextImage src="/assets/images/header/icon-phone.svg" width={16} height={16} alt="icon phone" />
-              <span>+6583586388</span>
-            </Link>
+            {leftSocials.map((item, key) => (
+              <Link key={`social-link-${key}`} href={item.href} target="_blank">
+                <NextImage src={item.imageUrl} width={16} height={16} alt={item.text} />
+                <span>{item.text}</span>
+              </Link>
+            ))}
           </div>
           <div className="socials">
-            <Link href="">
-              <NextImage src="/assets/images/socials/icon-facebook.svg" width={24} height={24} alt="icon facebook" />
-            </Link>
-
-            <Link href="">
-              <NextImage src="/assets/images/socials/icon-instagram.svg" width={24} height={24} alt="icon instagram" />
-            </Link>
-
-            <Link href="">
-              <NextImage src="/assets/images/socials/icon-tiktok.svg" width={24} height={24} alt="icon tiktok" />
-            </Link>
-
-            <Link href="">
-              <NextImage src="/assets/images/socials/icon-whatsapp.svg" width={24} height={24} alt="icon whatsapp" />
-            </Link>
-
-            <Link href="">
-              <NextImage src="/assets/images/socials/icon-wechat.svg" width={24} height={24} alt="icon wechat" />
-            </Link>
+            {rightSocials.map((item, key) => (
+              <Link key={`social-link-${key}`} href={item.href} target="_blank">
+                <NextImage src={item.imageUrl} width={24} height={24} alt={item.text} />
+              </Link>
+            ))}
           </div>
         </div>
       </div>
@@ -68,25 +115,25 @@ const NavigationMenu = () => {
           </Link>
           <nav>
             <ul>
-              <li>
-                <Select items={malaysiaMenuItems} label={<h6>MALAYSIA</h6>} />
-              </li>
-              <li>
-                <Select items={interestsMenuItems} label={<h6>INTERESTS</h6>} />
-              </li>
-              <li>
-                <Select items={interestsMenuItems} label={<h6>PLAN MY TRIP</h6>} />
-              </li>
-              <li>
-                <Select items={interestsMenuItems} label={<h6>DISCOVER</h6>} />
-              </li>
+              {navigationMenuItems?.map((item, key) => (
+                <li key={`menu-item-${key}`}>
+                  <Select
+                    items={item.subMenu}
+                    label={
+                      <Link href={item.marks?.href || '/'}>
+                        <h6>{item.text}</h6>
+                      </Link>
+                    }
+                  />
+                </li>
+              ))}
             </ul>
           </nav>
 
           <div className="action-menu">
-            <Link href="">
-              <NextImage src="/assets/images/header/icon-search.svg" width={24} height={24} alt="icon search" />
-              <span>FIND</span>
+            <Link href={findDesc?.marks?.href || ''}>
+              <NextImage src={findElement.imageUrl} width={24} height={24} alt="icon search" />
+              <span>{findDesc?.text}</span>
             </Link>
 
             <Link href="">
