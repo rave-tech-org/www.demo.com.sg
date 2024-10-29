@@ -7,9 +7,11 @@
     background: none;
     border: none;
     font-size: 1rem;
+    svg {
+      color: $primary-color;
+    }
   }
   .generic-collapse-panel {
-    margin-top: 10px;
     display: flex;
     flex-direction: column;
   }

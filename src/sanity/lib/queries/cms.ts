@@ -48,6 +48,7 @@ export const GET_MENU_LAYOUT = `
     _id,
     title,
     slug,
+    "imageUrl": image.asset->url,
     description,
     layout[]->{
       _id,

@@ -11,6 +11,7 @@ export interface SelectProps {
   items: OptionItem[];
   onChange?: (item: OptionItem) => void;
   label?: ReactNode;
+  labelRender?: (label: string) => ReactNode;
   isSelect?: boolean;
   panelClassName?: string;
   controlClassName?: string;

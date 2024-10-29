@@ -7,12 +7,12 @@ type ViewportProps = {
 };
 
 const useViewport = (): ViewportProps => {
-  const [width, setWidth] = useState(0);
+  const [width, setWidth] = useState(3000);
 
   useEffect(() => {
     setWidth(window.innerWidth);
     eventOnMount('resize', () => setWidth(window.innerWidth));
-  }, []);
+  }, [width]);
 
   return {
     isMobile: width <= 480,

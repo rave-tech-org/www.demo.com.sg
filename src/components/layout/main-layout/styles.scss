@@ -19,6 +19,7 @@
 
     &.not-sticky {
       transform: translateY(-10px);
+      padding-top: 10px;
       opacity: 0.9;
     }
   }

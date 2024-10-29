@@ -9,7 +9,15 @@ import { OptionItem, SelectProps } from './type';
 import eventOnMount from '@/hooks/events/event-on-mount';
 import clickOutside from '@/hooks/events/click-outside';
 
-function Select({ items, onChange, label, isSelect = false, panelClassName, controlClassName }: SelectProps) {
+function Select({
+  items,
+  onChange,
+  label,
+  isSelect = false,
+  panelClassName,
+  controlClassName,
+  labelRender,
+}: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<OptionItem>(items[0]);
   const componentRef = useRef<HTMLDivElement>(null);
@@ -78,7 +86,7 @@ function Select({ items, onChange, label, isSelect = false, panelClassName, cont
   return (
     <div id="generic-select" ref={componentRef}>
       <div className={`select-control ${controlClassName}`} onClick={toggleOpen}>
-        {label || <span>{selectedItem.label}</span>}
+        {labelRender?.(selectedItem.label) || label || <span>{selectedItem.label}</span>}
         <DropdownArrow className={`rotate-element select-arrow ${isOpen ? 'on' : ''}`} />
       </div>
 

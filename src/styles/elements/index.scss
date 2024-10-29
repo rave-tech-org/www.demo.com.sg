@@ -28,6 +28,9 @@
 .rotate-element {
   transition: transform 0.2s ease;
   transform: rotate(0deg);
+  svg {
+    color: $primary-color;
+  }
   &.on {
     transition: transform 0.2s ease;
     transform: rotate(180deg);

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Portal from '@/elements/portal';
 import { useTransition, animated } from '@react-spring/web';
 import { DrawerProps } from './type';
+import { DefaultCross } from '@elements/icons/default-cross';
 
 const Drawer: React.FC<DrawerProps> = ({
   isOpen,
@@ -72,7 +73,7 @@ const Drawer: React.FC<DrawerProps> = ({
               }}
             >
               <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>
-                Close
+                <DefaultCross width={32} height={32} />
               </button>
               {children}
             </animated.div>

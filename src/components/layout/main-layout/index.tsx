@@ -4,6 +4,9 @@ import { usePathname } from 'next/navigation';
 import MainLayoutProps from './type';
 import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
 import NavigationMenu from '@/components/layout/navigation-menu';
+import useViewport from '@/hooks/client/use-viewport';
+import dynamic from 'next/dynamic';
+import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
@@ -13,15 +16,23 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   const stickyClassName = isSticky ? 'sticky main-header' : 'not-sticky main-header';
   const mainContentClassName = isSticky ? 'sticky main-layout-content' : 'main-layout-content';
 
+  const { isTablet } = useViewport();
+
   if (isStudio) {
     return <>{children}</>;
   }
 
   return (
     <div id="main-layout">
-      <div className={stickyClassName}>
-        <NavigationMenu />
-      </div>
+      {isTablet ? (
+        <div className={stickyClassName}>
+          <MobileNavigation />
+        </div>
+      ) : (
+        <div className={stickyClassName}>
+          <NavigationMenu />
+        </div>
+      )}
       <main className={mainContentClassName}>{children}</main>
     </div>
   );
