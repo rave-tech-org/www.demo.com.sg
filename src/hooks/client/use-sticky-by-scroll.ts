@@ -13,7 +13,7 @@ const useStickyByScroll = (menuHeight: number): boolean => {
       }
     };
 
-    eventOnMount('scroll', () => handleScroll);
+    eventOnMount('scroll', handleScroll);
   }, [menuHeight]);
 
   return isSticky;

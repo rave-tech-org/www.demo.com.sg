@@ -84,8 +84,6 @@ const NavigationMenu = () => {
   const leftSocials = getSocials(['phone', 'email']);
   const rightSocials = getSocials(['facebook', 'instagram', 'tiktok', 'wechat', 'whatsapp']);
 
-  console.log({ leftSocials, rightSocials });
-
   return (
     <div className="navigation-menu-wrapper">
       <div className="top-navigation">

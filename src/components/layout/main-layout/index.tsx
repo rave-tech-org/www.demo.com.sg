@@ -2,18 +2,16 @@
 
 import { usePathname } from 'next/navigation';
 import MainLayoutProps from './type';
-import { Suspense } from 'react';
-import SkeletonLoader from '@/elements/skeleton-loader';
-import dynamic from 'next/dynamic';
-
-const NavigationMenu = dynamic(() => import('@components/layout/navigation-menu'), {
-  ssr: false,
-  loading: () => <SkeletonLoader />,
-});
+import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
+import NavigationMenu from '@/components/layout/navigation-menu';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
   const isStudio = pathname.includes('studio');
+
+  const isSticky = useStickyByScroll(175);
+  const stickyClassName = isSticky ? 'sticky main-header' : 'not-sticky main-header';
+  const mainContentClassName = isSticky ? 'sticky main-layout-content' : 'main-layout-content';
 
   if (isStudio) {
     return <>{children}</>;
@@ -21,10 +19,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <div id="main-layout">
-      <Suspense fallback={<SkeletonLoader />}>
+      <div className={stickyClassName}>
         <NavigationMenu />
-      </Suspense>
-      <main className="main-layout-content">{children}</main>
+      </div>
+      <main className={mainContentClassName}>{children}</main>
     </div>
   );
 };
