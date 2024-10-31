@@ -41,8 +41,8 @@ export default async function Home() {
   const contentMapping = new Map([
     ['home-banner', BannerCarousel],
     ['hot-deals', HotDealsCarousel],
-    // ['destination-carousel', DestinationCarousel],
-    // ['travel-interest-group', TravelInterestGroup],
+    ['explore-destination', DestinationCarousel],
+    ['travel-interest', TravelInterestGroup],
     // ['content-background', ContentBackground],
   ]);
 

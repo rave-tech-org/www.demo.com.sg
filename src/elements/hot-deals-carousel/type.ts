@@ -1,11 +1,12 @@
 import { ContentBlock, Product } from '@/sanity/sanity.types';
 
-export type HotDealsBlock = ContentBlock & {
+export type CategoryBlock = ContentBlock & {
   categories?: {
     slug: {
       current: string;
     };
   }[];
+  imageUrl?: string;
 };
 
 export type ModifiedProduct = Omit<Product, 'categories'> & {

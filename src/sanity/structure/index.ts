@@ -47,28 +47,31 @@ export const structure: StructureResolver = (S) =>
                         .child(S.documentTypeList('product').title('All Products')),
 
                       S.listItem()
-                        .title('Tour Products')
+                        .title('Tour')
+                        .schemaType('product')
+                        .child(S.documentList().title('Tour').filter('_type == "product" && productType == "tour"')),
+
+                      S.listItem()
+                        .title('Transport')
                         .schemaType('product')
                         .child(
-                          S.documentList().title('Tour Products').filter('_type == "product" && productType == "tour"')
+                          S.documentList().title('Transport').filter('_type == "product" && productType == "transport"')
                         ),
 
                       S.listItem()
-                        .title('Transport Products')
+                        .title('Destination')
                         .schemaType('product')
                         .child(
                           S.documentList()
-                            .title('Transport Products')
-                            .filter('_type == "product" && productType == "transport"')
+                            .title('Destination')
+                            .filter('_type == "product" && productType == "destination"')
                         ),
 
                       S.listItem()
-                        .title('Ticket Products')
+                        .title('Ticket')
                         .schemaType('product')
                         .child(
-                          S.documentList()
-                            .title('Ticket Products')
-                            .filter('_type == "product" && productType == "ticket"')
+                          S.documentList().title('Ticket').filter('_type == "product" && productType == "ticket"')
                         ),
                     ])
                 ),

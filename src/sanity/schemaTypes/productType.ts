@@ -30,6 +30,7 @@ export const productType = defineType({
         list: [
           { title: 'Tour', value: 'tour' },
           { title: 'Transport', value: 'transport' },
+          { title: 'Destination', value: 'destination' },
           { title: 'Ticket', value: 'ticket' },
         ],
         layout: 'dropdown',

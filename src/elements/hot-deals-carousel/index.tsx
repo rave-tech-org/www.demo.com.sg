@@ -9,9 +9,10 @@ import { Pagination } from 'swiper/modules';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
 import SkeletonLoader from '../skeleton-loader';
-import { HotDealsBlock, ModifiedProduct } from './type';
+import { CategoryBlock, ModifiedProduct } from './type';
 import { ContentBlock } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';
+import { PortableText } from 'next-sanity';
 
 const hotDealsSwiperSetting: SwiperOptions = {
   modules: [Pagination],
@@ -38,7 +39,7 @@ const hotDealsSwiperSetting: SwiperOptions = {
 };
 
 const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
-  const { categories } = block as HotDealsBlock;
+  const { categories, title, description } = block as CategoryBlock;
   const categorySlugs = useMemo(
     () => categories?.map((category) => category.slug.current) || ['hot-deals'],
     [categories]
@@ -67,8 +68,8 @@ const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
     <ViewIn variant="slideUp" delay={200}>
       <div className="lago-hot-deals-carousel-wrapper">
         <div className="wrapper">
-          <h5>Fresh out of our adventure even!</h5>
-          <h3>Piping Hot Deals</h3>
+          {description && <PortableText value={description} />}
+          <h3>{title}</h3>
           <Swiper {...hotDealsSwiperSetting}>
             {products.map((product, index) => (
               <SwiperSlide key={index}>

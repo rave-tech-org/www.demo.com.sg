@@ -1,59 +1,118 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
 import { Navigation } from 'swiper/modules';
 import { ContentBlock } from '@/sanity/sanity.types';
-
-const slides = [
-  'https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/4016596/pexels-photo-4016596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/351265/pexels-photo-351265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-  'https://images.pexels.com/photos/924675/pexels-photo-924675.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-];
+import { CategoryBlock, ModifiedProduct } from '@elements/hot-deals-carousel/type';
+import { sanityFetch } from '@/sanity/lib/client';
+import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
+import SkeletonLoader from '@elements/skeleton-loader';
+import ViewIn from '@elements/view-in';
+import AspectRatioImage from '@elements/aspect-ratio-image';
+import { PortableText } from 'next-sanity';
+import Link from 'next/link';
 
 const destinationSwiperSetting: SwiperOptions = {
   modules: [Navigation],
   navigation: true,
-  slidesPerView: 4.4,
+  slidesPerView: 4.6,
   centeredSlides: true,
   loop: true,
   breakpoints: {
+    200: {
+      slidesPerView: 1.6,
+    },
     320: {
-      slidesPerView: 3.4,
+      slidesPerView: 1.6,
     },
     480: {
-      slidesPerView: 4.4,
+      slidesPerView: 2.6,
+    },
+    720: {
+      slidesPerView: 3.6,
+    },
+    1024: {
+      slidesPerView: 4.6,
     },
   },
   spaceBetween: 30,
 };
 
 const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
+  const { categories, imageUrl, description } = block as CategoryBlock;
+  const categorySlugs = useMemo(
+    () => categories?.map((category) => category.slug.current) || ['destination'],
+    [categories]
+  );
+  const [products, setProducts] = useState<ModifiedProduct[] | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const products = await sanityFetch<ModifiedProduct[]>({
+        query: GET_PRODUCTS_BY_PARENT_CATEGORIES(categorySlugs),
+        tags: [`page.products.${categorySlugs.join('.')}`],
+      });
+      setProducts(products);
+    })();
+  }, [categorySlugs]);
+
+  if (!products) {
+    return <SkeletonLoader />;
+  }
+
   return (
-    <div className="lago-destination-carousel-wrapper">
-      <Swiper {...destinationSwiperSetting}>
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                backgroundImage: `url(${slide})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                width: '100%',
-                height: '18vw',
-                borderRadius: '10px',
-              }}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <ViewIn variant="slideUp" delay={200}>
+      <div className="lago-destination-carousel-wrapper">
+        <div
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
+            width: '100%',
+            height: 'clamp(300px, 40vw, 600px)',
+            borderRadius: '10px',
+          }}
+        >
+          <div className="content-group">
+            {description && <PortableText value={description} />}
+            <Swiper {...destinationSwiperSetting}>
+              {products.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <Link href="">
+                    <div
+                      style={{
+                        backgroundImage: `url(${product.imageUrl})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        width: '100%',
+                        height: 'clamp(200px, 20vw, 500px)',
+                        borderRadius: '10px',
+                        border: '1px solid #fff',
+                      }}
+                    />
+                    <div className="content">
+                      <p>{product.name}</p>
+                    </div>
+                    <div className="image">
+                      <AspectRatioImage
+                        src="/assets/images/home/label-destination.webp"
+                        alt="Default Destination Image"
+                        aspectRatio="1/1"
+                        priority
+                        objFit="contain"
+                      />
+                    </div>
+                  </Link>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </div>
+    </ViewIn>
   );
 };
 

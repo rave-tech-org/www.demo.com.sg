@@ -9,6 +9,7 @@ const AspectRatioImage: React.FC<AspectRatioImageProps> = ({
   objFit = 'cover',
   sizes = '(max-width: 768px) 100vw, 50vw',
   hasBlackOpacityBackground = false,
+  children,
   ...props
 }) => {
   const [width, height] = aspectRatio.split('/').map(Number);
@@ -33,6 +34,7 @@ const AspectRatioImage: React.FC<AspectRatioImageProps> = ({
         style={{ objectFit: objFit }}
         {...props}
       />
+      {children}
     </div>
   );
 };
