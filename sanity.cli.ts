@@ -1,6 +1,6 @@
 import { defineCliConfig } from 'sanity/cli'
-import { dataset, projectId } from './src/sanity/env'
 import * as dotenv from 'dotenv'
+import { dataset, projectId } from '@/sanity/lib/env'
 dotenv.config()
 
 export default defineCliConfig({

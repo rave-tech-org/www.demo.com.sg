@@ -73,7 +73,6 @@ const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
             backgroundPosition: 'center bottom',
             width: '100%',
             height: 'clamp(300px, 40vw, 600px)',
-            borderRadius: '10px',
           }}
         >
           <div className="content-group">
