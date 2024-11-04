@@ -5,12 +5,12 @@ import MainLayoutProps from './type';
 import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
 import NavigationMenu from '@/components/layout/navigation-menu';
 import useViewport from '@/hooks/client/use-viewport';
-import dynamic from 'next/dynamic';
 import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
   const isStudio = pathname.includes('studio');
+  const isContentBlock = pathname.includes('content-block');
 
   const isSticky = useStickyByScroll(175);
   const stickyClassName = isSticky ? 'sticky main-header' : 'not-sticky main-header';
@@ -18,7 +18,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   const { isTablet } = useViewport();
 
-  if (isStudio) {
+  if (isStudio || isContentBlock) {
     return <>{children}</>;
   }
 

@@ -18,6 +18,7 @@
     "@react-spring/web": "^9.7.5",
     "@sanity/icons": "^3.4.0",
     "@sanity/image-url": "1",
+    "@sanity/preview-kit": "^5.1.11",
     "@sanity/vision": "3",
     "@use-gesture/react": "^10.3.1",
     "dotenv": "^16.4.5",
@@ -27,6 +28,7 @@
     "react-dom": "^18",
     "react-use-measure": "^2.1.1",
     "sanity": "^3.30.0",
+    "sanity-plugin-iframe-pane": "^3.1.6",
     "styled-components": "^6.1",
     "swiper": "^11.1.14"
   },

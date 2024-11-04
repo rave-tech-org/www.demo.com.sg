@@ -6,7 +6,6 @@ export const structure: StructureResolver = (S) =>
     .id('root')
     .title('Content')
     .items([
-      // CMS (Pages) Group
       S.listItem()
         .title('CMS')
         .icon(DocumentIcon)
@@ -25,7 +24,6 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      // Mini CRM Group
       S.listItem()
         .title('Package Lists')
         .icon(PackageIcon)

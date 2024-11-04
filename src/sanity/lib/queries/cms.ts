@@ -111,3 +111,27 @@ export const GET_PRODUCTS_BY_PARENT_CATEGORIES = (slugs: string[]) => `
     customPrices
   }
 `;
+
+export const GET_CONTENT_BLOCK_BY_SLUG = (slug: string) => `
+  *[_type == "contentBlock" && slug.current == "${slug}"][0] {
+    _id,
+    slug,
+    blockType,
+    title,
+    description,
+    image,
+    "imageUrl": image.asset->url,
+    customAttributes,
+    listItems[]{
+      title,
+      slug,
+      description,
+      image,
+      "imageUrl": image.asset->url,
+    },
+    "categories": categoryBlock[]->{
+      _id,
+      slug,
+    }
+  }
+`;
