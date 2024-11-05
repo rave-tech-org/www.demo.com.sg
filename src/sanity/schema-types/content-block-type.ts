@@ -19,6 +19,8 @@ export const contentBlockType = defineType({
           { title: 'Basic Block', value: 'basic' },
           { title: 'List Block', value: 'list' },
           { title: 'Category List', value: 'categoryBlock' },
+          { title: 'Post List', value: 'post' },
+          { title: 'Testimonial List', value: 'testimonial' },
         ],
         layout: 'dropdown',
       },

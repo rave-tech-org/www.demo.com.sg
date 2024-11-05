@@ -3,8 +3,10 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId } from './src/sanity/lib/env'
 import { schemaTypes } from './src/sanity/schema-types'
-import { structure } from './src/sanity/structure'
 import { defaultDocumentNode } from '@/sanity/components/default-document-node'
+import CustomNavBar from '@/sanity/structure/custom-nav-bar'
+import { RocketIcon } from '@sanity/icons'
+import CustomToolMenu from '@/sanity/structure/custom-tool-menu'
 
 export default defineConfig({
   basePath: '/studio',
@@ -17,4 +19,13 @@ export default defineConfig({
     structureTool({ defaultDocumentNode }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  icon: RocketIcon,
+  studio: {
+    components: {
+      navbar: CustomNavBar,
+      toolMenu: CustomToolMenu
+    }
+  },
+  title: 'Lago Travel Studio',
+  name: 'lago-travel-studio'
 })

@@ -2,6 +2,7 @@
 @import '@components/layout/navigation-menu/styles.scss';
 @import '@components/layout/mobile-navigation-menu/styles.scss';
 
+@import '@/sanity/structure/custom-nav-bar/styles.scss';
 
 .wrapper {
   @include container-center;
@@ -13,3 +14,4 @@
   flex-direction: column;
   justify-content: center;
 }
+
