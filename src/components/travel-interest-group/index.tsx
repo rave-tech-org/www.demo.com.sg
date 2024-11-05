@@ -1,7 +1,7 @@
 import { ContentBlock } from '@/sanity/sanity.types';
-import TravelInterestCard from '@elements/travel-interest-card';
+import TravelInterestCard from '@components/travel-interest-card';
 import { PortableText } from 'next-sanity';
-import { ListItemBlock } from '@elements/banner-carousel/type';
+import { ListItemBlock } from '@/components/banner-carousel/type';
 
 const TravelInterestGroup = ({ block }: { block: ContentBlock }) => {
   const { listItems, description, title } = block as ListItemBlock;

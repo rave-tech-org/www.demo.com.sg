@@ -4,11 +4,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
-import HotDealsCard from '@elements/hot-deals-card';
+import HotDealsCard from '@/components/hot-deals-card';
 import { Pagination } from 'swiper/modules';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
-import SkeletonLoader from '../skeleton-loader';
+import SkeletonLoader from '@/elements/skeleton-loader';
 import { CategoryBlock, ModifiedProduct } from './type';
 import { ContentBlock } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';

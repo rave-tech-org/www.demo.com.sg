@@ -5,7 +5,7 @@ import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';
 
 import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
-import { ModifiedProduct } from '@elements/hot-deals-carousel/type';
+import { ModifiedProduct } from '@/components/hot-deals-carousel/type';
 import { formatCurrency, transformObject } from '@/utils';
 
 const HotDealsCard = (props: ModifiedProduct) => {

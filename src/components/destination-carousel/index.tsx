@@ -6,7 +6,7 @@ import { SwiperOptions } from 'swiper/types';
 
 import { Navigation } from 'swiper/modules';
 import { ContentBlock } from '@/sanity/sanity.types';
-import { CategoryBlock, ModifiedProduct } from '@elements/hot-deals-carousel/type';
+import { CategoryBlock, ModifiedProduct } from '@/components/hot-deals-carousel/type';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
 import SkeletonLoader from '@elements/skeleton-loader';

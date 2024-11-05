@@ -3,7 +3,7 @@ import { GET_MENU_LAYOUT } from '@/sanity/lib/queries/cms';
 import { useEffect, useState } from 'react';
 import { buildMenu } from '@/utils/build-menu';
 import { PageType } from '@/components/layout/main-layout/type';
-import { ListItemBlock } from '@/elements/banner-carousel/type';
+import { ListItemBlock } from '@/components/banner-carousel/type';
 import { NAVIGATION_MENU, NAVIGATION_MENU_FIND, NAVIGATION_MENU_LANGUAGE, SOCIAL_LINK } from '@/resources/constant';
 
 const useNavigation = () => {

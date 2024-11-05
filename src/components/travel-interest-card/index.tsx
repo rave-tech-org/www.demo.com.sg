@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import AspectRatioImage from '../aspect-ratio-image';
+import AspectRatioImage from '@elements/aspect-ratio-image';
 
 interface TravelInterestCard {
   title?: string;

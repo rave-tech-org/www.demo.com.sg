@@ -1,15 +1,16 @@
-@import '@elements/banner-carousel/styles.scss';
-@import '@elements/destination-carousel/styles.scss';
-@import '@elements/hot-deals-carousel/styles.scss';
-@import '@elements/hot-deals-card/styles.scss';
-@import '@elements/aspect-ratio-image/styles.scss';
-@import '@elements/collapse/styles.scss';
-@import '@elements/skeleton-loader/styles.scss';
-@import '@elements/travel-interest-group/styles.scss';
-@import '@elements/travel-interest-card/styles.scss';
-@import '@elements/content-background/styles.scss';
 @import '@elements/select/styles.scss';
 @import '@elements/drawer/styles.scss';
+@import '@elements/collapse/styles.scss';
+@import '@elements/aspect-ratio-image/styles.scss';
+@import '@elements/skeleton-loader/styles.scss';
+
+@import '@components/banner-carousel/styles.scss';
+@import '@components/destination-carousel/styles.scss';
+@import '@components/hot-deals-carousel/styles.scss';
+@import '@components/hot-deals-card/styles.scss';
+@import '@components/travel-interest-group/styles.scss';
+@import '@components/travel-interest-card/styles.scss';
+@import '@components/content-background/styles.scss';
 
 .primary-button {
   background-color: $primary-color;
