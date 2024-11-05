@@ -1,31 +1,46 @@
 .lago-content-background {
   position: relative;
 
+  .black-opacity-background {
+    &::before {
+      opacity: .5;
+    }
+  }
   .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    h6, h3, p {
+    z-index: $z-index-floor-one;
+    h5, h3, p {
       color: #fff;
     }
 
-    h6 {
+    h5 {
       font-family: $secondary-font;
     }
 
     h3 {
-      font-weight: $bold-font-weight;
+      font-weight: $heading-font-weight;
     }
 
     .button-group {
       display: flex;
       justify-content: center;
+      flex-wrap: wrap;
       gap: 1rem;
       margin-top: 2rem;
 
       .primary-button {
-        padding: 1rem 1.75rem;
+        padding: .75rem 2rem;
 
         p {
           font-weight: $bold-font-weight;
+        }
+        a {
+          color: #fff;
+          font-weight: $heading-font-weight;
         }
       }
     }
