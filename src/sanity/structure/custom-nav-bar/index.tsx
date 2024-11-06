@@ -5,7 +5,7 @@ import { NavbarProps } from 'sanity';
 const CustomNavBar: ComponentType<NavbarProps> = (props) => {
   return (
     <Stack>
-      <>{props.renderDefault(props)}</>
+      <div className="custom-nav-bar">{props.renderDefault(props)}</div>
     </Stack>
   );
 };
