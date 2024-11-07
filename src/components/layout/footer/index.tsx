@@ -19,7 +19,7 @@ const Footer = () => {
     (async () => {
       const footerLayout = await sanityFetch<PageType>({
         query: GET_FOOTER_LAYOUT,
-        tags: [`layout.footer`],
+        tags: [`page`],
       });
       setFooterLayout(footerLayout);
     })();

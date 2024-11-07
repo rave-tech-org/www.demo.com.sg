@@ -50,7 +50,7 @@ const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
     (async () => {
       const products = await sanityFetch<ModifiedProduct[]>({
         query: GET_PRODUCTS_BY_PARENT_CATEGORIES(categorySlugs),
-        tags: [`page.home.products.${categorySlugs.join('.')}`],
+        tags: [`product`],
       });
       const removedParentCategoryProducts = products.map((product) => ({
         ...product,

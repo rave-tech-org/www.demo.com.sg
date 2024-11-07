@@ -12,7 +12,7 @@ import contentBlockRegistry from '@/resources/content-block-registry';
 export async function generateMetadata(): Promise<Metadata> {
   const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
     query: GET_HOME_PAGE_META,
-    tags: ['page.home.meta'],
+    tags: ['page'],
   });
 
   return {
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const homePage = await sanityFetch<PageType>({
     query: GET_HOME_PAGE,
-    tags: ['page.home'],
+    tags: ['page'],
   });
 
   const layout: ContentBlock[] = homePage.layout;
