@@ -37,8 +37,8 @@ export const postType = defineType({
     }),
 
     defineField({
-      name: 'mainImage',
-      title: 'Main Image',
+      name: 'image',
+      title: 'Image',
       type: 'image',
       options: {
         hotspot: true,
@@ -70,7 +70,7 @@ export const postType = defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'mainImage',
+      media: 'image',
       publishedDate: 'publishedDate',
     },
     prepare({ title, media, publishedDate }) {

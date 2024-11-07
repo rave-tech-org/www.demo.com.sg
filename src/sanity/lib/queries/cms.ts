@@ -43,6 +43,19 @@ export const GET_HOME_PAGE = `
   }
 `;
 
+export const GET_POSTS = `
+  *[_type == "post"] {
+    _id,
+    title,
+    slug,
+    publishedDate,
+    excerpt,
+    "imageUrl": image.asset->url,
+    content,
+    tags
+  }
+`;
+
 export const GET_MENU_LAYOUT = `
   *[_type == "page" && slug.current == "menu-layout"][0] {
     _id,

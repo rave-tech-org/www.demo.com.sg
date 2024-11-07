@@ -68,13 +68,85 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Post = {
+  _id: string;
+  _type: 'post';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  publishedDate?: string;
+  excerpt?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }>;
+  tags?: Array<string>;
+};
+
+export type Testimonial = {
+  _id: string;
+  _type: 'testimonial';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  testimonialText?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  rating?: number;
+  dateTime?: string;
+  product?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'product';
+  };
+};
+
 export type ContentBlock = {
   _id: string;
   _type: 'contentBlock';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  blockType?: 'basic' | 'list' | 'categoryBlock';
+  blockType?: 'basic' | 'list' | 'categoryBlock' | 'post' | 'testimonial';
   title?: string;
   slug?: Slug;
   customAttributes?: Array<{
@@ -201,95 +273,6 @@ export type Page = {
   }>;
 };
 
-export type PurchaseHistory = {
-  _id: string;
-  _type: 'purchaseHistory';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  customer?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'customer';
-  };
-  product?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'product';
-  };
-  quantity?: number;
-  totalSpent?: number;
-  purchaseDate?: string;
-};
-
-export type PointRule = {
-  _id: string;
-  _type: 'pointRule';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: string;
-  pointsPerDollar?: number;
-};
-
-export type Customer = {
-  _id: string;
-  _type: 'customer';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  fullName?: string;
-  email?: string;
-  phone?: string;
-  dob?: string;
-  nationality?:
-    | 'american'
-    | 'british'
-    | 'canadian'
-    | 'chinese'
-    | 'french'
-    | 'german'
-    | 'indian'
-    | 'japanese'
-    | 'korean'
-    | 'malaysian'
-    | 'singaporean'
-    | 'other';
-  passportNumber?: string;
-  passportExpiry?: string;
-  visaInfo?: string;
-  address?: {
-    street?: string;
-    city?: string;
-    state?: string;
-    zipCode?: string;
-    country?: string;
-  };
-  emergencyContact?: {
-    name?: string;
-    relation?: string;
-    phone?: string;
-  };
-  travelHistory?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'product';
-  }>;
-  pointsBalance?: number;
-  purchaseHistory?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'purchaseHistory';
-  }>;
-};
-
 export type Category = {
   _id: string;
   _type: 'category';
@@ -321,7 +304,7 @@ export type Product = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  productType?: 'tour' | 'transport' | 'ticket';
+  productType?: 'tour' | 'transport' | 'destination' | 'ticket';
   categories?: Array<{
     _ref: string;
     _type: 'reference';
@@ -445,11 +428,10 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | SanityFileAsset
   | Geopoint
+  | Post
+  | Testimonial
   | ContentBlock
   | Page
-  | PurchaseHistory
-  | PointRule
-  | Customer
   | Category
   | Product
   | SanityImageCrop

@@ -11,18 +11,53 @@
 @import '@components/travel-interest-group/styles.scss';
 @import '@components/travel-interest-card/styles.scss';
 @import '@components/content-background/styles.scss';
+@import '@components/see-more-articles/styles.scss';
 
 .primary-button {
   background-color: $primary-color;
   color: #fff;
   border-radius: 8px;
   padding: 14px 24px 12px 24px;
+  transition: all .5s ease;
+  border: 2px solid $primary-color;
 
   @media (max-width: $breakpoint-sm) {
     padding: 10px 16px 8px 16px;
   }
-  p {
+  p, a {
+    color: #fff;
     font-weight: $bold-font-weight;
+  }
+  &:hover {
+    color: $primary-color;
+    background-color: #fff;
+    p, a {
+      color: $primary-color;
+    }
+  }
+}
+
+.primary-button.outline {
+  background-color: #fff;
+  color: $primary-color;
+  border-radius: 8px;
+  padding: 14px 24px 12px 24px;
+  transition: all .5s ease;
+  border: 2px solid $primary-color;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 10px 16px 8px 16px;
+  }
+  p, a {
+    color: $primary-color;
+    font-weight: $bold-font-weight;
+  }
+  &:hover {
+    color: #fff;
+    background-color: $primary-color;
+    p, a {
+      color: #fff;
+    }
   }
 }
 
