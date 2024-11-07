@@ -1,13 +1,7 @@
-import { ReactNode } from 'react';
 import AspectRatioImage from '@elements/aspect-ratio-image';
+import { TravelInterestCardProps } from './type';
 
-interface TravelInterestCard {
-  title?: string;
-  desc: string | ReactNode;
-  imageUrl?: string;
-}
-
-const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCard) => {
+const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCardProps) => {
   return (
     <div className="lago-travel-interest-card">
       <div className="image-circle-wrapper">

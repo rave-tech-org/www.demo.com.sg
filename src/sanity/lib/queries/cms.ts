@@ -56,6 +56,21 @@ export const GET_POSTS = `
   }
 `;
 
+export const GET_TESTIMONIALS = `
+  *[_type == "testimonial"]{
+    name,
+    slug,
+    testimonialText,
+    "imageUrl": image.asset->url,
+    rating,
+    dateTime,
+    product->{
+      name,
+      slug
+    }
+  }
+`;
+
 export const GET_MENU_LAYOUT = `
   *[_type == "page" && slug.current == "menu-layout"][0] {
     _id,
