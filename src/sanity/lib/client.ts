@@ -7,7 +7,7 @@ const clientConfig = {
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: process.env.NODE_ENV === 'development' ? true : false,
   perspective: 'published' as ClientPerspective,
 };
 
