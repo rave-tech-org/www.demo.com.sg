@@ -47,7 +47,7 @@ const TestimonialCarousel = ({ block }: { block: ContentBlock }) => {
     (async () => {
       const testimonials = await sanityFetch<TestimonialType[]>({
         query: GET_TESTIMONIALS,
-        tags: [`testimonial`],
+        tags: ['testimonial'],
       });
       setTestimonials(testimonials);
     })();

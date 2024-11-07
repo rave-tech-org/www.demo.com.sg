@@ -13,7 +13,7 @@ const useNavigation = () => {
     (async () => {
       const menuLayout = await sanityFetch<PageType>({
         query: GET_HEADER_LAYOUT,
-        tags: [`page`],
+        tags: ['page', 'contentBlock'],
       });
       setMenuLayout(menuLayout);
     })();

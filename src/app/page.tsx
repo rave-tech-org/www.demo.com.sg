@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const homePage = await sanityFetch<PageType>({
     query: GET_HOME_PAGE,
-    tags: ['page'],
+    tags: ['page', 'contentBlock'],
   });
 
   const layout: ContentBlock[] = homePage.layout;

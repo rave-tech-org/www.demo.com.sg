@@ -19,7 +19,7 @@ const Footer = () => {
     (async () => {
       const footerLayout = await sanityFetch<PageType>({
         query: GET_FOOTER_LAYOUT,
-        tags: [`page`],
+        tags: ['page', 'contentBlock'],
       });
       setFooterLayout(footerLayout);
     })();
@@ -32,7 +32,7 @@ const Footer = () => {
   const { imageUrl, description } = footerLayout;
   const footerMenuBlock = footerLayout?.layout?.find((m) => m.slug?.current === FOOTER_MENU);
   const footerList = buildMenu(footerMenuBlock?.description);
-  const { imageUrl: logoUrl } = footerMenuBlock as ContentBlock & { imageUrl: string };
+  const { imageUrl: logoUrl } = footerMenuBlock as ContentBlock & { imageUrl?: string };
 
   // social link
   const socialBlock = footerLayout?.layout?.find((m) => m.slug?.current === SOCIAL_LINK);
@@ -65,7 +65,7 @@ const Footer = () => {
       <div className="wrapper">
         <div className="main-footer">
           <Link className="logo" href="/">
-            <NextImage src={logoUrl} width={140} height={140} alt="lago logo" />
+            <NextImage src={logoUrl || ''} width={140} height={140} alt="lago logo" />
           </Link>
           <div className="list">
             {footerList?.map((item, key) => (

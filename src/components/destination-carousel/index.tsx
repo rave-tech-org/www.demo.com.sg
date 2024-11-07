@@ -53,7 +53,7 @@ const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
     (async () => {
       const products = await sanityFetch<ModifiedProduct[]>({
         query: GET_PRODUCTS_BY_PARENT_CATEGORIES(categorySlugs),
-        tags: [`product`],
+        tags: ['product'],
       });
       setProducts(products);
     })();

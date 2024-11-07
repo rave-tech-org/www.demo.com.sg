@@ -11,7 +11,7 @@ const SeeMoreArticles = async ({ block }: { block: ContentBlock }) => {
   const { description, customAttributes } = block;
   const posts = await sanityFetch<PostType[]>({
     query: GET_POSTS,
-    tags: [`post`],
+    tags: ['post'],
   });
   const custom = transformObject<CustomSeeMoreAttributes>(customAttributes);
   const buttons = Object.keys(custom).map((key) => ({
