@@ -6,6 +6,7 @@ import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
 import NavigationMenu from '@/components/layout/navigation-menu';
 import useViewport from '@/hooks/client/use-viewport';
 import MobileNavigation from '@/components/layout/mobile-navigation-menu';
+import Footer from '@/components/layout/footer';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
@@ -34,6 +35,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         </div>
       )}
       <main className={mainContentClassName}>{children}</main>
+      <Footer />
     </div>
   );
 };

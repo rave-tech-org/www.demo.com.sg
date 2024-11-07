@@ -1,5 +1,5 @@
 import { sanityFetch } from '@/sanity/lib/client';
-import { GET_MENU_LAYOUT } from '@/sanity/lib/queries/cms';
+import { GET_HEADER_LAYOUT } from '@/sanity/lib/queries/cms';
 import { useEffect, useState } from 'react';
 import { buildMenu } from '@/utils/build-menu';
 import { PageType } from '@/components/layout/main-layout/type';
@@ -12,7 +12,7 @@ const useNavigation = () => {
   useEffect(() => {
     (async () => {
       const menuLayout = await sanityFetch<PageType>({
-        query: GET_MENU_LAYOUT,
+        query: GET_HEADER_LAYOUT,
         tags: [`layout.menu`],
       });
       setMenuLayout(menuLayout);

@@ -42,6 +42,13 @@ export const pageType = defineType({
       },
     }),
     defineField({
+      name: 'image',
+      title: 'Image',
+      group: 'detail',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       group: 'detail',

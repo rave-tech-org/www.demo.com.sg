@@ -1,6 +1,7 @@
 const pageRegistry = new Map([
   ['home-page', '/'],
-  ['menu-layout', '/content-block/navigation-menu'],
+  ['header-layout', '/content-block/navigation-menu'],
+  ['footer-layout', '/content-block/navigation-menu'],
 ]);
 
 export default pageRegistry;

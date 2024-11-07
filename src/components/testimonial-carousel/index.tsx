@@ -49,7 +49,6 @@ const TestimonialCarousel = ({ block }: { block: ContentBlock }) => {
         query: GET_TESTIMONIALS,
         tags: [`page.home.testimonial`],
       });
-      console.log({ testimonials });
       setTestimonials(testimonials);
     })();
   }, []);

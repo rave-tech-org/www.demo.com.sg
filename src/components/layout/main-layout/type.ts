@@ -5,6 +5,6 @@ type MainLayoutProps = {
   children: ReactNode;
 };
 
-export type PageType = Omit<Page, 'layout'> & { layout: ContentBlock[] };
+export type PageType = Omit<Page, 'layout'> & { layout: ContentBlock[] } & { imageUrl: string };
 
 export default MainLayoutProps;

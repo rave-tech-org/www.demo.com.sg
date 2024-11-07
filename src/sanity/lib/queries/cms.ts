@@ -71,8 +71,35 @@ export const GET_TESTIMONIALS = `
   }
 `;
 
-export const GET_MENU_LAYOUT = `
-  *[_type == "page" && slug.current == "menu-layout"][0] {
+export const GET_HEADER_LAYOUT = `
+  *[_type == "page" && slug.current == "header-layout"][0] {
+    _id,
+    title,
+    slug,
+    "imageUrl": image.asset->url,
+    description,
+    layout[]->{
+      _id,
+      slug,
+      blockType,
+      title,
+      description,
+      image,
+      "imageUrl": image.asset->url,
+      customAttributes,
+      listItems[]{
+        title,
+        slug,
+        description,
+        image,
+        "imageUrl": image.asset->url,
+      },
+    }
+  }
+`;
+
+export const GET_FOOTER_LAYOUT = `
+  *[_type == "page" && slug.current == "footer-layout"][0] {
     _id,
     title,
     slug,

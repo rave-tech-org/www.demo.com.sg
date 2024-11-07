@@ -236,6 +236,17 @@ export type Page = {
   pageType?: 'single' | 'multiple';
   title?: string;
   slug?: Slug;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
   description?: Array<{
     children?: Array<{
       marks?: Array<string>;
