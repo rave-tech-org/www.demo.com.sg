@@ -173,13 +173,11 @@ export const productType = defineType({
     select: {
       title: 'name',
       productType: 'productType',
-      price: 'price',
       image: 'image',
     },
-    prepare({ title, productType, price, image }) {
+    prepare({ title, productType, image }) {
       return {
         title: `${title} - ${productType}`,
-        subtitle: `Price: $${price}`,
         media: image || EarthGlobeIcon,
       };
     },

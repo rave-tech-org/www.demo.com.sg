@@ -28,30 +28,6 @@
       }
     }
 
-    .tags {
-      min-height: 1.25rem;
-      visibility: visible;
-      margin-top: 0.75rem;
-      margin-bottom: 0.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-
-      span {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        border-radius: 1rem;
-        background: $tag-primary;
-        color: $accent-color;
-        &.success {
-          background: $tag-success;
-        }
-        &.special {
-          background: $tag-special;
-        }
-      }
-    }
-
     .pricing {
       .original-price {
         display: flex;

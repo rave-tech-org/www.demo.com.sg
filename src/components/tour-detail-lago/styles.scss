@@ -1,0 +1,101 @@
+.tour-detail-lago {
+  .tour-detail-main-info {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .tour-detail-image-wrapper {
+    flex: 1;
+    img {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+  .tour-detail-book-now {
+    flex: 1;
+    padding: 1.5rem 3.5rem;
+    .wrapper {
+      max-width: 580px;
+      margin: 0;
+    }
+    .location-label {
+      display: flex;
+      align-items: center;
+      margin-left: -0.25rem;
+      span {
+        color: $text-danger;
+        font-weight: $bold-font-weight;
+      }
+    }
+    .travel-code {
+      color: $muted-text-color;
+      font-weight: $bold-font-weight;
+    }
+    .rating {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 2rem;
+      p {
+        color: $rating-color;
+        font-weight: $bold-font-weight;
+        padding-top: 6px;
+      }
+      span {
+        text-decoration: underline;
+        color: $muted-text-color;
+        font-weight: $bold-font-weight;
+        margin-left: .5rem;
+      }
+    }
+    .pricing {
+      padding-top: 3rem;
+      span {
+        color: $muted-text-color;
+        font-weight: $bold-font-weight;
+      }
+      h4 {
+        color: $primary-color;
+        sup {
+          color: $text-danger;
+          text-decoration: line-through;
+          opacity: .8;
+          font-size: $font-body;
+        }
+      }
+      .option {
+        strong {
+          color: $primary-color;
+          font-style: normal;
+        }
+        color: $muted-text-color;
+        font-style: italic;
+      }
+      .book-now-info {
+        color: $book-now-color;
+        font-weight: $bold-font-weight;
+        sup {
+          color: $text-danger;
+          text-decoration: underline;
+          font-style: italic;
+          opacity: .8;
+        }
+      }
+    }
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      .primary-button {
+        padding: .5rem 2rem;
+      }
+    }
+  }
+
+  .tour-detail-extra {
+    .tour-detail-panel {
+      padding: 1rem;
+      margin-left: 10rem;
+    }
+  }
+}

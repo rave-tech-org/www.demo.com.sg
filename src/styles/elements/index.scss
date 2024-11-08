@@ -1,8 +1,9 @@
 @import '@elements/select/styles.scss';
 @import '@elements/drawer/styles.scss';
 @import '@elements/collapse/styles.scss';
-@import '@elements/aspect-ratio-image/styles.scss';
 @import '@elements/skeleton-loader/styles.scss';
+@import '@elements/anchor/styles.scss';
+@import '@elements/aspect-ratio-image/styles.scss';
 
 @import '@components/banner-carousel/styles.scss';
 @import '@components/destination-carousel/styles.scss';
@@ -13,6 +14,7 @@
 @import '@components/content-background/styles.scss';
 @import '@components/see-more-articles/styles.scss';
 @import '@components/testimonial-card/styles.scss';
+@import '@components/tour-detail-lago/styles.scss';
 @import '@components/testimonial-carousel/styles.scss';
 
 .primary-button {
@@ -119,5 +121,53 @@
       color: $primary-color;
     }
   }
+}
 
+.breadcrumbs-group {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  display: flex;
+  .breadcrumbs-item {
+    display: flex;
+    align-items: center;
+    svg {
+      color: $primary-color;
+    }
+    a {
+      font-size: $font-xs !important;
+      font-weight: $text-font-weight;
+      color: $secondary-color;
+      &.active {
+        color: $primary-color;
+      }
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+}
+
+.tags {
+  min-height: 1.25rem;
+  visibility: visible;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  span {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 1rem;
+    background: $tag-primary;
+    color: $accent-color;
+    &.success {
+      background: $tag-success;
+    }
+    &.special {
+      background: $tag-special;
+    }
+  }
 }
