@@ -196,3 +196,34 @@ export const GET_CONTENT_BLOCK_BY_SLUG = (slug: string) =>
     }
   }
 `);
+
+export const GET_PRODUCT_BY_SLUG = (slug: string) =>
+  defineQuery(`
+*[_type == "product" && slug.current == "${slug}"][0]{
+  name,
+  productType,
+  slug,
+  categories[]->{
+    title
+  },
+  price,
+  customPrices,
+  availableDate,
+  duration,
+  description,
+  image,
+  bookingUrl,
+  features,
+  overview,
+  itinerary,
+  transportation->{
+    title
+  },
+  accommodation,
+  reviews[]->{
+    title,
+    body
+  },
+  thingsToNote
+}
+`);

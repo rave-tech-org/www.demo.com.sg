@@ -150,9 +150,59 @@
   }
 
   .tour-detail-extra {
+    padding-top: 4rem;
+    display: flex;
+    gap: 3rem;
     .tour-detail-panel {
       padding: 1rem;
       margin-left: 10rem;
+    }
+  }
+
+  .ant-anchor {
+    width: 160px;
+    &::before {
+      border-inline-start: 2px solid rgba(5, 5, 5, .3) !important;
+      left: 12rem !important;
+    }
+    .ant-anchor-link {
+      padding-inline: 0;
+    }
+    .ant-anchor-link-title {
+      font-size: $font-small !important;
+      text-align: right;
+      padding-top: 0 !important;
+      &.ant-anchor-link-title-active {
+        font-size: $font-h6 !important;
+        font-weight: $bold-font-weight;
+        color: $primary-color !important;
+      }
+    }
+    .ant-anchor-ink-visible {
+      position: relative;
+      &::before {
+        content: '';
+        background-color: $primary-color;
+        width: 8px;
+        height: 8px;
+        left: -3px;
+        top: 7.5px;
+        border-radius: 50%;
+        position: absolute;
+        z-index: $z-index-floor-one;
+      }
+      &::after {
+        content: '';
+        background-color: #fff;
+        width: 12px;
+        height: 12px;
+        left: -5px;
+        border-radius: 50%;
+        position: absolute;
+        top: 5.5px;
+      }
+      background-color: transparent !important;
+      left: 12rem !important;
     }
   }
 }

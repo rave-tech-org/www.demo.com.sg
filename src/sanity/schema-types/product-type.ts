@@ -6,22 +6,8 @@ export const productType = defineType({
   title: 'Product',
   type: 'document',
   icon: EarthGlobeIcon,
+  groups: [{ name: 'tourDetails', title: 'Tour Details' }],
   fields: [
-    defineField({
-      name: 'name',
-      title: 'Product Name',
-      type: 'string',
-      validation: (Rule) => Rule.required().error('Product name is required'),
-    }),
-
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'name' },
-      validation: (Rule) => Rule.required().error('Slug is required to generate a URL'),
-    }),
-
     defineField({
       name: 'productType',
       title: 'Product Type',
@@ -36,6 +22,21 @@ export const productType = defineType({
         layout: 'dropdown',
       },
       validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'name',
+      title: 'Product Name',
+      type: 'string',
+      validation: (Rule) => Rule.required().error('Product name is required'),
+    }),
+
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'name' },
+      validation: (Rule) => Rule.required().error('Slug is required to generate a URL'),
     }),
 
     defineField({
@@ -68,28 +69,13 @@ export const productType = defineType({
           name: 'price',
           title: 'Price',
           fields: [
-            {
-              name: 'key',
-              title: 'Key',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            },
-            {
-              name: 'value',
-              title: 'Value',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            },
+            { name: 'key', title: 'Key', type: 'string', validation: (Rule) => Rule.required() },
+            { name: 'value', title: 'Value', type: 'string', validation: (Rule) => Rule.required() },
           ],
           preview: {
-            select: {
-              key: 'key',
-              value: 'value',
-            },
+            select: { key: 'key', value: 'value' },
             prepare({ key, value }) {
-              return {
-                title: `${key}: ${value}`,
-              };
+              return { title: `${key}: ${value}` };
             },
           },
         },
@@ -97,9 +83,26 @@ export const productType = defineType({
     }),
 
     defineField({
-      name: 'availableDate',
-      title: 'Available Date',
-      type: 'datetime',
+      name: 'departureDateRanges',
+      title: 'Departure Date Ranges',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'startDate',
+              title: 'Start Date',
+              type: 'datetime',
+            },
+            {
+              name: 'endDate',
+              title: 'End Date',
+              type: 'datetime',
+            },
+          ],
+        },
+      ],
     }),
 
     defineField({
@@ -120,9 +123,7 @@ export const productType = defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
-      options: {
-        hotspot: true,
-      },
+      options: { hotspot: true },
     }),
 
     defineField({
@@ -141,32 +142,205 @@ export const productType = defineType({
           name: 'feature',
           title: 'Feature',
           fields: [
+            { name: 'key', title: 'Key', type: 'string', validation: (Rule) => Rule.required() },
+            { name: 'value', title: 'Value', type: 'string', validation: (Rule) => Rule.required() },
+          ],
+          preview: {
+            select: { key: 'key', value: 'value' },
+            prepare({ key, value }) {
+              return { title: `${key}: ${value}` };
+            },
+          },
+        },
+      ],
+    }),
+
+    defineField({
+      name: 'tourSummary',
+      title: 'Tour Summary',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'tourSummaryItem',
+          title: 'Tour Summary Item',
+          fields: [
             {
-              name: 'key',
-              title: 'Key',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
+              name: 'isActive',
+              title: 'Is Active',
+              type: 'boolean',
+              options: {
+                withLabel: true,
+              },
+              initialValue: true,
             },
             {
-              name: 'value',
-              title: 'Value',
+              name: 'title',
+              title: 'Title',
               type: 'string',
-              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'array',
+              of: [{ type: 'block' }],
+            },
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: { hotspot: true },
+            },
+          ],
+          preview: {
+            select: { title: 'title', image: 'image' },
+            prepare({ title, image }) {
+              return { title: title || 'Tour Summary Item', media: image };
+            },
+          },
+        },
+      ],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'overview',
+      title: 'Overview',
+      type: 'array',
+      of: [
+        { type: 'block' },
+        { type: 'image' },
+        {
+          type: 'object',
+          name: 'table',
+          title: 'Table',
+          fields: [
+            {
+              name: 'rows',
+              title: 'Rows',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'row',
+                  fields: [
+                    {
+                      name: 'cells',
+                      title: 'Cells',
+                      type: 'array',
+                      of: [{ type: 'string' }],
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      cells: 'cells',
+                    },
+                    prepare({ cells }) {
+                      return {
+                        title: cells ? cells.join(' | ') : 'Row',
+                      };
+                    },
+                  },
+                },
+              ],
             },
           ],
           preview: {
             select: {
-              key: 'key',
-              value: 'value',
+              rows: 'rows',
             },
-            prepare({ key, value }) {
+            prepare({ rows }) {
+              const rowCount = rows ? rows.length : 0;
               return {
-                title: `${key}: ${value}`,
+                title: `Table (${rowCount} row${rowCount !== 1 ? 's' : ''})`,
               };
             },
           },
         },
       ],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'itinerary',
+      title: 'Itinerary',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'itineraryItem',
+          title: 'Itinerary Item',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'array',
+              of: [{ type: 'block' }],
+            },
+            {
+              name: 'images',
+              title: 'Images',
+              type: 'array',
+              of: [{ type: 'image' }],
+              options: { layout: 'grid' },
+            },
+          ],
+          preview: {
+            select: { title: 'title', image: 'images.0' },
+            prepare({ title, image }) {
+              return {
+                title: title || 'Itinerary Item',
+                media: image,
+              };
+            },
+          },
+        },
+      ],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'transportation',
+      title: 'Transportation',
+      type: 'reference',
+      to: [{ type: 'category' }],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'accommodation',
+      title: 'Accommodation',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'reviews',
+      title: 'Reviews',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }, { type: 'post' }] }],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'thingsToNote',
+      title: 'Things to Note',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
   ],
   preview: {
