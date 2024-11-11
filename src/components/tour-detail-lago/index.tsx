@@ -3,12 +3,21 @@
 import AspectRatioImage from '@/elements/aspect-ratio-image';
 import RightChevron from '@/elements/icons/right-chevron';
 import NextImage from '@/elements/next-image';
-import { transformObject } from '@/utils';
 import Link from 'next/link';
-import { CustomCategoryAttributes } from '@components/hot-deals-card/type';
 import RatingStar from '@/elements/icons/rating-star';
+import useViewport from '@/hooks/client/use-viewport';
+import { Anchor, AnchorLink, AnchorPoint } from '@/elements/anchor';
 
 const TourDetailLago = () => {
+  const { isMobile, isTablet, isMdScreen, isLgScreen, isXlScreen, isXxlScreen } = useViewport();
+  const screenWidths = new Map([
+    ['6/1', isMobile],
+    ['5/2', isTablet],
+    ['4/2', isMdScreen],
+    ['4/3', isXlScreen],
+    ['3/2', isXxlScreen],
+  ]);
+  const [ratio] = screenWidths?.entries()?.find(([, cond]) => cond) || ['2/1'];
   const breadcrumbs = [
     {
       text: 'Home',
@@ -67,18 +76,18 @@ const TourDetailLago = () => {
           <div className="tour-detail-main-info">
             <div className="tour-detail-image-wrapper">
               <AspectRatioImage
-                src="/assets/images/home/banner-customised-tour.webp"
+                src="/assets/images/tour/hero-tour-cover.jpg"
                 alt="Default Tour Image"
-                aspectRatio="2/1"
+                aspectRatio={ratio}
                 priority
               />
+              <NextImage src="/assets/images/tour/icon-zoom.svg" width={48} height={48} alt="icon zoom" />
             </div>
             <div className="tour-detail-book-now">
               <div className="wrapper">
                 <div className="rating">
                   <RatingStar percentage={(parseInt('4.3') / 5) * 100} />
                   <p>4.3</p> <span>(Based on 3 reviews)</span>
-                  {/* <p>{customFeature.rating}</p> */}
                 </div>
                 <div className="location-label">
                   <NextImage
@@ -94,7 +103,6 @@ const TourDetailLago = () => {
 
                 <div className="tags">
                   {[1, 2]?.map((category, key) => {
-                    // const custom = transformObject<CustomCategoryAttributes>(category?.customAttributes);
                     return (
                       <span key={`hot-deals-tag-${key}`} className="success">
                         Min. 2-to-go
@@ -125,44 +133,61 @@ const TourDetailLago = () => {
                     </button>
                   ))}
                 </div>
+                <div className="printout">
+                  <div>
+                    <NextImage src="/assets/images/tour/icon-transfer.svg" width={32} height={32} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="tour-detail-additional-info">3days</div>
+          <div className="tour-detail-additional-info wrapper">
+            <div className="additional-item">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+            <div className="additional-item">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+            <div className="additional-item not-active">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+            <div className="additional-item">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+            <div className="additional-item">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+            <div className="additional-item">
+              <div className="icon-wrapper">
+                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+              </div>
+              <p>Total Duration</p>
+              <span>3 days</span>
+            </div>
+          </div>
         </div>
       </div>
-      {/* <div className="tour-detail-extra wrapper">
-        <div className="tour-detail-anchor">
-          <Anchor>
-            <AnchorLink href="overview">Overview</AnchorLink>
-            <AnchorLink href="itinerary">Itinerary</AnchorLink>
-            <AnchorLink href="transportation">Transportation</AnchorLink>
-            <AnchorLink href="accommodation">Accommodation</AnchorLink>
-            <AnchorLink href="reviews">Reviews</AnchorLink>
-            <AnchorLink href="things-to-note">Things to Note</AnchorLink>
-          </Anchor>
-        </div>
-        <div className="tour-detail-panel">
-          <AnchorPoint id="overview">
-            <h1>Overview</h1>
-          </AnchorPoint>
-          <AnchorPoint id="itinerary">
-            <h1>Itinerary</h1>
-          </AnchorPoint>
-          <AnchorPoint id="transportation">
-            <h1>Transportation</h1>
-          </AnchorPoint>
-          <AnchorPoint id="accommodation">
-            <h1>Accommodation</h1>
-          </AnchorPoint>
-          <AnchorPoint id="reviews">
-            <h1>Reviews</h1>
-          </AnchorPoint>
-          <AnchorPoint id="things-to-note">
-            <h1>Things to Note</h1>
-          </AnchorPoint>
-        </div>
-      </div> */}
+      <div className="tour-detail-extra wrapper"></div>
     </div>
   );
 };
