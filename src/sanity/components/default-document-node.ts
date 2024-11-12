@@ -12,6 +12,15 @@ function getContentBlockPreviewUrl(doc: SanityDocument & { slug?: { current: str
   return doc?.slug?.current ? `${studioUrl}/content-block/${doc?.slug?.current}` : `${studioUrl}`;
 }
 
+function getProductPreviewUrl(doc: SanityDocument & { slug?: { current: string }; productType?: string }) {
+  if (doc.productType === 'tour') {
+    return doc?.slug?.current ? `${studioUrl}/tour/${doc?.slug?.current}` : `${studioUrl}`;
+  } else if (doc.productType === 'destination') {
+    return doc?.slug?.current ? `${studioUrl}/destination/${doc?.slug?.current}` : `${studioUrl}`;
+  }
+  return doc?.slug?.current ? `${studioUrl}/tour/${doc?.slug?.current}` : `${studioUrl}`;
+}
+
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType }) => {
   switch (schemaType) {
     case `page`:
@@ -31,6 +40,16 @@ export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType
           .component(Iframe)
           .options({
             url: (doc: SanityDocument) => getContentBlockPreviewUrl(doc),
+          })
+          .title('Preview'),
+      ]);
+    case `product`:
+      return S.document().views([
+        S.view.form(),
+        S.view
+          .component(Iframe)
+          .options({
+            url: (doc: SanityDocument) => getProductPreviewUrl(doc),
           })
           .title('Preview'),
       ]);
