@@ -19,6 +19,11 @@ export const structure: StructureResolver = (S) =>
                 .title('Content Blocks')
                 .schemaType('contentBlock')
                 .child(S.documentTypeList('contentBlock').title('All Content Blocks')),
+              S.listItem()
+                .title('Testimonial')
+                .schemaType('testimonial')
+                .child(S.documentTypeList('testimonial').title('All Testimonials')),
+              S.listItem().title('Post').schemaType('post').child(S.documentTypeList('post').title('All Posts')),
             ])
         ),
 
@@ -78,74 +83,8 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title('Categories')
                 .icon(TagIcon)
-                .child(
-                  S.list()
-                    .title('Categories')
-                    .items([
-                      S.listItem()
-                        .title('All Categories')
-                        .schemaType('category')
-                        .child(S.documentTypeList('category').title('All Categories')),
-                    ])
-                ),
-
-              // Customers
-              S.listItem()
-                .title('Customers')
-                .icon(UserIcon)
-                .child(
-                  S.list()
-                    .title('Customers')
-                    .items([
-                      S.listItem()
-                        .title('All Customers')
-                        .schemaType('customer')
-                        .child(S.documentTypeList('customer').title('All Customers')),
-
-                      S.listItem()
-                        .title('Customers by Nationality')
-                        .schemaType('customer')
-                        .child(
-                          S.documentList()
-                            .title('Customers by Nationality')
-                            .filter('_type == "customer" && nationality == $nationality')
-                            .params({ nationality: 'malaysian' })
-                        ),
-
-                      S.listItem()
-                        .title('Customers with Travel History')
-                        .schemaType('customer')
-                        .child(
-                          S.documentList()
-                            .title('Customers with Travel History')
-                            .filter('_type == "customer" && travelHistory != null')
-                        ),
-                    ])
-                ),
-
-              // Point Rules
-              S.listItem()
-                .title('Point Rules')
-                .icon(DashboardIcon)
-                .child(
-                  S.list()
-                    .title('Point Rules')
-                    .items([
-                      S.listItem()
-                        .title('All Point Rules')
-                        .schemaType('pointRule')
-                        .child(S.documentTypeList('pointRule').title('All Point Rules')),
-
-                      S.listItem()
-                        .title('Specific Point Rule')
-                        .schemaType('pointRule')
-                        .child(
-                          S.documentList()
-                            .title('Specific Point Rule')
-                            .filter('_type == "pointRule" && pointsPerDollar >= 1')
-                        ),
-                    ])
-                ),
+                .schemaType('category')
+                .child(S.documentTypeList('category').title('All Categories')),
             ])
         ),
 

@@ -15,8 +15,10 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.1",
     "@ant-design/nextjs-registry": "^1.0.1",
     "@react-spring/web": "^9.7.5",
+    "@sanity/client": "^6.22.4",
     "@sanity/icons": "^3.4.0",
     "@sanity/image-url": "1",
     "@sanity/preview-kit": "^5.1.11",

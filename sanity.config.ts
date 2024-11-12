@@ -7,6 +7,7 @@ import { defaultDocumentNode } from '@/sanity/components/default-document-node'
 import CustomNavBar from '@/sanity/structure/custom-nav-bar'
 import { RocketIcon } from '@sanity/icons'
 import CustomToolMenu from '@/sanity/structure/custom-tool-menu'
+import { structure } from '@/sanity/structure'
 
 export default defineConfig({
   basePath: '/studio',
@@ -16,7 +17,7 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
-    structureTool({ defaultDocumentNode }),
+    structureTool({ defaultDocumentNode, structure }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
   icon: RocketIcon,

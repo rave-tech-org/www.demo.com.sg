@@ -28,7 +28,7 @@ const HotDealsCard = (props: ModifiedProduct) => {
       onMouseLeave={() => setHovered(false)}
     >
       <div className="card-image-container black-opacity-background">
-        <AspectRatioImage src={imageUrl} alt="Default Tour Image" aspectRatio="1/1" priority />
+        <AspectRatioImage src={imageUrl} alt={name || ''} aspectRatio="1/1" priority />
         <animated.div className="special-card-label" style={springStyle}>
           <AspectRatioImage
             src="/assets/images/tour/special-card-label.webp"
@@ -72,7 +72,11 @@ const HotDealsCard = (props: ModifiedProduct) => {
               </div>
             )}
           </div>
-          <p className="book-now-info">Book now to save S$100</p>
+          {customFeature?.['save-info'] && (
+            <p className="book-now-info">
+              {customFeature?.['save-info']} S${customPrices?.['discount-price']}
+            </p>
+          )}
         </div>
       </div>
     </div>

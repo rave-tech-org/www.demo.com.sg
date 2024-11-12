@@ -9,13 +9,19 @@ import useViewport from '@/hooks/client/use-viewport';
 import { Anchor, Collapse, CollapseProps, Image } from 'antd';
 import { useEffect, useState } from 'react';
 import { client, sanityFetch } from '@/sanity/lib/client';
-import { usePathname } from 'next/navigation';
-import { ImageProps } from 'next/image';
 import { GET_PRODUCT_BY_SLUG } from '@/sanity/lib/queries/cms';
-import { ModifiedProduct } from '@components/hot-deals-carousel/type';
 import { PortableText } from 'next-sanity';
 import { useNextSanityImage } from 'next-sanity-image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import SkeletonLoader from '@/elements/skeleton-loader';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { TourDetailProduct } from './type';
+import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from '@components/hot-deals-card/type';
+import { transformObject } from '@/utils';
+import { SwiperOptions } from 'swiper/types';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { usePathname } from 'next/navigation';
 
 type SanityImageProps = {
   value: SanityImageSource & {
@@ -25,30 +31,58 @@ type SanityImageProps = {
 
 const SanityImage: React.FC<SanityImageProps> = ({ value }) => {
   const imageProps = useNextSanityImage(client, value);
+  const [visible, setVisible] = useState(false);
 
   if (!imageProps) return null;
 
   return (
-    <Image {...imageProps} alt={value.alt || ' '} sizes="(max-width: 800px) 100vw, 800px" className="rounded-lg" />
+    <div className="tour-detail-image-wrapper">
+      <Image
+        width={200}
+        style={{ display: 'none' }}
+        src={imageProps.src}
+        preview={{
+          visible,
+          src: imageProps.src,
+          onVisibleChange: (value) => {
+            setVisible(value);
+          },
+        }}
+        alt={value.alt || ''}
+      />
+      <AspectRatioImage
+        onClick={() => setVisible(true)}
+        src={imageProps.src}
+        alt={value.alt || ''}
+        aspectRatio="2/1"
+        priority
+      />
+    </div>
   );
 };
 
-const TourDetailLago = () => {
-  const slug = '3d2n-berjaya-tioman-resort-full-board-package';
-  const [product, setProduct] = useState<ModifiedProduct | null>(null);
+const TourDetailLago = ({ slug }: { slug: string }) => {
+  const pathname = usePathname();
+  const pathSegments = pathname.split('/').filter((segment) => segment);
+  const [product, setProduct] = useState<TourDetailProduct | null>(null);
+  const [visible, setVisible] = useState(false);
+  const [activeKeys, setActiveKeys] = useState<string[]>([]);
+  const { isMobile, isTablet, isMdScreen, isXlScreen, isXxlScreen } = useViewport();
 
   useEffect(() => {
     (async () => {
-      const product = await sanityFetch<ModifiedProduct>({
+      const product = await sanityFetch<TourDetailProduct>({
         query: GET_PRODUCT_BY_SLUG(slug),
         tags: ['product'],
       });
       setProduct(product);
     })();
   }, [slug]);
-  console.log({ product });
-  const [visible, setVisible] = useState(false);
-  const { isMobile, isTablet, isMdScreen, isXlScreen, isXxlScreen } = useViewport();
+
+  if (!product) {
+    return <SkeletonLoader />;
+  }
+
   const screenWidths = new Map([
     ['6/1', isMobile],
     ['5/2', isTablet],
@@ -56,30 +90,18 @@ const TourDetailLago = () => {
     ['4/3', isXlScreen],
     ['3/2', isXxlScreen],
   ]);
-  const [ratio] = screenWidths?.entries()?.find(([, cond]) => cond) || ['2/1'];
-  const breadcrumbs = [
-    {
-      text: 'Home',
-      link: '/',
-    },
-    {
-      text: 'Malaysia',
-      link: '/',
-    },
-    {
-      text: 'Cameron Highlands',
-      link: '/',
-    },
-    {
-      text: '3D2N Cameron Highlands Tour',
-      link: '/',
-    },
-  ];
+  const ratio = Array.from(screenWidths.entries()).find(([, cond]) => cond)?.[0] || '2/1';
+  const breadcrumbs = pathSegments.map((segment, index) => {
+    const href = '/' + pathSegments.slice(0, index + 1).join('/');
+    const text = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+    return { text, link: href };
+  });
+  breadcrumbs.unshift({ text: 'Home', link: '/' });
 
   const buttons = [
     {
       key: 'BOOK NOW',
-      value: '/',
+      value: product.bookingUrl || '',
     },
     {
       key: 'ENQUIRE',
@@ -97,14 +119,49 @@ const TourDetailLago = () => {
     },
   };
 
-  const items: CollapseProps['items'] = product?.itinerary?.map((it, key) => {
-    return {
-      key,
-      label: it.title,
-      // @ts-ignore: fix later
-      children: <PortableText value={it?.description || ''} />,
-    };
-  });
+  const tourItinerarySwiperSettingconst: SwiperOptions = {
+    modules: [Navigation],
+    navigation: true,
+    loop: true,
+    slidesPerView: 1,
+  };
+
+  const items: CollapseProps['items'] =
+    product.itinerary
+      ?.filter((it) => it.imageUrls != null && it.imageUrls?.length > 0)
+      .map((it, key) => {
+        return {
+          key,
+          label: it.title,
+          children: it.description && (
+            <div className="itinerary-item">
+              <Swiper {...tourItinerarySwiperSettingconst}>
+                {it.imageUrls?.map((imageUrl, index) => (
+                  <SwiperSlide key={index}>
+                    <AspectRatioImage src={imageUrl} alt={product?.name || ''} aspectRatio="7/4" priority />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="itinerary-content">
+                <PortableText value={it.description} />
+              </div>
+            </div>
+          ),
+        };
+      }) || [];
+
+  const allPanelKeys = items.map((item) => item.key as string);
+
+  const toggleExpandAll = () => {
+    setActiveKeys(activeKeys.length === allPanelKeys.length ? [] : allPanelKeys);
+  };
+
+  const itineraryWithoutPhotos = product?.itinerary?.filter((it) => !it.imageUrls);
+
+  const customFeature = transformObject<CustomFeatures>(product?.features);
+  const customPrices = transformObject<CustomPrices>(product?.customPrices);
+
+  const categories = product.categories?.filter((category) => category.slug.current !== 'tour');
 
   return (
     <div className="tour-detail-lago">
@@ -133,21 +190,17 @@ const TourDetailLago = () => {
               <Image
                 width={200}
                 style={{ display: 'none' }}
-                src="/assets/images/tour/hero-tour-cover.jpg"
+                src={product?.imageUrl}
                 preview={{
                   visible,
-                  src: '/assets/images/tour/hero-tour-cover.jpg',
+                  src: product?.imageUrl,
                   onVisibleChange: (value) => {
                     setVisible(value);
                   },
                 }}
+                alt={product?.name || ''}
               />
-              <AspectRatioImage
-                src="/assets/images/tour/hero-tour-cover.jpg"
-                alt="Default Tour Image"
-                aspectRatio={ratio}
-                priority
-              />
+              <AspectRatioImage src={product?.imageUrl} alt={product?.name || ''} aspectRatio={ratio} priority />
               <NextImage
                 onClick={() => setVisible(true)}
                 src="/assets/images/tour/icon-zoom.svg"
@@ -158,27 +211,30 @@ const TourDetailLago = () => {
             </div>
             <div className="tour-detail-book-now">
               <div className="wrapper">
-                <div className="rating">
-                  <RatingStar percentage={(parseInt('4.3') / 5) * 100} />
-                  <p>4.3</p> <span>(Based on 3 reviews)</span>
-                </div>
+                {customFeature.rating && (
+                  <div className="rating">
+                    <RatingStar percentage={(parseInt(customFeature.rating) / 5) * 100} />
+                    <p>{customFeature.rating}</p> <span>(Based on 3 reviews)</span>
+                  </div>
+                )}
                 <div className="location-label">
                   <NextImage
                     src="/assets/images/tour/icon-location.svg"
                     width={24}
                     height={24}
-                    alt="icon location pin"
+                    alt={customFeature?.['pin-location']}
                   />
-                  <span>Cameron Highlands</span>
+                  <span>{customFeature?.['pin-location']}</span>
                 </div>
-                <h4 className="text-ellipsis">3D2N Cameron Highlands Tour</h4>
-                <span className="travel-code">Tour Code: 3D2NCHT</span>
+                <h4 className="text-ellipsis">{product?.name}</h4>
+                <span className="travel-code">Tour Code: {customFeature?.['tour-code']}</span>
 
                 <div className="tags">
-                  {[1, 2]?.map((category, key) => {
+                  {categories?.map((category, key) => {
+                    const custom = transformObject<CustomCategoryAttributes>(category?.customAttributes);
                     return (
-                      <span key={`hot-deals-tag-${key}`} className="success">
-                        Min. 2-to-go
+                      <span key={`hot-deals-tag-${key}`} className={custom.className}>
+                        {category.name}
                       </span>
                     );
                   })}
@@ -192,9 +248,11 @@ const TourDetailLago = () => {
                   <p className="option">
                     <strong>Twin-sharing</strong> (excludes processing fees & taxes if any)
                   </p>
-                  <p className="book-now-info">
-                    SAVE S$100 <sup>Important note</sup>
-                  </p>
+                  {customFeature?.['save-info'] && (
+                    <p className="book-now-info">
+                      SAVE S${customPrices?.['discount-price']} <sup>Important note</sup>
+                    </p>
+                  )}
                 </div>
 
                 <div className="button-group">
@@ -208,63 +266,33 @@ const TourDetailLago = () => {
                 </div>
                 <div className="printout">
                   <div>
-                    <NextImage src="/assets/images/tour/icon-transfer.svg" width={32} height={32} />
+                    <span>Get a printout</span>
+                  </div>
+                  <div>
+                    <span>Save a copy</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="tour-detail-additional-info wrapper">
-            <div className="additional-item">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
+            {product?.tourSummary?.map((summary, key) => (
+              <div key={`summary-${key}`} className={`additional-item ${summary.isActive ? '' : 'not-active'}`}>
+                <div className="icon-wrapper">
+                  <NextImage src={summary.imageUrl} width={40} height={40} />
+                </div>
+                <p>{summary?.title}</p>
+                <span>{summary?.description && <PortableText value={summary?.description} />}</span>
               </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
-            <div className="additional-item">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
-              </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
-            <div className="additional-item not-active">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
-              </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
-            <div className="additional-item">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
-              </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
-            <div className="additional-item">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
-              </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
-            <div className="additional-item">
-              <div className="icon-wrapper">
-                <NextImage src="/assets/images/tour/icon-transfer.svg" width={40} height={40} />
-              </div>
-              <p>Total Duration</p>
-              <span>3 days</span>
-            </div>
+            ))}
           </div>
         </div>
       </div>
       <div className="tour-detail-extra wrapper">
         <div>
           <Anchor
-            offsetTop={175}
-            affix
+            offsetTop={200}
+            affix={!isMdScreen}
             showInkInFixed
             items={[
               {
@@ -301,21 +329,63 @@ const TourDetailLago = () => {
           />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 32 }}>
-          <div id="overview">
-            {product?.overview && <PortableText value={product?.overview} components={components} />}
-          </div>
-          <div id="itinerary">
-            <Collapse accordion items={items} />
-          </div>
-          <div id="accommodation">
-            {product?.accommodation && <PortableText value={product?.accommodation} components={components} />}
-          </div>
+          {product?.overview && (
+            <div id="overview">
+              {' '}
+              <PortableText value={product?.overview} components={components} />
+            </div>
+          )}
+          {product?.itinerary && (
+            <div id="itinerary">
+              <div className="itinerary-title">
+                <h5>Day-by-day Details</h5>
+                <button onClick={toggleExpandAll} className="primary-button outline">
+                  {activeKeys.length === allPanelKeys.length ? 'COLLAPSE ALL' : 'EXPAND ALL +'}
+                </button>
+              </div>
+              <Collapse
+                activeKey={activeKeys}
+                items={items}
+                onChange={(keys: string[]) => setActiveKeys(keys)}
+                expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 270 : 90} />}
+              />
+              {itineraryWithoutPhotos?.map((it, key) => (
+                <div key={`itinerary-n-${key}`} className="important-note">
+                  {it.description && <PortableText value={it.description} />}
+                </div>
+              ))}
+            </div>
+          )}
 
-          <div id="things-to-note">
-            {product?.thingsToNote && <PortableText value={product?.thingsToNote} components={components} />}
-          </div>
+          {product?.accommodation && (
+            <div id="accommodation">
+              <h5>Accommodation Info</h5>
+              {product?.accommodation && <PortableText value={product?.accommodation} components={components} />}
+            </div>
+          )}
+
+          {product?.thingsToNote && (
+            <div id="things-to-note">
+              <h5>Important Notes</h5>
+              <div className="important-note">
+                {product?.thingsToNote && <PortableText value={product?.thingsToNote} components={components} />}
+              </div>
+            </div>
+          )}
         </div>
       </div>
+      <div
+        style={{
+          backgroundImage: `url('/assets/images/home/bg-malaysia-flags.webp')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          width: '100%',
+          height: 'clamp(300px, 40vw, 600px)',
+          position: 'absolute',
+          bottom: 0,
+          zIndex: -1,
+        }}
+      ></div>
     </div>
   );
 };

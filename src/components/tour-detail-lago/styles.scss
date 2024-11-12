@@ -1,4 +1,8 @@
 .tour-detail-lago {
+  position: relative;
+  .text-ellipsis {
+    max-width: 30rem;
+  }
   .tour-detail-main-info {
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +29,7 @@
     }
     img {
       position: absolute;
-      bottom: 2rem;
+      bottom: 4rem;
       right: 2rem;
     }
   }
@@ -110,6 +114,22 @@
         padding: .5rem 2rem;
       }
     }
+    .printout {
+      padding-left: 15%;
+      padding-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      & > div {
+        display: flex;
+      }
+      span {
+        cursor: pointer;
+        color: $muted-text-color;
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
   }
 
   .tour-detail-additional-info {
@@ -132,7 +152,10 @@
         font-weight: $bold-font-weight;
       }
       span {
-        font-weight: $bold-font-weight;
+        p {
+          color: #000;
+          font-weight: $bold-font-weight;
+        }
       }
       .icon-wrapper {
         display: flex;
@@ -156,6 +179,9 @@
     .tour-detail-panel {
       padding: 1rem;
       margin-left: 10rem;
+    }
+    @media (max-width: $breakpoint-md) {
+      flex-wrap: wrap;
     }
   }
 
@@ -203,6 +229,159 @@
       }
       background-color: transparent !important;
       left: 12rem !important;
+    }
+  }
+
+  .ant-collapse {
+    border: 0;
+    background: #fff;
+    .ant-collapse-header {
+      background-color: rgba(17, 125, 194, .1);
+      flex-direction: row-reverse;
+      border-radius: 10px !important;
+
+      svg {
+        color: $primary-color;
+      }
+    }
+    .ant-collapse-item {
+      border: 1px solid #e3e3e3;
+      border-radius: 10px !important;
+      margin-bottom: 1rem;
+      &.ant-collapse-item-active{
+        padding-bottom: .4rem;
+        .ant-collapse-header {
+          border-bottom: 1px solid #d9d9d9;
+        }
+      }
+      &:last-child {
+        border-bottom: 1px solid #d9d9d9;
+      }
+    }
+    .ant-collapse-content {
+      border-top: 0;
+
+      
+    }
+    .ant-collapse-header-text {
+      color: $primary-color;
+      font-weight: $bold-font-weight;
+      letter-spacing: .5px;
+    }
+  }
+
+  #overview {
+    padding-top: 2rem;
+    h5 {
+      color: $primary-color;
+      font-weight: $heading-font-weight;
+    }
+    p {
+      font-weight: $bold-font-weight;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+    }
+  }
+  #itinerary {
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid #e3e3e3;
+    .itinerary-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.5rem;
+    }
+    .primary-button {
+      min-width: 141px;
+      padding: .5rem 1rem;
+    }
+    h5 {
+      color: $primary-color;
+      font-weight: $heading-font-weight;
+    }
+    .itinerary-item {
+      display: flex;
+      gap: 2rem;
+      .swiper {
+        flex: 2;
+        .aspect-ratio-container {
+          img {
+            border-radius: 10px;
+          }
+        }
+        .swiper-slide {
+          width: 100% !important;
+        }
+        .swiper-button-prev {
+          color: #fff;
+          &::after{
+            font-size: 1.5rem;
+            font-weight: $bold-font-weight;
+          }
+        }
+        .swiper-button-next {
+          color: #fff;
+          &::after{
+            font-size: 1.5rem;
+            font-weight: $bold-font-weight;
+          }
+        }
+      }
+      .itinerary-content {
+        flex: 3;
+        ul {
+          list-style: inside;
+        }
+      }
+    }
+  }
+
+  #accommodation {
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e3e3e3;
+    h5 {
+      color: $primary-color;
+      font-weight: $heading-font-weight;
+    }
+  }
+
+  #things-to-note {
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e3e3e3;
+    h5 {
+      color: $primary-color;
+      font-weight: $heading-font-weight;
+    }
+    .important-note {
+      margin-top: 1rem;
+      margin-bottom: 4rem;
+    }
+  }
+  .important-note {
+    background: rgb(195, 153, 107, .2);
+    padding: 1.5rem 2.5rem;
+    border-radius: 10px;
+    h6 {
+      color: $primary-color;
+      font-weight: $heading-font-weight;
+    }
+    ul {
+      list-style: inside;
+      li {
+        font-size: $font-small !important;
+      }
+    }
+    ol {
+      list-style:decimal;
+      strong {
+        display: block;
+      }
+      li {
+        font-size: $font-small !important;
+      }
     }
   }
 }

@@ -199,31 +199,37 @@ export const GET_CONTENT_BLOCK_BY_SLUG = (slug: string) =>
 
 export const GET_PRODUCT_BY_SLUG = (slug: string) =>
   defineQuery(`
-*[_type == "product" && slug.current == "${slug}"][0]{
-  name,
-  productType,
-  slug,
-  categories[]->{
-    title
-  },
-  price,
-  customPrices,
-  availableDate,
-  duration,
-  description,
-  image,
-  bookingUrl,
-  features,
-  overview,
-  itinerary,
-  transportation->{
-    title
-  },
-  accommodation,
-  reviews[]->{
-    title,
-    body
-  },
-  thingsToNote
-}
+  *[_type == "product" && slug.current == "${slug}"][0]{
+    name,
+    productType,
+    slug,
+    price,
+    customPrices,
+    availableDate,
+    duration,
+    description,
+    "imageUrl": image.asset->url,
+    bookingUrl,
+    features,
+    overview,
+    itinerary[]{
+      title,
+      "imageUrls": images[].asset->url,
+      description
+    },
+    accommodation,
+    thingsToNote,
+    tourSummary[]{
+      "imageUrl": image.asset->url,
+      isActive,
+      title,
+      description
+    },
+    categories[]-> {
+      _id,
+      name,
+      slug,
+      customAttributes
+    }
+  }
 `);

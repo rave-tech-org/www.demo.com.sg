@@ -415,15 +415,6 @@ export type Product = {
         _type: 'image';
         _key: string;
       }
-    | {
-        rows?: Array<{
-          cells?: Array<string>;
-          _type: 'row';
-          _key: string;
-        }>;
-        _type: 'table';
-        _key: string;
-      }
   >;
   itinerary?: Array<{
     title?: string;

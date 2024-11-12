@@ -208,57 +208,7 @@ export const productType = defineType({
       name: 'overview',
       title: 'Overview',
       type: 'array',
-      of: [
-        { type: 'block' },
-        { type: 'image' },
-        {
-          type: 'object',
-          name: 'table',
-          title: 'Table',
-          fields: [
-            {
-              name: 'rows',
-              title: 'Rows',
-              type: 'array',
-              of: [
-                {
-                  type: 'object',
-                  name: 'row',
-                  fields: [
-                    {
-                      name: 'cells',
-                      title: 'Cells',
-                      type: 'array',
-                      of: [{ type: 'string' }],
-                    },
-                  ],
-                  preview: {
-                    select: {
-                      cells: 'cells',
-                    },
-                    prepare({ cells }) {
-                      return {
-                        title: cells ? cells.join(' | ') : 'Row',
-                      };
-                    },
-                  },
-                },
-              ],
-            },
-          ],
-          preview: {
-            select: {
-              rows: 'rows',
-            },
-            prepare({ rows }) {
-              const rowCount = rows ? rows.length : 0;
-              return {
-                title: `Table (${rowCount} row${rowCount !== 1 ? 's' : ''})`,
-              };
-            },
-          },
-        },
-      ],
+      of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
