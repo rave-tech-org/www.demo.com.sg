@@ -12,7 +12,6 @@ function getContentBlockPreviewUrl(doc: SanityDocument & { slug?: { current: str
   return doc?.slug?.current ? `${studioUrl}/content-block/${doc?.slug?.current}` : `${studioUrl}`;
 }
 
-
 function getProductPreviewUrl(doc: SanityDocument & { slug?: { current: string }; productType?: string }) {
   if (doc.productType === 'tour') {
     return doc?.slug?.current ? `${studioUrl}/tour/${doc?.slug?.current}` : `${studioUrl}`;
@@ -21,7 +20,6 @@ function getProductPreviewUrl(doc: SanityDocument & { slug?: { current: string }
   }
   return doc?.slug?.current ? `${studioUrl}/tour/${doc?.slug?.current}` : `${studioUrl}`;
 }
-
 
 export const defaultDocumentNode: DefaultDocumentNodeResolver = (S, { schemaType }) => {
   switch (schemaType) {
