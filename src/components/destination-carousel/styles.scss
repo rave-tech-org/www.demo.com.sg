@@ -50,18 +50,21 @@
     &.swiper-slide-prev {
       &::after {
         background: transparent;
+        z-index: $z-index-basement-one;
       }
     }
 
     &.swiper-slide-active {
       &::after {
         background: transparent;
+        z-index: $z-index-basement-one;
       }
     }
 
     &.swiper-slide-next {
       &::after {
         background: transparent;
+        z-index: $z-index-basement-one;
       }
     }
   }

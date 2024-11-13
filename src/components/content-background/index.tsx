@@ -10,9 +10,9 @@ import { CustomContentBackgroundAttribute } from './type';
 import ViewIn from '@elements/view-in';
 
 const ContentBackground = ({ block }: { block: ContentBlock }) => {
+  const { customAttributes, imageUrl } = block as ContentBlock & { imageUrl: string };
   const { isMobile, isTablet } = useViewport();
   const aspectRatio = isMobile ? '.5/1' : isTablet ? '2/1' : '3/1';
-  const { customAttributes } = block;
   const custom = transformObject<CustomContentBackgroundAttribute>(customAttributes);
   const buttons = Object.keys(custom).map((key) => ({
     key: key.replaceAll('-', ' ').toUpperCase(),
@@ -22,7 +22,7 @@ const ContentBackground = ({ block }: { block: ContentBlock }) => {
     <ViewIn variant="slideUp" delay={200}>
       <div className="lago-content-background">
         <AspectRatioImage
-          src="/assets/images/home/banner-customised-tour.webp"
+          src={imageUrl}
           alt="Banner Customise Tour"
           aspectRatio={aspectRatio}
           hasBlackOpacityBackground

@@ -7,6 +7,7 @@ import TravelInterestGroup from '@/components/travel-interest-group';
 import SeeMoreArticles from '@/components/see-more-articles';
 import TestimonialCarousel from '@/components/testimonial-carousel';
 import { ContentBlock } from '@/sanity/sanity.types';
+import TourSearchResult from '@/components/tour-search-result';
 
 const contentBlockRegistry = new Map<
   string,
@@ -18,9 +19,11 @@ const contentBlockRegistry = new Map<
   ['travel-interest', TravelInterestGroup],
   ['navigation-menu', NavigationMenu],
   ['tour-experience', ContentBackground],
+  ['tour-search-banner', ContentBackground],
   ['full-testimonials', TestimonialCarousel],
   ['see-more-articles', SeeMoreArticles],
   ['social-link', NavigationMenu],
+  ['tour-search-and-result', TourSearchResult],
 ]);
 
 export default contentBlockRegistry;

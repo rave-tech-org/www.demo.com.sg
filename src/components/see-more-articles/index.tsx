@@ -41,7 +41,7 @@ const SeeMoreArticles = async ({ block }: { block: ContentBlock }) => {
                 <div className="excerpt">
                   <h6>{post.excerpt}</h6>
                   <span>{new Date(post.publishedDate || '').toDateString()}</span>
-                  <Link key={`post-${key}`} href="">
+                  <Link key={`post-${key}`} href={`/post/${post.slug?.current}`}>
                     Read More
                   </Link>
                 </div>

@@ -1,7 +1,8 @@
 import { defineQuery } from 'next-sanity';
 
-export const GET_HOME_PAGE_META = defineQuery(`
-  *[_type == "page" && slug.current == "home-page"][0] {
+export const GET_PAGE_META = (pageName: string) =>
+  defineQuery(`
+  *[_type == "page" && slug.current == "${pageName}"][0] {
     _id,
     slug,
     metaTitle,
@@ -10,8 +11,9 @@ export const GET_HOME_PAGE_META = defineQuery(`
   }
 `);
 
-export const GET_HOME_PAGE = defineQuery(`
-  *[_type == "page" && slug.current == "home-page"][0] {
+export const GET_PAGE = (pageName: string) =>
+  defineQuery(`
+  *[_type == "page" && slug.current == "${pageName}"][0] {
     _id,
     title,
     slug,
@@ -231,5 +233,38 @@ export const GET_PRODUCT_BY_SLUG = (slug: string) =>
       slug,
       customAttributes
     }
+  }
+`);
+
+export const GET_PRODUCTS_BY_TYPE = (type: string) =>
+  defineQuery(`
+  *[_type == "product" && productType == "${type}"]{
+    _id,
+    name,
+    slug,
+    price,
+    "imageUrl": image.asset->url,
+    categories[]-> {
+      _id,
+      name,
+      slug,
+      customAttributes
+    },
+    features,
+    customPrices
+  }
+`);
+
+export const GET_POST_BY_SLUG = (slug: string) =>
+  defineQuery(`
+  *[_type == "post" && slug.current == "${slug}"][0]{
+    title,
+    slug,
+    price,
+    publishedDate,
+    excerpt,
+    "imageUrl": image.asset->url,
+    content,
+    tags,
   }
 `);

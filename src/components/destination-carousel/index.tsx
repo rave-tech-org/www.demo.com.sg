@@ -80,7 +80,7 @@ const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
             <Swiper {...destinationSwiperSetting}>
               {products.map((product, index) => (
                 <SwiperSlide key={index}>
-                  <Link href="">
+                  <Link href={`/destination/${product?.slug?.current}`}>
                     <div
                       style={{
                         backgroundImage: `url(${product.imageUrl})`,

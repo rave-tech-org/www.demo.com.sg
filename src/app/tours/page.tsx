@@ -11,7 +11,7 @@ import contentBlockRegistry from '@/resources/content-block-registry';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
-    query: GET_PAGE_META('home-page'),
+    query: GET_PAGE_META('tour-search-page'),
     tags: ['page'],
   });
 
@@ -21,9 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Home() {
+export default async function Tours() {
   const homePage = await sanityFetch<PageType>({
-    query: GET_PAGE('home-page'),
+    query: GET_PAGE('tour-search-page'),
     tags: ['page', 'contentBlock'],
   });
 
