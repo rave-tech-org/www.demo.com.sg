@@ -1,8 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
-export const GET_PAGE_META = (pageName: string) =>
-  defineQuery(`
-  *[_type == "page" && slug.current == "${pageName}"][0] {
+export const GET_PAGE_META = defineQuery(`
+  *[_type == "page" && slug.current == $name][0] {
     _id,
     slug,
     metaTitle,
@@ -11,9 +10,8 @@ export const GET_PAGE_META = (pageName: string) =>
   }
 `);
 
-export const GET_PAGE = (pageName: string) =>
-  defineQuery(`
-  *[_type == "page" && slug.current == "${pageName}"][0] {
+export const GET_PAGE = defineQuery(`
+  *[_type == "page" && slug.current == $name][0] {
     _id,
     title,
     slug,
@@ -129,9 +127,8 @@ export const GET_FOOTER_LAYOUT = defineQuery(`
   }
 `);
 
-export const GET_CATEGORIES_BY_PARENT_CATEGORY = (slug: string) =>
-  defineQuery(`
-  *[_type == "category" && parentCategory->slug.current == "${slug}"] {
+export const GET_CATEGORIES_BY_PARENT_CATEGORY = defineQuery(`
+  *[_type == "category" && parentCategory->slug.current == $slug] {
     _id,
     name,
     slug,
@@ -139,9 +136,8 @@ export const GET_CATEGORIES_BY_PARENT_CATEGORY = (slug: string) =>
   }
 `);
 
-export const GET_CATEGORIES_BY_PARENT_CATEGORIES = (slugs: string[]) =>
-  defineQuery(`
-  *[_type == "category" && parentCategory->slug.current in ${JSON.stringify(slugs)}] {
+export const GET_CATEGORIES_BY_PARENT_CATEGORIES = defineQuery(`
+  *[_type == "category" && parentCategory->slug.current in $slugs] {
     _id,
     name,
     slug,
@@ -153,10 +149,9 @@ export const GET_CATEGORIES_BY_PARENT_CATEGORIES = (slugs: string[]) =>
   }
 `);
 
-export const GET_PRODUCTS_BY_PARENT_CATEGORIES = (slugs: string[]) =>
-  defineQuery(`
+export const GET_PRODUCTS_BY_PARENT_CATEGORIES = defineQuery(`
   *[_type == "product" && references(
-    *[_type == "category" && parentCategory->slug.current in ${JSON.stringify(slugs)}]._id
+    *[_type == "category" && parentCategory->slug.current in $categories]._id
   )] {
     _id,
     name,
@@ -174,9 +169,8 @@ export const GET_PRODUCTS_BY_PARENT_CATEGORIES = (slugs: string[]) =>
   }
 `);
 
-export const GET_CONTENT_BLOCK_BY_SLUG = (slug: string) =>
-  defineQuery(`
-  *[_type == "contentBlock" && slug.current == "${slug}"][0] {
+export const GET_CONTENT_BLOCK_BY_SLUG = defineQuery(`
+  *[_type == "contentBlock" && slug.current == $slug][0] {
     _id,
     slug,
     blockType,
@@ -199,9 +193,8 @@ export const GET_CONTENT_BLOCK_BY_SLUG = (slug: string) =>
   }
 `);
 
-export const GET_PRODUCT_BY_SLUG = (slug: string) =>
-  defineQuery(`
-  *[_type == "product" && slug.current == "${slug}"][0]{
+export const GET_PRODUCT_BY_SLUG = defineQuery(`
+  *[_type == "product" && slug.current == $slug && productType == $type][0]{
     name,
     productType,
     slug,
@@ -211,6 +204,13 @@ export const GET_PRODUCT_BY_SLUG = (slug: string) =>
     duration,
     description,
     "imageUrl": image.asset->url,
+    landArea,
+    averageClimate,
+    travelDuration,
+    peakSeason,
+    midSeason,
+    monsoonSeason,
+    travelGuide,
     bookingUrl,
     features,
     overview,
@@ -236,9 +236,8 @@ export const GET_PRODUCT_BY_SLUG = (slug: string) =>
   }
 `);
 
-export const GET_PRODUCTS_BY_TYPE = (type: string) =>
-  defineQuery(`
-  *[_type == "product" && productType == "${type}"]{
+export const GET_PRODUCTS_BY_TYPE = defineQuery(`
+  *[_type == "product" && productType == $type]{
     _id,
     name,
     slug,
@@ -255,9 +254,8 @@ export const GET_PRODUCTS_BY_TYPE = (type: string) =>
   }
 `);
 
-export const GET_POST_BY_SLUG = (slug: string) =>
-  defineQuery(`
-  *[_type == "post" && slug.current == "${slug}"][0]{
+export const GET_POST_BY_SLUG = defineQuery(`
+  *[_type == "post" && slug.current == $slug][0]{
     title,
     slug,
     price,
@@ -266,5 +264,23 @@ export const GET_POST_BY_SLUG = (slug: string) =>
     "imageUrl": image.asset->url,
     content,
     tags,
+  }
+`);
+
+export const GET_PRODUCTS_BY_CATEGORY = defineQuery(`
+  *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {
+    _id,
+    name,
+    slug,
+    price,
+    "imageUrl": image.asset->url,
+    categories[]-> {
+      _id,
+      name,
+      slug,
+      customAttributes
+    },
+    features,
+    customPrices
   }
 `);

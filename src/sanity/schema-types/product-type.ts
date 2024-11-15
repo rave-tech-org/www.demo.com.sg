@@ -6,7 +6,10 @@ export const productType = defineType({
   title: 'Product',
   type: 'document',
   icon: EarthGlobeIcon,
-  groups: [{ name: 'tourDetails', title: 'Tour Details' }],
+  groups: [
+    { name: 'tourDetails', title: 'Tour Details' },
+    { name: 'destinationDetails', title: 'Destination Details' },
+  ],
   fields: [
     defineField({
       name: 'productType',
@@ -56,7 +59,9 @@ export const productType = defineType({
       name: 'price',
       title: 'Price',
       type: 'number',
+      group: 'tourDetails',
       validation: (Rule) => Rule.min(0).error('Price must be a positive number'),
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
@@ -80,6 +85,8 @@ export const productType = defineType({
           },
         },
       ],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
@@ -103,6 +110,8 @@ export const productType = defineType({
           ],
         },
       ],
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
@@ -110,6 +119,8 @@ export const productType = defineType({
       title: 'Duration (Hours or Days)',
       type: 'string',
       validation: (Rule) => Rule.required(),
+      group: 'tourDetails',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
@@ -130,6 +141,7 @@ export const productType = defineType({
       name: 'bookingUrl',
       title: 'Booking URL',
       type: 'url',
+      hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
@@ -153,6 +165,71 @@ export const productType = defineType({
           },
         },
       ],
+    }),
+
+    defineField({
+      name: 'areaName',
+      title: 'Area Name',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'landArea',
+      title: 'Land Area',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'travelDuration',
+      title: 'Travel Duration',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'averageClimate',
+      title: 'Average Climate',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'peakSeason',
+      title: 'Peak Season',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'midSeason',
+      title: 'Mid Season',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'monsoonSeason',
+      title: 'Monsoon Season',
+      type: 'string',
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
+      name: 'travelGuide',
+      title: 'Travel Guide',
+      type: 'array',
+      of: [{ type: 'block' }],
+      group: 'destinationDetails',
+      hidden: ({ parent }) => parent?.productType !== 'destination',
     }),
 
     defineField({

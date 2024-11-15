@@ -349,6 +349,31 @@ export type Product = {
     _type: 'feature';
     _key: string;
   }>;
+  areaName?: string;
+  landArea?: string;
+  travelDuration?: string;
+  averageClimate?: string;
+  peakSeason?: string;
+  midSeason?: string;
+  monsoonSeason?: string;
+  travelGuide?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }>;
   tourSummary?: Array<{
     isActive?: boolean;
     title?: string;
@@ -643,18 +668,18 @@ export type AllSanitySchemaTypes =
   | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries/cms.ts
-// Variable: GET_HOME_PAGE_META
-// Query: *[_type == "page" && slug.current == "home-page"][0] {    _id,    slug,    metaTitle,    metaDescription,    metaKeywords  }
-export type GET_HOME_PAGE_METAResult = {
+// Variable: GET_PAGE_META
+// Query: *[_type == "page" && slug.current == $name][0] {    _id,    slug,    metaTitle,    metaDescription,    metaKeywords  }
+export type GET_PAGE_METAResult = {
   _id: string;
   slug: Slug | null;
   metaTitle: string | null;
   metaDescription: string | null;
   metaKeywords: Array<string> | null;
 } | null;
-// Variable: GET_HOME_PAGE
-// Query: *[_type == "page" && slug.current == "home-page"][0] {    _id,    title,    slug,    pageType,    layout[]->{      _id,      slug,      blockType,      title,      description,      image,      "imageUrl": image.asset->url,      customAttributes,      listItems[]{        title,        slug,        description,        image,        "imageUrl": image.asset->url,      },      "categories": categoryBlock[]->{        _id,        slug,      }    },    variants[]->{      _id,      title,      slug    }  }
-export type GET_HOME_PAGEResult = {
+// Variable: GET_PAGE
+// Query: *[_type == "page" && slug.current == $name][0] {    _id,    title,    slug,    pageType,    layout[]->{      _id,      slug,      blockType,      title,      description,      image,      "imageUrl": image.asset->url,      customAttributes,      listItems[]{        title,        slug,        description,        image,        "imageUrl": image.asset->url,      },      "categories": categoryBlock[]->{        _id,        slug,      }    },    variants[]->{      _id,      title,      slug    }  }
+export type GET_PAGEResult = {
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -992,16 +1017,469 @@ export type GET_FOOTER_LAYOUTResult = {
     }> | null;
   }> | null;
 } | null;
+// Variable: GET_CATEGORIES_BY_PARENT_CATEGORY
+// Query: *[_type == "category" && parentCategory->slug.current == $slug] {    _id,    name,    slug,    description  }
+export type GET_CATEGORIES_BY_PARENT_CATEGORYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  description: string | null;
+}>;
+// Variable: GET_CATEGORIES_BY_PARENT_CATEGORIES
+// Query: *[_type == "category" && parentCategory->slug.current in $slugs] {    _id,    name,    slug,    description,    parentCategory-> {      _id,      slug,    }  }
+export type GET_CATEGORIES_BY_PARENT_CATEGORIESResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  description: string | null;
+  parentCategory: {
+    _id: string;
+    slug: Slug | null;
+  } | null;
+}>;
+// Variable: GET_PRODUCTS_BY_PARENT_CATEGORIES
+// Query: *[_type == "product" && references(    *[_type == "category" && parentCategory->slug.current in $categories]._id  )] {    _id,    name,    slug,    price,    "imageUrl": image.asset->url,    categories[]-> {      _id,      name,      slug,      customAttributes    },    features,    customPrices  }
+export type GET_PRODUCTS_BY_PARENT_CATEGORIESResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  price: number | null;
+  imageUrl: string | null;
+  categories: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    customAttributes: Array<{
+      key?: string;
+      value?: string;
+      _type: 'attribute';
+      _key: string;
+    }> | null;
+  }> | null;
+  features: Array<{
+    key?: string;
+    value?: string;
+    _type: 'feature';
+    _key: string;
+  }> | null;
+  customPrices: Array<{
+    key?: string;
+    value?: string;
+    _type: 'price';
+    _key: string;
+  }> | null;
+}>;
+// Variable: GET_CONTENT_BLOCK_BY_SLUG
+// Query: *[_type == "contentBlock" && slug.current == $slug][0] {    _id,    slug,    blockType,    title,    description,    image,    "imageUrl": image.asset->url,    customAttributes,    listItems[]{      title,      slug,      description,      image,      "imageUrl": image.asset->url,    },    "categories": categoryBlock[]->{      _id,      slug,    }  }
+export type GET_CONTENT_BLOCK_BY_SLUGResult = {
+  _id: string;
+  slug: Slug | null;
+  blockType: 'basic' | 'categoryBlock' | 'list' | 'post' | 'testimonial' | null;
+  title: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }> | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  } | null;
+  imageUrl: string | null;
+  customAttributes: Array<{
+    key?: string;
+    value?: string;
+    _type: 'attribute';
+    _key: string;
+  }> | null;
+  listItems: Array<{
+    title: string | null;
+    slug: Slug | null;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<{
+        href?: string;
+        _type: 'link';
+        _key: string;
+      }>;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }> | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: 'image';
+    } | null;
+    imageUrl: string | null;
+  }> | null;
+  categories: Array<{
+    _id: string;
+    slug: Slug | null;
+  }> | null;
+} | null;
+// Variable: GET_PRODUCT_BY_SLUG
+// Query: *[_type == "product" && slug.current == $slug && productType == $type][0]{    name,    productType,    slug,    price,    customPrices,    availableDate,    duration,    description,    "imageUrl": image.asset->url,    landArea,    averageClimate,    travelDuration,    peakSeason,    midSeason,    monsoonSeason,    travelGuide,    bookingUrl,    features,    overview,    itinerary[]{      title,      "imageUrls": images[].asset->url,      description    },    accommodation,    thingsToNote,    tourSummary[]{      "imageUrl": image.asset->url,      isActive,      title,      description    },    categories[]-> {      _id,      name,      slug,      customAttributes    }  }
+export type GET_PRODUCT_BY_SLUGResult = {
+  name: string | null;
+  productType: 'destination' | 'ticket' | 'tour' | 'transport' | null;
+  slug: Slug | null;
+  price: number | null;
+  customPrices: Array<{
+    key?: string;
+    value?: string;
+    _type: 'price';
+    _key: string;
+  }> | null;
+  availableDate: null;
+  duration: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }> | null;
+  imageUrl: string | null;
+  landArea: string | null;
+  averageClimate: string | null;
+  travelDuration: string | null;
+  peakSeason: string | null;
+  midSeason: string | null;
+  monsoonSeason: string | null;
+  travelGuide: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }> | null;
+  bookingUrl: string | null;
+  features: Array<{
+    key?: string;
+    value?: string;
+    _type: 'feature';
+    _key: string;
+  }> | null;
+  overview: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<{
+          href?: string;
+          _type: 'link';
+          _key: string;
+        }>;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  > | null;
+  itinerary: Array<{
+    title: string | null;
+    imageUrls: Array<string | null> | null;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<{
+        href?: string;
+        _type: 'link';
+        _key: string;
+      }>;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }> | null;
+  }> | null;
+  accommodation: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<{
+          href?: string;
+          _type: 'link';
+          _key: string;
+        }>;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  > | null;
+  thingsToNote: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+        listItem?: 'bullet' | 'number';
+        markDefs?: Array<{
+          href?: string;
+          _type: 'link';
+          _key: string;
+        }>;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | {
+        asset?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: 'image';
+        _key: string;
+      }
+  > | null;
+  tourSummary: Array<{
+    imageUrl: string | null;
+    isActive: boolean | null;
+    title: string | null;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<{
+        href?: string;
+        _type: 'link';
+        _key: string;
+      }>;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }> | null;
+  }> | null;
+  categories: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    customAttributes: Array<{
+      key?: string;
+      value?: string;
+      _type: 'attribute';
+      _key: string;
+    }> | null;
+  }> | null;
+} | null;
+// Variable: GET_PRODUCTS_BY_TYPE
+// Query: *[_type == "product" && productType == $type]{    _id,    name,    slug,    price,    "imageUrl": image.asset->url,    categories[]-> {      _id,      name,      slug,      customAttributes    },    features,    customPrices  }
+export type GET_PRODUCTS_BY_TYPEResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  price: number | null;
+  imageUrl: string | null;
+  categories: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    customAttributes: Array<{
+      key?: string;
+      value?: string;
+      _type: 'attribute';
+      _key: string;
+    }> | null;
+  }> | null;
+  features: Array<{
+    key?: string;
+    value?: string;
+    _type: 'feature';
+    _key: string;
+  }> | null;
+  customPrices: Array<{
+    key?: string;
+    value?: string;
+    _type: 'price';
+    _key: string;
+  }> | null;
+}>;
+// Variable: GET_POST_BY_SLUG
+// Query: *[_type == "post" && slug.current == $slug][0]{    title,    slug,    price,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags,  }
+export type GET_POST_BY_SLUGResult = {
+  title: string | null;
+  slug: Slug | null;
+  price: null;
+  publishedDate: string | null;
+  excerpt: string | null;
+  imageUrl: string | null;
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }> | null;
+  tags: Array<string> | null;
+} | null;
+// Variable: GET_PRODUCTS_BY_CATEGORY
+// Query: *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {    _id,    name,    slug,    price,    "imageUrl": image.asset->url,    categories[]-> {      _id,      name,      slug,      customAttributes    },    features,    customPrices  }
+export type GET_PRODUCTS_BY_CATEGORYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  price: number | null;
+  imageUrl: string | null;
+  categories: Array<{
+    _id: string;
+    name: string | null;
+    slug: Slug | null;
+    customAttributes: Array<{
+      key?: string;
+      value?: string;
+      _type: 'attribute';
+      _key: string;
+    }> | null;
+  }> | null;
+  features: Array<{
+    key?: string;
+    value?: string;
+    _type: 'feature';
+    _key: string;
+  }> | null;
+  customPrices: Array<{
+    key?: string;
+    value?: string;
+    _type: 'price';
+    _key: string;
+  }> | null;
+}>;
 
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "page" && slug.current == "home-page"][0] {\n    _id,\n    slug,\n    metaTitle,\n    metaDescription,\n    metaKeywords\n  }\n': GET_HOME_PAGE_METAResult;
-    '\n  *[_type == "page" && slug.current == "home-page"][0] {\n    _id,\n    title,\n    slug,\n    pageType,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n      "categories": categoryBlock[]->{\n        _id,\n        slug,\n      }\n    },\n    variants[]->{\n      _id,\n      title,\n      slug\n    }\n  }\n': GET_HOME_PAGEResult;
+    '\n  *[_type == "page" && slug.current == $name][0] {\n    _id,\n    slug,\n    metaTitle,\n    metaDescription,\n    metaKeywords\n  }\n': GET_PAGE_METAResult;
+    '\n  *[_type == "page" && slug.current == $name][0] {\n    _id,\n    title,\n    slug,\n    pageType,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n      "categories": categoryBlock[]->{\n        _id,\n        slug,\n      }\n    },\n    variants[]->{\n      _id,\n      title,\n      slug\n    }\n  }\n': GET_PAGEResult;
     '\n  *[_type == "post"] {\n    _id,\n    title,\n    slug,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags\n  }\n': GET_POSTSResult;
     '\n  *[_type == "testimonial"]{\n    name,\n    slug,\n    testimonialText,\n    "imageUrl": image.asset->url,\n    rating,\n    dateTime,\n    product->{\n      name,\n      slug\n    }\n  }\n': GET_TESTIMONIALSResult;
     '\n  *[_type == "page" && slug.current == "header-layout"][0] {\n    _id,\n    title,\n    slug,\n    "imageUrl": image.asset->url,\n    description,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n    }\n  }\n': GET_HEADER_LAYOUTResult;
     '\n  *[_type == "page" && slug.current == "footer-layout"][0] {\n    _id,\n    title,\n    slug,\n    "imageUrl": image.asset->url,\n    description,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n    }\n  }\n': GET_FOOTER_LAYOUTResult;
+    '\n  *[_type == "category" && parentCategory->slug.current == $slug] {\n    _id,\n    name,\n    slug,\n    description\n  }\n': GET_CATEGORIES_BY_PARENT_CATEGORYResult;
+    '\n  *[_type == "category" && parentCategory->slug.current in $slugs] {\n    _id,\n    name,\n    slug,\n    description,\n    parentCategory-> {\n      _id,\n      slug,\n    }\n  }\n': GET_CATEGORIES_BY_PARENT_CATEGORIESResult;
+    '\n  *[_type == "product" && references(\n    *[_type == "category" && parentCategory->slug.current in $categories]._id\n  )] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GET_PRODUCTS_BY_PARENT_CATEGORIESResult;
+    '\n  *[_type == "contentBlock" && slug.current == $slug][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GET_CONTENT_BLOCK_BY_SLUGResult;
+    '\n  *[_type == "product" && slug.current == $slug && productType == $type][0]{\n    name,\n    productType,\n    slug,\n    price,\n    customPrices,\n    availableDate,\n    duration,\n    description,\n    "imageUrl": image.asset->url,\n    landArea,\n    averageClimate,\n    travelDuration,\n    peakSeason,\n    midSeason,\n    monsoonSeason,\n    travelGuide,\n    bookingUrl,\n    features,\n    overview,\n    itinerary[]{\n      title,\n      "imageUrls": images[].asset->url,\n      description\n    },\n    accommodation,\n    thingsToNote,\n    tourSummary[]{\n      "imageUrl": image.asset->url,\n      isActive,\n      title,\n      description\n    },\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    }\n  }\n': GET_PRODUCT_BY_SLUGResult;
+    '\n  *[_type == "product" && productType == $type]{\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GET_PRODUCTS_BY_TYPEResult;
+    '\n  *[_type == "post" && slug.current == $slug][0]{\n    title,\n    slug,\n    price,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags,\n  }\n': GET_POST_BY_SLUGResult;
+    '\n  *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GET_PRODUCTS_BY_CATEGORYResult;
   }
 }

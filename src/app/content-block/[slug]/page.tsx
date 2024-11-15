@@ -5,8 +5,9 @@ import contentBlockRegistry from '@/resources/content-block-registry';
 
 export default async function ContentBlockPage({ params }: { params: { slug: string } }) {
   const block = await sanityFetch<ContentBlock>({
-    query: GET_CONTENT_BLOCK_BY_SLUG(params?.slug || 'home-banner'),
+    query: GET_CONTENT_BLOCK_BY_SLUG,
     tags: ['contentBlock'],
+    qParams: { slug: params?.slug || 'home-banner' },
   });
 
   const Component = contentBlockRegistry.get(block.slug?.current || '');
