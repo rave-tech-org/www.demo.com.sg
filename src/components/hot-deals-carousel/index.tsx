@@ -49,8 +49,9 @@ const HotDealsCarousel = ({ block }: { block: ContentBlock }) => {
   useEffect(() => {
     (async () => {
       const products = await sanityFetch<ModifiedProduct[]>({
-        query: GET_PRODUCTS_BY_PARENT_CATEGORIES(categorySlugs),
+        query: GET_PRODUCTS_BY_PARENT_CATEGORIES,
         tags: ['product'],
+        qParams: { categories: categorySlugs },
       });
       const removedParentCategoryProducts = products.map((product) => ({
         ...product,

@@ -72,8 +72,9 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
   useEffect(() => {
     (async () => {
       const product = await sanityFetch<TourDetailProduct>({
-        query: GET_PRODUCT_BY_SLUG(slug),
+        query: GET_PRODUCT_BY_SLUG,
         tags: ['product'],
+        qParams: { slug, type: 'tour' },
       });
       setProduct(product);
     })();

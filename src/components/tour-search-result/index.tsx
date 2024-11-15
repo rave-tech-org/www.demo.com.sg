@@ -2,11 +2,7 @@
 
 import NextImage from '@/elements/next-image';
 import { sanityFetch } from '@/sanity/lib/client';
-import {
-  GET_CATEGORIES_BY_PARENT_CATEGORIES,
-  GET_PRODUCTS_BY_PARENT_CATEGORIES,
-  GET_PRODUCTS_BY_TYPE,
-} from '@/sanity/lib/queries/cms';
+import { GET_CATEGORIES_BY_PARENT_CATEGORIES, GET_PRODUCTS_BY_TYPE } from '@/sanity/lib/queries/cms';
 import { RightOutlined } from '@ant-design/icons';
 import { Select, Input, GetProps, Slider, Collapse, CollapseProps, Checkbox, Pagination } from 'antd';
 import { useEffect, useState } from 'react';
@@ -39,8 +35,9 @@ const TourSearchResult = () => {
   useEffect(() => {
     (async () => {
       const products = await sanityFetch<ModifiedProduct[]>({
-        query: GET_PRODUCTS_BY_TYPE('tour'),
+        query: GET_PRODUCTS_BY_TYPE,
         tags: ['product'],
+        qParams: { type: 'tour' },
       });
       const removedParentCategoryProducts = products?.map((product) => ({
         ...product,
@@ -53,8 +50,9 @@ const TourSearchResult = () => {
   useEffect(() => {
     (async () => {
       const categories = await sanityFetch<ModifiedCategory[]>({
-        query: GET_CATEGORIES_BY_PARENT_CATEGORIES(['hot-deals', 'destination']),
+        query: GET_CATEGORIES_BY_PARENT_CATEGORIES,
         tags: ['category'],
+        qParams: { slugs: JSON.stringify(['hot-deals']) },
       });
       const filteredCategories = categories.filter(
         (category) => !['hot-deals', 'destination'].includes(category?.slug?.current || '-')

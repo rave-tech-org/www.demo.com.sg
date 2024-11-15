@@ -9,10 +9,11 @@ export default async function PostPage({ params }: { params: { slug: string } })
   const slug = params?.slug as string;
 
   const post = await sanityFetch<Post & { imageUrl: string }>({
-    query: GET_POST_BY_SLUG(slug),
+    query: GET_POST_BY_SLUG,
     tags: ['post'],
+    qParams: { slug },
   });
-  console.log({ post });
+
   return (
     <ViewIn variant="slideUp" delay={200}>
       <div className="lago-content-background">

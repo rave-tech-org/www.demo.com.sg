@@ -349,6 +349,31 @@ export type Product = {
     _type: 'feature';
     _key: string;
   }>;
+  areaName?: string;
+  landArea?: string;
+  travelDuration?: string;
+  averageClimate?: string;
+  peakSeason?: string;
+  midSeason?: string;
+  monsoonSeason?: string;
+  travelGuide?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }>;
   tourSummary?: Array<{
     isActive?: boolean;
     title?: string;
@@ -643,108 +668,6 @@ export type AllSanitySchemaTypes =
   | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries/cms.ts
-// Variable: GET_HOME_PAGE_META
-// Query: *[_type == "page" && slug.current == "home-page"][0] {    _id,    slug,    metaTitle,    metaDescription,    metaKeywords  }
-export type GET_HOME_PAGE_METAResult = {
-  _id: string;
-  slug: Slug | null;
-  metaTitle: string | null;
-  metaDescription: string | null;
-  metaKeywords: Array<string> | null;
-} | null;
-// Variable: GET_HOME_PAGE
-// Query: *[_type == "page" && slug.current == "home-page"][0] {    _id,    title,    slug,    pageType,    layout[]->{      _id,      slug,      blockType,      title,      description,      image,      "imageUrl": image.asset->url,      customAttributes,      listItems[]{        title,        slug,        description,        image,        "imageUrl": image.asset->url,      },      "categories": categoryBlock[]->{        _id,        slug,      }    },    variants[]->{      _id,      title,      slug    }  }
-export type GET_HOME_PAGEResult = {
-  _id: string;
-  title: string | null;
-  slug: Slug | null;
-  pageType: 'multiple' | 'single' | null;
-  layout: Array<{
-    _id: string;
-    slug: Slug | null;
-    blockType: 'basic' | 'categoryBlock' | 'list' | 'post' | 'testimonial' | null;
-    title: string | null;
-    description: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<{
-        href?: string;
-        _type: 'link';
-        _key: string;
-      }>;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }> | null;
-    image: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    } | null;
-    imageUrl: string | null;
-    customAttributes: Array<{
-      key?: string;
-      value?: string;
-      _type: 'attribute';
-      _key: string;
-    }> | null;
-    listItems: Array<{
-      title: string | null;
-      slug: Slug | null;
-      description: Array<{
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: 'span';
-          _key: string;
-        }>;
-        style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
-        listItem?: 'bullet' | 'number';
-        markDefs?: Array<{
-          href?: string;
-          _type: 'link';
-          _key: string;
-        }>;
-        level?: number;
-        _type: 'block';
-        _key: string;
-      }> | null;
-      image: {
-        asset?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-        };
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: 'image';
-      } | null;
-      imageUrl: string | null;
-    }> | null;
-    categories: Array<{
-      _id: string;
-      slug: Slug | null;
-    }> | null;
-  }> | null;
-  variants: Array<{
-    _id: string;
-    title: null;
-    slug: Slug | null;
-  }> | null;
-} | null;
 // Variable: GET_POSTS
 // Query: *[_type == "post"] {    _id,    title,    slug,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags  }
 export type GET_POSTSResult = Array<{
@@ -997,8 +920,6 @@ export type GET_FOOTER_LAYOUTResult = {
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "page" && slug.current == "home-page"][0] {\n    _id,\n    slug,\n    metaTitle,\n    metaDescription,\n    metaKeywords\n  }\n': GET_HOME_PAGE_METAResult;
-    '\n  *[_type == "page" && slug.current == "home-page"][0] {\n    _id,\n    title,\n    slug,\n    pageType,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n      "categories": categoryBlock[]->{\n        _id,\n        slug,\n      }\n    },\n    variants[]->{\n      _id,\n      title,\n      slug\n    }\n  }\n': GET_HOME_PAGEResult;
     '\n  *[_type == "post"] {\n    _id,\n    title,\n    slug,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags\n  }\n': GET_POSTSResult;
     '\n  *[_type == "testimonial"]{\n    name,\n    slug,\n    testimonialText,\n    "imageUrl": image.asset->url,\n    rating,\n    dateTime,\n    product->{\n      name,\n      slug\n    }\n  }\n': GET_TESTIMONIALSResult;
     '\n  *[_type == "page" && slug.current == "header-layout"][0] {\n    _id,\n    title,\n    slug,\n    "imageUrl": image.asset->url,\n    description,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n    }\n  }\n': GET_HEADER_LAYOUTResult;

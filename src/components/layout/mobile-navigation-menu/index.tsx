@@ -39,7 +39,7 @@ export const MobileNavigation: React.FC = () => {
     <div className="mobile-navigation-container">
       <div className="mobile-control">
         <Link href="/" className="main-logo">
-          <NextImage src="/assets/images/header/logo-header.svg" width={160} height={80} alt="lago logo" />
+          <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
         </Link>
         <button onClick={() => handleToggle()}>
           <MenuBurger width={32} height={32} />
