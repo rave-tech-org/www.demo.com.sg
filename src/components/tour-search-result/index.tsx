@@ -52,7 +52,7 @@ const TourSearchResult = () => {
       const categories = await sanityFetch<ModifiedCategory[]>({
         query: GET_CATEGORIES_BY_PARENT_CATEGORIES,
         tags: ['category'],
-        qParams: { slugs: JSON.stringify(['hot-deals']) },
+        qParams: { slugs: ['hot-deals', 'destination'] },
       });
       const filteredCategories = categories.filter(
         (category) => !['hot-deals', 'destination'].includes(category?.slug?.current || '-')
