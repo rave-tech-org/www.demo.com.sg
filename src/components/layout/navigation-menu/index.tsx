@@ -5,14 +5,10 @@ import Select from '@elements/select';
 import Link from 'next/link';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
-import { ContentBlock } from '@/sanity/sanity.types';
 
 const NavigationMenu = () => {
   const navigation = useNavigation();
-
-  if (!navigation) {
-    return <SkeletonLoader />;
-  }
+  if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
 
   const {
     leftSocials,
@@ -22,26 +18,26 @@ const NavigationMenu = () => {
     navigationMenuItems,
     languageOptions,
     navigationMenuBlock,
-  } = navigation;
+  } = navigation.data;
 
-  const { imageUrl } = navigationMenuBlock as ContentBlock & { imageUrl: string };
+  const imageUrl = navigationMenuBlock?.imageUrl;
 
   return (
     <div className="navigation-menu-wrapper">
       <div className="top-navigation">
         <div className="wrapper">
           <div className="contacts">
-            {leftSocials.map((item, key) => (
+            {leftSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
-                <NextImage src={item.imageUrl} width={16} height={16} alt={item.text} />
+                <NextImage src={item.imageUrl || ''} width={16} height={16} alt={item.text} />
                 <span>{item.text}</span>
               </Link>
             ))}
           </div>
           <div className="socials">
-            {rightSocials.map((item, key) => (
+            {rightSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
-                <NextImage src={item.imageUrl} width={24} height={24} alt={item.text} />
+                <NextImage src={item.imageUrl || ''} width={24} height={24} alt={item.text} />
               </Link>
             ))}
           </div>
@@ -51,7 +47,7 @@ const NavigationMenu = () => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="/">
-            <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
+            <NextImage src={imageUrl || ''} width={160} height={80} alt="lago logo" />
           </Link>
           <nav>
             <ul>
@@ -72,7 +68,7 @@ const NavigationMenu = () => {
 
           <div className="action-menu">
             <Link href={findDesc?.marks?.href || ''}>
-              <NextImage src={findElement.imageUrl} width={24} height={24} alt="icon search" />
+              <NextImage src={findElement?.imageUrl || ''} width={24} height={24} alt="icon search" />
               <span>{findDesc?.text}</span>
             </Link>
 

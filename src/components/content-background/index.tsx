@@ -1,7 +1,7 @@
 'use client';
 
 import useViewport from '@/hooks/client/use-viewport';
-import { ContentBlock } from '@/sanity/sanity.types';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import { PortableText } from 'next-sanity';
@@ -9,8 +9,9 @@ import Link from 'next/link';
 import { CustomContentBackgroundAttribute } from './type';
 import ViewIn from '@elements/view-in';
 
-const ContentBackground = ({ block }: { block: ContentBlock }) => {
-  const { customAttributes, imageUrl } = block as ContentBlock & { imageUrl: string };
+const ContentBackground = ({ block }: { block: GetContentBlockResult }) => {
+  const customAttributes = block?.customAttributes;
+  const imageUrl = block?.imageUrl || '';
   const { isMobile, isTablet } = useViewport();
   const aspectRatio = isMobile ? '.5/1' : isTablet ? '2/1' : '3/1';
   const custom = transformObject<CustomContentBackgroundAttribute>(customAttributes);
@@ -29,7 +30,7 @@ const ContentBackground = ({ block }: { block: ContentBlock }) => {
           priority
         />
         <div className="content">
-          {block.description && <PortableText value={block.description} />}
+          {block?.description && <PortableText value={block.description} />}
           <div className="button-group">
             {buttons.map((button, index) => (
               <button key={`button-${index}`} className="primary-button">

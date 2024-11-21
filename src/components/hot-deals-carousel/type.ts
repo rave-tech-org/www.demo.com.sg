@@ -10,20 +10,22 @@ export type CategoryBlock = ContentBlock & {
 };
 
 export type ModifiedProduct = Omit<Product, 'categories'> & {
-  categories?: {
-    slug: {
-      current: string;
-    };
-    customAttributes:
-      | {
-          key?: string;
-          value?: string;
-          _type: 'attribute';
-          _key: string;
-        }[]
-      | undefined;
-    name: string;
-    description: string;
-  }[];
+  categories?:
+    | {
+        slug: {
+          current: string;
+        };
+        customAttributes:
+          | {
+              key?: string;
+              value?: string;
+              _type: 'attribute';
+              _key: string;
+            }[]
+          | undefined;
+        name: string;
+        description: string;
+      }[]
+    | null;
   imageUrl: string;
 };

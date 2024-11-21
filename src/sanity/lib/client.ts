@@ -1,5 +1,6 @@
 import { ClientPerspective, createClient, QueryParams } from 'next-sanity';
 import { projectId, dataset, apiVersion } from './env';
+import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 export const token = typeof process === 'undefined' ? '' : process.env.SANITY_API_READ_TOKEN!;
 
@@ -20,6 +21,13 @@ export const previewClient = client.withConfig({
   perspective: 'previewDrafts',
 });
 
+type SanityFetchProps = {
+  query: string;
+  qParams?: QueryParams;
+  tags: string[];
+  isDraft?: boolean;
+};
+
 export async function sanityFetch<QueryResponse>({
   query,
   qParams = {},
@@ -38,5 +46,19 @@ export async function sanityFetch<QueryResponse>({
   return currentClient.fetch<QueryResponse>(query, qParams, {
     cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
     next: { tags },
+  });
+}
+
+export function useSanityQuery<QueryResponse>({
+  query,
+  tags,
+  qParams = {},
+  isDraft = false,
+  options,
+}: SanityFetchProps & { options?: UseQueryOptions<QueryResponse, Error> }): UseQueryResult<QueryResponse, Error> {
+  return useQuery<QueryResponse, Error>({
+    queryKey: tags,
+    queryFn: () => sanityFetch<QueryResponse>({ query, qParams, tags, isDraft }),
+    ...options,
   });
 }

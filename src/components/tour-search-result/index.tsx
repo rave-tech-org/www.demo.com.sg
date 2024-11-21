@@ -1,15 +1,13 @@
 'use client';
 
 import NextImage from '@/elements/next-image';
-import { sanityFetch } from '@/sanity/lib/client';
-import { GET_CATEGORIES_BY_PARENT_CATEGORIES, GET_PRODUCTS_BY_TYPE } from '@/sanity/lib/queries/cms';
 import { RightOutlined } from '@ant-design/icons';
 import { Select, Input, GetProps, Slider, Collapse, CollapseProps, Checkbox, Pagination } from 'antd';
-import { useEffect, useState } from 'react';
-import { ModifiedProduct } from '@components/hot-deals-carousel/type';
+import { useState } from 'react';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import HotDealsCard from '@components/hot-deals-card';
-import { Category } from '@/sanity/sanity.types';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { Entries } from '@/resources/content-block-registry';
 
 type SearchProps = GetProps<typeof Input.Search>;
 
@@ -17,49 +15,31 @@ const CheckboxGroup = Checkbox.Group;
 
 const { Search } = Input;
 
-type ModifiedCategory = Omit<Category, 'parentCategory'> & {
-  parentCategory: {
-    slug: {
-      current: string;
-    };
-  };
-};
-
-const TourSearchResult = () => {
-  const [products, setProducts] = useState<ModifiedProduct[]>([]);
-  const [categories, setCategories] = useState<ModifiedCategory[]>([]);
-
+const TourSearchResult = ({ entries }: { block: GetContentBlockResult; entries?: Entries }) => {
   const [destinationCheckedList, setDestinationCheckedList] = useState<string[]>([]);
   const [hotDealsCheckedList, setHotDealsCheckedList] = useState<string[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const products = await sanityFetch<ModifiedProduct[]>({
-        query: GET_PRODUCTS_BY_TYPE,
-        tags: ['product'],
-        qParams: { type: 'tour' },
-      });
-      const removedParentCategoryProducts = products?.map((product) => ({
-        ...product,
-        categories: product.categories?.filter((category) => !['tour'].includes(category.slug.current)),
-      }));
-      setProducts(removedParentCategoryProducts);
-    })();
-  }, []);
+  const productEntries = entries?.products;
+  const productSlugs = ['tour'];
+  const categoryEntries = entries?.categories;
+  const categorySlugs = ['hot-deals', 'destination'];
 
-  useEffect(() => {
-    (async () => {
-      const categories = await sanityFetch<ModifiedCategory[]>({
-        query: GET_CATEGORIES_BY_PARENT_CATEGORIES,
-        tags: ['category'],
-        qParams: { slugs: ['hot-deals', 'destination'] },
-      });
-      const filteredCategories = categories.filter(
-        (category) => !['hot-deals', 'destination'].includes(category?.slug?.current || '-')
-      );
-      setCategories(filteredCategories);
-    })();
-  }, []);
+  const products = productEntries
+    ?.filter((product) => product.productType === 'tour')
+    .filter((product) =>
+      productSlugs?.some((categorySlug) =>
+        product.categories?.some((category) => category.slug?.current === categorySlug)
+      )
+    )
+    .map((product) => ({
+      ...product,
+      categories:
+        product.categories?.filter((category) => !productSlugs?.includes(category?.slug?.current || '')) || null,
+    }));
+
+  const categories = categoryEntries
+    ?.filter((category) => categorySlugs.includes(category.parentCategory?.slug?.current || ''))
+    .filter((category) => !categorySlugs.includes(category.slug?.current || ''));
 
   if (!products) {
     return <SkeletonLoader />;
@@ -72,10 +52,10 @@ const TourSearchResult = () => {
   const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
 
   const destinationOptions = categories
-    .filter((cat) => cat.parentCategory?.slug?.current === 'destination')
+    ?.filter((cat) => cat.parentCategory?.slug?.current === 'destination')
     .map((cat) => cat.name || '');
   const hotDetalsOptions = categories
-    .filter((cat) => cat.parentCategory?.slug?.current === 'hot-deals')
+    ?.filter((cat) => cat.parentCategory?.slug?.current === 'hot-deals')
     .map((cat) => cat.name || '');
 
   const onDestinationChange = (list: string[]) => {
@@ -113,7 +93,7 @@ const TourSearchResult = () => {
     activeCategories.length === 0
       ? products
       : products.filter((product) => {
-          return product.categories?.some((category) => activeCategories.includes(category.name));
+          return product.categories?.some((category) => activeCategories.includes(category.name || ''));
         });
 
   return (

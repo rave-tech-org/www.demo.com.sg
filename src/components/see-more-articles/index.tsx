@@ -1,18 +1,16 @@
 import Link from 'next/link';
-import { CustomSeeMoreAttributes, PostType } from './type';
+import { CustomSeeMoreAttributes } from './type';
 import ViewIn from '@/elements/view-in';
 import { PortableText } from 'next-sanity';
-import { sanityFetch } from '@/sanity/lib/client';
-import { GET_POSTS } from '@/sanity/lib/queries/cms';
-import { ContentBlock } from '@/sanity/sanity.types';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
+import { Entries } from '@/resources/content-block-registry';
 
-const SeeMoreArticles = async ({ block }: { block: ContentBlock }) => {
-  const { description, customAttributes } = block;
-  const posts = await sanityFetch<PostType[]>({
-    query: GET_POSTS,
-    tags: ['post'],
-  });
+const SeeMoreArticles = async ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+  const description = block?.description;
+  const customAttributes = block?.customAttributes;
+  const posts = entries?.posts;
+
   const custom = transformObject<CustomSeeMoreAttributes>(customAttributes);
   const buttons = Object.keys(custom).map((key) => ({
     key,
@@ -26,7 +24,7 @@ const SeeMoreArticles = async ({ block }: { block: ContentBlock }) => {
         <div className="lago-see-more-articles">
           {description && <PortableText value={description} />}
           <div className="group">
-            {posts.map((post, key) => (
+            {posts?.map((post, key) => (
               <div key={`post-${key}`} className="item">
                 <div
                   style={{

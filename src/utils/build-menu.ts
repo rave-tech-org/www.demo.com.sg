@@ -16,7 +16,7 @@ interface MenuItem extends SubMenu {
   subMenu: SubMenu[];
 }
 
-export const buildMenu = (description?: ContentBlock['description'], type: string = 'h3') => {
+export const buildMenu = (description?: ContentBlock['description'] | null, type: string = 'h3') => {
   return description?.reduce<MenuItem[]>((acc, desc, index) => {
     const child = desc.children?.[0];
     const markKey = child?.marks?.[0];

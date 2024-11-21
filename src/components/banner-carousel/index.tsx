@@ -5,10 +5,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 import { transformObject } from '@/utils';
 import Link from 'next/link';
-import { ListItemBlock, CustomBannerAttribute } from './type';
+import { CustomBannerAttribute } from './type';
 import { PortableText } from 'next-sanity';
-import { ContentBlock } from '@/sanity/sanity.types';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';
+import { Entries } from '@/resources/content-block-registry';
 
 const bannerSwiperSetting: SwiperOptions = {
   slidesPerView: 1.2,
@@ -26,8 +27,9 @@ const bannerSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const BannerCarousel = ({ block }: { block: ContentBlock }) => {
-  const { customAttributes, listItems } = block as ListItemBlock;
+const BannerCarousel = ({ block }: { block: GetContentBlockResult; entries?: Entries }) => {
+  const customAttributes = block?.customAttributes;
+  const listItems = block?.listItems;
   const custom = transformObject<CustomBannerAttribute>(customAttributes);
 
   const target = custom?.['is-button-redirect-new-window'] ? '_blank' : '_self';

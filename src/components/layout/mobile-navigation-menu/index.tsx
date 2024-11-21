@@ -18,6 +18,7 @@ export const MobileNavigation: React.FC = () => {
   const handleClose = () => setIsOpen(false);
 
   const navigation = useNavigation();
+  if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
 
   if (!navigation) {
     return <SkeletonLoader />;
@@ -31,9 +32,9 @@ export const MobileNavigation: React.FC = () => {
     navigationMenuItems,
     languageOptions,
     navigationMenuBlock,
-  } = navigation;
+  } = navigation.data;
 
-  const { imageUrl } = navigationMenuBlock as ContentBlock & { imageUrl: string };
+  const imageUrl = navigationMenuBlock?.imageUrl || '';
 
   return (
     <div className="mobile-navigation-container">
@@ -49,7 +50,7 @@ export const MobileNavigation: React.FC = () => {
       <Drawer isOpen={isOpen} onClose={handleClose} position="top" width="100%">
         <div className="top-navigation">
           <div className="contacts">
-            {leftSocials.map((item, key) => (
+            {leftSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
                 <NextImage src={item.imageUrl} width={24} height={24} alt={item.text} />
                 <span>{item.text}</span>
@@ -57,7 +58,7 @@ export const MobileNavigation: React.FC = () => {
             ))}
           </div>
           <div className="socials">
-            {rightSocials.map((item, key) => (
+            {rightSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
                 <NextImage src={item.imageUrl} width={32} height={32} alt={item.text} />
               </Link>
@@ -95,7 +96,7 @@ export const MobileNavigation: React.FC = () => {
 
         <div className="action-menu">
           <Link href={findDesc?.marks?.href || ''}>
-            <NextImage src={findElement.imageUrl} width={24} height={24} alt="icon search" />
+            <NextImage src={findElement?.imageUrl} width={24} height={24} alt="icon search" />
             <span>{findDesc?.text}</span>
           </Link>
 

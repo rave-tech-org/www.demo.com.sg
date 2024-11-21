@@ -4,6 +4,7 @@ import { overpass, kapelka } from '@/resources/font';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 import '@/styles/global.scss';
+import ReactQueryProvider from '@/elements/react-query-provider';
 
 export const metadata: Metadata = {
   title: 'Lago Travel',
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
-        <AntdRegistry>
-          <MainLayout>{children}</MainLayout>
-        </AntdRegistry>
+        <ReactQueryProvider>
+          <AntdRegistry>
+            <MainLayout>{children}</MainLayout>
+          </AntdRegistry>
+        </ReactQueryProvider>
       </body>
     </html>
   );

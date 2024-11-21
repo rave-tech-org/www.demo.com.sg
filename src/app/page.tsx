@@ -1,17 +1,23 @@
 import { Suspense } from 'react';
 
 import { sanityFetch } from '@/sanity/lib/client';
-import { GET_PAGE_META, GET_PAGE } from '@/sanity/lib/queries/cms';
+import { GetPageMeta, GetPage, GetCategories, GetProducts, GetTestimonials, GetPosts } from '@/sanity/lib/queries/cms';
 
 import SkeletonLoader from '@/elements/skeleton-loader';
 import { Metadata } from 'next';
-import { ContentBlock, Page } from '@/sanity/sanity.types';
-import { PageType } from '@/components/layout/main-layout/type';
+import type {
+  GetCategoriesResult,
+  GetPageResult,
+  GetPostsResult,
+  GetProductsResult,
+  GetTestimonialsResult,
+  Page,
+} from '@/sanity/sanity.types';
 import contentBlockRegistry from '@/resources/content-block-registry';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
-    query: GET_PAGE_META,
+    query: GetPageMeta,
     tags: ['page'],
     qParams: { name: 'home-page' },
   });
@@ -23,21 +29,46 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const homePage = await sanityFetch<PageType>({
-    query: GET_PAGE,
+  const homePage = await sanityFetch<GetPageResult>({
+    query: GetPage,
     tags: ['page', 'contentBlock'],
     qParams: { name: 'home-page' },
   });
 
-  const layout: ContentBlock[] = homePage?.layout;
+  const categories = await sanityFetch<GetCategoriesResult>({
+    query: GetCategories,
+    tags: ['category'],
+  });
+
+  const products = await sanityFetch<GetProductsResult>({
+    query: GetProducts,
+    tags: ['product'],
+  });
+
+  const testimonials = await sanityFetch<GetTestimonialsResult>({
+    query: GetTestimonials,
+    tags: ['testimonial'],
+  });
+
+  const posts = await sanityFetch<GetPostsResult>({
+    query: GetPosts,
+    tags: ['post'],
+  });
+
+  const entries = {
+    categories,
+    products,
+    testimonials,
+    posts,
+  };
 
   return (
     <main>
-      {layout?.map((block, index) => {
+      {homePage?.layout?.map((block, index) => {
         const Component = contentBlockRegistry.get(block.slug?.current || '');
         return (
           <Suspense key={`home-page-${index}`} fallback={<SkeletonLoader />}>
-            {Component ? <Component block={block} /> : null}
+            {Component ? <Component block={block} entries={entries} /> : null}
           </Suspense>
         );
       })}

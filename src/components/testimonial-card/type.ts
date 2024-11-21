@@ -1,6 +1,6 @@
 export interface TestimonialCardProps {
-  author?: string;
-  productName?: string;
-  desc?: string;
-  imageUrl?: string;
+  author?: string | null;
+  productName?: string | null;
+  desc?: string | null;
+  imageUrl?: string | null;
 }

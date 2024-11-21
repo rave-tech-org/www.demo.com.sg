@@ -6,12 +6,25 @@ import HotDealsCarousel from '@/components/hot-deals-carousel';
 import TravelInterestGroup from '@/components/travel-interest-group';
 import SeeMoreArticles from '@/components/see-more-articles';
 import TestimonialCarousel from '@/components/testimonial-carousel';
-import { ContentBlock } from '@/sanity/sanity.types';
 import TourSearchResult from '@/components/tour-search-result';
+import type {
+  GetCategoriesResult,
+  GetContentBlockResult,
+  GetPostsResult,
+  GetProductsResult,
+  GetTestimonialsResult,
+} from '@/sanity/sanity.types';
+
+export type Entries = {
+  categories: GetCategoriesResult;
+  products: GetProductsResult;
+  testimonials: GetTestimonialsResult;
+  posts: GetPostsResult;
+};
 
 const contentBlockRegistry = new Map<
   string,
-  ({ block }: { block: ContentBlock }) => Promise<JSX.Element> | JSX.Element
+  ({ block }: { block: GetContentBlockResult; entries?: Entries }) => Promise<JSX.Element> | JSX.Element
 >([
   ['home-banner', BannerCarousel],
   ['hot-deals', HotDealsCarousel],

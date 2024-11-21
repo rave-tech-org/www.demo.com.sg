@@ -2,55 +2,33 @@
 
 import { ListItemBlock } from '@/components/banner-carousel/type';
 import NextImage from '@/elements/next-image';
+import useNavigation from '@/hooks/local/use-navigation';
 import { FOOTER_MENU, SOCIAL_LINK } from '@/resources/constant';
-import { sanityFetch } from '@/sanity/lib/client';
-import { GET_FOOTER_LAYOUT } from '@/sanity/lib/queries/cms';
+import { useSanityQuery } from '@/sanity/lib/client';
+import { GetFooterLayout } from '@/sanity/lib/queries/cms';
 import { ContentBlock } from '@/sanity/sanity.types';
 import { buildMenu } from '@/utils';
 import { PageType } from '@components/layout/main-layout/type';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 const Footer = () => {
-  const [footerLayout, setFooterLayout] = useState<PageType | null>(null);
+  const navigation = useNavigation();
+  const { data: footerLayout } = useSanityQuery<PageType>({
+    query: GetFooterLayout,
+    tags: ['page', 'footerLayout'],
+  });
 
-  useEffect(() => {
-    (async () => {
-      const footerLayout = await sanityFetch<PageType>({
-        query: GET_FOOTER_LAYOUT,
-        tags: ['page', 'contentBlock'],
-      });
-      setFooterLayout(footerLayout);
-    })();
-  }, []);
+  if (!navigation?.data || !footerLayout || navigation.isLoading) return null;
 
-  if (!footerLayout) {
-    return null;
-  }
+  const {
+    data: { footerSocialLink, paymentLink },
+  } = navigation;
 
   const { imageUrl, description } = footerLayout;
   const footerMenuBlock = footerLayout?.layout?.find((m) => m.slug?.current === FOOTER_MENU);
   const footerList = buildMenu(footerMenuBlock?.description);
   const { imageUrl: logoUrl } = footerMenuBlock as ContentBlock & { imageUrl?: string };
-
-  // social link
-  const socialBlock = footerLayout?.layout?.find((m) => m.slug?.current === SOCIAL_LINK);
-  const { listItems: socialListItems } = socialBlock as ListItemBlock;
-  const socials = socialListItems.map((item) => {
-    const social = buildMenu(item.description, 'normal')?.[0];
-    return {
-      slug: item.slug?.current,
-      imageUrl: item.imageUrl,
-      href: social?.marks?.href || '',
-      text: social?.text || '',
-    };
-  });
-  const getSocials = (chunks: string[]) =>
-    socials.filter((social) => chunks.some((chunk) => social.slug?.includes(chunk)));
-
-  const socialLink = getSocials(['facebook', 'instagram', 'tiktok', 'whatsapp', 'wechat']);
-  const paymentLink = getSocials(['visa', 'mastercard', 'paynow']);
 
   return (
     <footer
@@ -83,7 +61,7 @@ const Footer = () => {
           </div>
           <div className="info-sharing">
             <div className="socials">
-              {socialLink.map((item, key) => (
+              {footerSocialLink?.map((item, key) => (
                 <Link key={`social-link-${key}`} href={item.href} target="_blank">
                   <NextImage src={item.imageUrl} width={32} height={32} alt={item.text} />
                 </Link>
@@ -100,7 +78,7 @@ const Footer = () => {
         <div className="wrapper">
           {description && <PortableText value={description} />}
           <div className="payments">
-            {paymentLink.map((item, key) => (
+            {paymentLink?.map((item, key) => (
               <Link key={`payment-link-${key}`} href={item.href} target="_blank">
                 <NextImage src={item.imageUrl} width={56} height={56} alt={item.text} />
               </Link>

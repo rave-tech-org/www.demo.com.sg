@@ -1,21 +1,15 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
-import { Navigation } from 'swiper/modules';
-import { ContentBlock } from '@/sanity/sanity.types';
-import { CategoryBlock, ModifiedProduct } from '@/components/hot-deals-carousel/type';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
-import AspectRatioImage from '@elements/aspect-ratio-image';
 import { PortableText } from 'next-sanity';
-import Link from 'next/link';
 import TestimonialCard from '@components/testimonial-card';
-import { sanityFetch } from '@/sanity/lib/client';
-import { GET_POSTS, GET_TESTIMONIALS } from '@/sanity/lib/queries/cms';
-import { TestimonialType } from './type';
+import { Entries } from '@/resources/content-block-registry';
 
 const testimonialSwiperSetting: SwiperOptions = {
   slidesPerView: 1.4,
@@ -39,21 +33,12 @@ const testimonialSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const TestimonialCarousel = ({ block }: { block: ContentBlock }) => {
-  const { title, description } = block as CategoryBlock;
-  const [testimonials, setTestimonials] = useState<TestimonialType[] | null>(null);
+const TestimonialCarousel = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+  const title = block?.title;
+  const description = block?.description;
+  const testimonialEntries = entries?.testimonials;
 
-  useEffect(() => {
-    (async () => {
-      const testimonials = await sanityFetch<TestimonialType[]>({
-        query: GET_TESTIMONIALS,
-        tags: ['testimonial'],
-      });
-      setTestimonials(testimonials);
-    })();
-  }, []);
-
-  if (!testimonials) {
+  if (!testimonialEntries) {
     return <SkeletonLoader />;
   }
 
@@ -62,12 +47,12 @@ const TestimonialCarousel = ({ block }: { block: ContentBlock }) => {
       <div className="lago-testimonial-carousel-wrapper">
         {description && <PortableText value={description} />}
         <Swiper {...testimonialSwiperSetting}>
-          {testimonials.map((testimonial, index) => (
+          {testimonialEntries.map((testimonial, index) => (
             <SwiperSlide key={index}>
               <TestimonialCard
                 imageUrl={testimonial.imageUrl}
                 author={testimonial.name}
-                productName={testimonial.product.name}
+                productName={testimonial.product?.name}
                 desc={testimonial.testimonialText}
               />
             </SwiperSlide>

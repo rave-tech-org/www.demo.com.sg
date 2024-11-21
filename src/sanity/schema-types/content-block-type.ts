@@ -96,6 +96,14 @@ export const contentBlockType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'file',
+      title: 'File',
+      type: 'file',
+      options: {
+        accept: 'application/pdf,video/*,image/*',
+      },
+    }),
+    defineField({
       name: 'listItems',
       title: 'List of Items',
       group: 'list',

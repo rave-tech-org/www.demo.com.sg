@@ -1,7 +1,7 @@
 import AspectRatioImage from '@/elements/aspect-ratio-image';
 import ViewIn from '@/elements/view-in';
 import { sanityFetch } from '@/sanity/lib/client';
-import { GET_POST_BY_SLUG } from '@/sanity/lib/queries/cms';
+import { GetPostBySlug } from '@/sanity/lib/queries/cms';
 import { Post } from '@/sanity/sanity.types';
 import { PortableText } from 'next-sanity';
 
@@ -9,7 +9,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
   const slug = params?.slug as string;
 
   const post = await sanityFetch<Post & { imageUrl: string }>({
-    query: GET_POST_BY_SLUG,
+    query: GetPostBySlug,
     tags: ['post'],
     qParams: { slug },
   });

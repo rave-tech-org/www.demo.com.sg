@@ -1,6 +1,6 @@
 import { defineQuery } from 'next-sanity';
 
-export const GET_PAGE_META = defineQuery(`
+export const GetPageMeta = defineQuery(`
   *[_type == "page" && slug.current == $name][0] {
     _id,
     slug,
@@ -10,7 +10,7 @@ export const GET_PAGE_META = defineQuery(`
   }
 `);
 
-export const GET_PAGE = defineQuery(`
+export const GetPage = defineQuery(`
   *[_type == "page" && slug.current == $name][0] {
     _id,
     title,
@@ -24,6 +24,7 @@ export const GET_PAGE = defineQuery(`
       description,
       image,
       "imageUrl": image.asset->url,
+      "fileUrl": file.asset->url,
       customAttributes,
       listItems[]{
         title,
@@ -45,7 +46,7 @@ export const GET_PAGE = defineQuery(`
   }
 `);
 
-export const GET_POSTS = defineQuery(`
+export const GetPosts = defineQuery(`
   *[_type == "post"] {
     _id,
     title,
@@ -58,7 +59,7 @@ export const GET_POSTS = defineQuery(`
   }
 `);
 
-export const GET_TESTIMONIALS = defineQuery(`
+export const GetTestimonials = defineQuery(`
   *[_type == "testimonial"]{
     name,
     slug,
@@ -73,7 +74,7 @@ export const GET_TESTIMONIALS = defineQuery(`
   }
 `);
 
-export const GET_HEADER_LAYOUT = defineQuery(`
+export const GetHeaderLayout = defineQuery(`
   *[_type == "page" && slug.current == "header-layout"][0] {
     _id,
     title,
@@ -100,7 +101,7 @@ export const GET_HEADER_LAYOUT = defineQuery(`
   }
 `);
 
-export const GET_FOOTER_LAYOUT = defineQuery(`
+export const GetFooterLayout = defineQuery(`
   *[_type == "page" && slug.current == "footer-layout"][0] {
     _id,
     title,
@@ -127,7 +128,7 @@ export const GET_FOOTER_LAYOUT = defineQuery(`
   }
 `);
 
-export const GET_CATEGORIES_BY_PARENT_CATEGORY = defineQuery(`
+export const GetCategoriesByParentCategory = defineQuery(`
   *[_type == "category" && parentCategory->slug.current == $slug] {
     _id,
     name,
@@ -136,7 +137,7 @@ export const GET_CATEGORIES_BY_PARENT_CATEGORY = defineQuery(`
   }
 `);
 
-export const GET_CATEGORIES_BY_PARENT_CATEGORIES = defineQuery(`
+export const GetCategoriesByParentCategories = defineQuery(`
   *[_type == "category" && parentCategory->slug.current in $slugs] {
     _id,
     name,
@@ -149,7 +150,7 @@ export const GET_CATEGORIES_BY_PARENT_CATEGORIES = defineQuery(`
   }
 `);
 
-export const GET_PRODUCTS_BY_PARENT_CATEGORIES = defineQuery(`
+export const GetProductsByParentCategories = defineQuery(`
   *[_type == "product" && references(
     *[_type == "category" && parentCategory->slug.current in $categories]._id
   )] {
@@ -169,7 +170,7 @@ export const GET_PRODUCTS_BY_PARENT_CATEGORIES = defineQuery(`
   }
 `);
 
-export const GET_CONTENT_BLOCK_BY_SLUG = defineQuery(`
+export const GetContentBlockBySlug = defineQuery(`
   *[_type == "contentBlock" && slug.current == $slug][0] {
     _id,
     slug,
@@ -193,7 +194,7 @@ export const GET_CONTENT_BLOCK_BY_SLUG = defineQuery(`
   }
 `);
 
-export const GET_PRODUCT_BY_SLUG = defineQuery(`
+export const GetProductBySlug = defineQuery(`
   *[_type == "product" && slug.current == $slug && productType == $type][0]{
     name,
     productType,
@@ -236,7 +237,7 @@ export const GET_PRODUCT_BY_SLUG = defineQuery(`
   }
 `);
 
-export const GET_PRODUCTS_BY_TYPE = defineQuery(`
+export const GetProductsByType = defineQuery(`
   *[_type == "product" && productType == $type]{
     _id,
     name,
@@ -254,7 +255,7 @@ export const GET_PRODUCTS_BY_TYPE = defineQuery(`
   }
 `);
 
-export const GET_POST_BY_SLUG = defineQuery(`
+export const GetPostBySlug = defineQuery(`
   *[_type == "post" && slug.current == $slug][0]{
     title,
     slug,
@@ -267,7 +268,7 @@ export const GET_POST_BY_SLUG = defineQuery(`
   }
 `);
 
-export const GET_PRODUCTS_BY_CATEGORY = defineQuery(`
+export const GetProductsByCategory = defineQuery(`
   *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {
     _id,
     name,
@@ -282,5 +283,60 @@ export const GET_PRODUCTS_BY_CATEGORY = defineQuery(`
     },
     features,
     customPrices
+  }
+`);
+
+export const GetProducts = defineQuery(`
+  *[_type == "product"] {
+    _id,
+    name,
+    slug,
+    price,
+    productType,
+    "imageUrl": image.asset->url,
+    categories[]-> {
+      _id,
+      name,
+      slug,
+      customAttributes
+    },
+    features,
+    customPrices
+  }
+`);
+
+export const GetContentBlock = defineQuery(`
+  *[_type == "contentBlock"][0] {
+    _id,
+    slug,
+    blockType,
+    title,
+    description,
+    image,
+    "imageUrl": image.asset->url,
+    "fileUrl": file.asset->url,
+    customAttributes,
+    listItems[]{
+      title,
+      slug,
+      description,
+      image,
+      "imageUrl": image.asset->url,
+    },
+    "categories": categoryBlock[]->{
+      _id,
+      slug,
+    }
+  }
+`);
+
+export const GetCategories = defineQuery(`
+  *[_type == "category"] {
+    _id,
+    name,
+    slug,
+    parentCategory-> {
+      slug
+    }
   }
 `);

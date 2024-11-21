@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface TravelInterestCardProps {
-  title?: string;
+  title?: string | null;
   desc: string | ReactNode;
-  imageUrl?: string;
+  imageUrl?: string | null;
 }

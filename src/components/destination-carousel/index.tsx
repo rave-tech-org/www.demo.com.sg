@@ -5,15 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
 
 import { Navigation } from 'swiper/modules';
-import { ContentBlock } from '@/sanity/sanity.types';
-import { CategoryBlock, ModifiedProduct } from '@/components/hot-deals-carousel/type';
-import { sanityFetch } from '@/sanity/lib/client';
-import { GET_PRODUCTS_BY_PARENT_CATEGORIES } from '@/sanity/lib/queries/cms';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
+import { Entries } from '@/resources/content-block-registry';
 
 const destinationSwiperSetting: SwiperOptions = {
   modules: [Navigation],
@@ -41,24 +39,23 @@ const destinationSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const DestinationCarousel = ({ block }: { block: ContentBlock }) => {
-  const { categories, imageUrl, description } = block as CategoryBlock;
-  const categorySlugs = useMemo(
-    () => categories?.map((category) => category.slug.current) || ['destination'],
-    [categories]
-  );
-  const [products, setProducts] = useState<ModifiedProduct[] | null>(null);
+const DestinationCarousel = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+  const categories = block?.categories;
+  const imageUrl = block?.imageUrl;
+  const description = block?.description;
+  const productEntries = entries?.products;
+  const categorySlugs = categories?.map((category) => category?.slug?.current);
 
-  useEffect(() => {
-    (async () => {
-      const products = await sanityFetch<ModifiedProduct[]>({
-        query: GET_PRODUCTS_BY_PARENT_CATEGORIES,
-        tags: ['product'],
-        qParams: { categories: categorySlugs },
-      });
-      setProducts(products);
-    })();
-  }, [categorySlugs]);
+  const products = productEntries
+    ?.filter((product) =>
+      categorySlugs?.some((categorySlug) =>
+        product.categories?.some((category) => category.slug?.current === categorySlug)
+      )
+    )
+    .map((product) => ({
+      ...product,
+      categories: product.categories?.filter((category) => !categorySlugs?.includes(category?.slug?.current)) || null,
+    }));
 
   if (!products) {
     return <SkeletonLoader />;

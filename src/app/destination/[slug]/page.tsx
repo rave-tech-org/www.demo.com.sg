@@ -2,25 +2,25 @@ import DestinationDetailLago from '@/components/destination-detail-lago';
 import { DestinationProduct } from '@/components/destination-detail-lago/type';
 import { PostType } from '@/components/see-more-articles/type';
 import { sanityFetch } from '@/sanity/lib/client';
-import { GET_POSTS, GET_PRODUCT_BY_SLUG, GET_PRODUCTS_BY_CATEGORY } from '@/sanity/lib/queries/cms';
+import { GetPosts, GetProductBySlug, GetProductsByCategory } from '@/sanity/lib/queries/cms';
 
 export default async function DestinationPage({ params }: { params: { slug: string } }) {
   const slug = params?.slug as string;
   const pathname = `/destination/${slug}`;
   const pathSegments = pathname.split('/').filter((segment) => segment);
   const product = await sanityFetch<DestinationProduct>({
-    query: GET_PRODUCT_BY_SLUG,
+    query: GetProductBySlug,
     tags: ['product'],
     qParams: { slug, type: 'destination' },
   });
 
   const posts = await sanityFetch<PostType[]>({
-    query: GET_POSTS,
+    query: GetPosts,
     tags: ['post'],
   });
 
   const products = await sanityFetch<DestinationProduct>({
-    query: GET_PRODUCTS_BY_CATEGORY,
+    query: GetProductsByCategory,
     tags: ['product'],
     qParams: { categorySlug: 'penang' },
   });

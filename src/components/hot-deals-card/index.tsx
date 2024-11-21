@@ -5,11 +5,11 @@ import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';
 
 import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
-import { ModifiedProduct } from '@/components/hot-deals-carousel/type';
 import { formatCurrency, transformObject } from '@/utils';
 import Link from 'next/link';
+import { GetProductsResult } from '@/sanity/sanity.types';
 
-const HotDealsCard = (props: ModifiedProduct) => {
+const HotDealsCard = (props: GetProductsResult[number]) => {
   const [hovered, setHovered] = useState(false);
 
   const springStyle = useSpring({
@@ -30,7 +30,7 @@ const HotDealsCard = (props: ModifiedProduct) => {
     >
       <Link href={`/tour/${slug?.current}`}>
         <div className="card-image-container black-opacity-background">
-          <AspectRatioImage src={imageUrl} alt={name || ''} aspectRatio="1/1" priority />
+          <AspectRatioImage src={imageUrl || ''} alt={name || ''} aspectRatio="1/1" priority />
           <animated.div className="special-card-label" style={springStyle}>
             <AspectRatioImage
               src="/assets/images/tour/special-card-label.webp"

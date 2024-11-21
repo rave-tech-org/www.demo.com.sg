@@ -1,10 +1,12 @@
-import { ContentBlock } from '@/sanity/sanity.types';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
 import TravelInterestCard from '@components/travel-interest-card';
 import { PortableText } from 'next-sanity';
-import { ListItemBlock } from '@/components/banner-carousel/type';
 
-const TravelInterestGroup = ({ block }: { block: ContentBlock }) => {
-  const { listItems, description, title } = block as ListItemBlock;
+const TravelInterestGroup = ({ block }: { block: GetContentBlockResult }) => {
+  const title = block?.title;
+  const listItems = block?.listItems;
+  const description = block?.description;
+
   const cards = listItems?.map(({ title, description, imageUrl }) => ({
     title: title,
     desc: description ? <PortableText value={description} /> : '',

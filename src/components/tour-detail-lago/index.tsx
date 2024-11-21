@@ -9,7 +9,7 @@ import useViewport from '@/hooks/client/use-viewport';
 import { Anchor, Collapse, CollapseProps, Image } from 'antd';
 import { useEffect, useState } from 'react';
 import { client, sanityFetch } from '@/sanity/lib/client';
-import { GET_PRODUCT_BY_SLUG } from '@/sanity/lib/queries/cms';
+import { GetProductBySlug } from '@/sanity/lib/queries/cms';
 import { PortableText } from 'next-sanity';
 import { useNextSanityImage } from 'next-sanity-image';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -72,7 +72,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
   useEffect(() => {
     (async () => {
       const product = await sanityFetch<TourDetailProduct>({
-        query: GET_PRODUCT_BY_SLUG,
+        query: GetProductBySlug,
         tags: ['product'],
         qParams: { slug, type: 'tour' },
       });
