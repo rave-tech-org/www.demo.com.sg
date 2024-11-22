@@ -2,7 +2,6 @@ import AspectRatioImage from '@/elements/aspect-ratio-image';
 import TravelInterestCard from '../travel-interest-card';
 import { DestinationProduct } from './type';
 import { PortableText } from 'next-sanity';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import RightChevron from '@/elements/icons/right-chevron';
 import { PostType } from '@components/see-more-articles/type';
