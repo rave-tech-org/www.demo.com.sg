@@ -1,15 +1,15 @@
 'use client';
 
+import { Entries } from '@/resources/content-block-registry';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { transformObject } from '@/utils';
+import ViewIn from '@elements/view-in';
+import { PortableText } from 'next-sanity';
+import Link from 'next/link';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SwiperOptions } from 'swiper/types';
-import { transformObject } from '@/utils';
-import Link from 'next/link';
 import { CustomBannerAttribute } from './type';
-import { PortableText } from 'next-sanity';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
-import ViewIn from '@elements/view-in';
-import { Entries } from '@/resources/content-block-registry';
 
 const bannerSwiperSetting: SwiperOptions = {
   slidesPerView: 1.2,
@@ -27,7 +27,7 @@ const bannerSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const BannerCarousel = ({ block }: { block: GetContentBlockResult; entries?: Entries }) => {
+const BannerCarousel = ({ block }: { block: GetContentBlockResult; entries: Entries }) => {
   const customAttributes = block?.customAttributes;
   const listItems = block?.listItems;
   const custom = transformObject<CustomBannerAttribute>(customAttributes);

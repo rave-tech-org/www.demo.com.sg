@@ -1,19 +1,11 @@
-import { Suspense } from 'react';
-
-import { sanityFetch } from '@/sanity/lib/client';
-import { GetPageMeta, GetPage, GetCategories, GetProducts, GetTestimonials, GetPosts } from '@/sanity/lib/queries/cms';
-
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { Metadata } from 'next';
-import type {
-  GetCategoriesResult,
-  GetPageResult,
-  GetPostsResult,
-  GetProductsResult,
-  GetTestimonialsResult,
-  Page,
-} from '@/sanity/sanity.types';
+import { useEntries } from '@/hooks/local/use-entries';
 import contentBlockRegistry from '@/resources/content-block-registry';
+import { sanityFetch } from '@/sanity/lib/client';
+import { GetPage, GetPageMeta } from '@/sanity/lib/queries/cms';
+import type { GetPageResult, Page } from '@/sanity/sanity.types';
+import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
   const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
@@ -35,32 +27,7 @@ export default async function Home() {
     qParams: { name: 'home-page' },
   });
 
-  const categories = await sanityFetch<GetCategoriesResult>({
-    query: GetCategories,
-    tags: ['category'],
-  });
-
-  const products = await sanityFetch<GetProductsResult>({
-    query: GetProducts,
-    tags: ['product'],
-  });
-
-  const testimonials = await sanityFetch<GetTestimonialsResult>({
-    query: GetTestimonials,
-    tags: ['testimonial'],
-  });
-
-  const posts = await sanityFetch<GetPostsResult>({
-    query: GetPosts,
-    tags: ['post'],
-  });
-
-  const entries = {
-    categories,
-    products,
-    testimonials,
-    posts,
-  };
+  const entries = await useEntries();
 
   return (
     <main>

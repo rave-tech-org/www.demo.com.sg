@@ -1,13 +1,13 @@
 'use client';
 
 import NextImage from '@/elements/next-image';
-import { RightOutlined } from '@ant-design/icons';
-import { Select, Input, GetProps, Slider, Collapse, CollapseProps, Checkbox, Pagination } from 'antd';
-import { useState } from 'react';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import HotDealsCard from '@components/hot-deals-card';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { Entries } from '@/resources/content-block-registry';
+import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { RightOutlined } from '@ant-design/icons';
+import HotDealsCard from '@components/hot-deals-card';
+import { Checkbox, Collapse, CollapseProps, GetProps, Input, Pagination, Select, Slider } from 'antd';
+import { useState } from 'react';
 
 type SearchProps = GetProps<typeof Input.Search>;
 

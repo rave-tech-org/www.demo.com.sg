@@ -1,12 +1,12 @@
-import NavigationMenu from '@/components/layout/navigation-menu';
 import BannerCarousel from '@/components/banner-carousel';
 import ContentBackground from '@/components/content-background';
 import DestinationCarousel from '@/components/destination-carousel';
 import HotDealsCarousel from '@/components/hot-deals-carousel';
-import TravelInterestGroup from '@/components/travel-interest-group';
+import NavigationMenu from '@/components/layout/navigation-menu';
 import SeeMoreArticles from '@/components/see-more-articles';
 import TestimonialCarousel from '@/components/testimonial-carousel';
 import TourSearchResult from '@/components/tour-search-result';
+import TravelInterestGroup from '@/components/travel-interest-group';
 import type {
   GetCategoriesResult,
   GetContentBlockResult,
@@ -24,7 +24,7 @@ export type Entries = {
 
 const contentBlockRegistry = new Map<
   string,
-  ({ block }: { block: GetContentBlockResult; entries?: Entries }) => Promise<JSX.Element> | JSX.Element
+  ({ block }: { block: GetContentBlockResult; entries: Entries }) => Promise<JSX.Element> | JSX.Element
 >([
   ['home-banner', BannerCarousel],
   ['hot-deals', HotDealsCarousel],
