@@ -1,27 +1,27 @@
 'use client';
 
 import AspectRatioImage from '@/elements/aspect-ratio-image';
+import RatingStar from '@/elements/icons/rating-star';
 import RightChevron from '@/elements/icons/right-chevron';
 import NextImage from '@/elements/next-image';
-import Link from 'next/link';
-import RatingStar from '@/elements/icons/rating-star';
+import SkeletonLoader from '@/elements/skeleton-loader';
 import useViewport from '@/hooks/client/use-viewport';
-import { Anchor, Collapse, CollapseProps, Image } from 'antd';
-import { useEffect, useState } from 'react';
-import { client, sanityFetch } from '@/sanity/lib/client';
+import { client, useSanityQuery } from '@/sanity/lib/client';
 import { GetProductBySlug } from '@/sanity/lib/queries/cms';
+import { formatCurrency, transformObject } from '@/utils';
+import { CaretRightOutlined } from '@ant-design/icons';
+import type { CustomCategoryAttributes, CustomFeatures, CustomPrices } from '@components/hot-deals-card/type';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { Anchor, Collapse, type CollapseProps, Image } from 'antd';
 import { PortableText } from 'next-sanity';
 import { useNextSanityImage } from 'next-sanity-image';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import SkeletonLoader from '@/elements/skeleton-loader';
-import { CaretRightOutlined } from '@ant-design/icons';
-import { TourDetailProduct } from './type';
-import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from '@components/hot-deals-card/type';
-import { transformObject } from '@/utils';
-import { SwiperOptions } from 'swiper/types';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { usePathname } from 'next/navigation';
+import type { SwiperOptions } from 'swiper/types';
+import type { TourDetailProduct } from './type';
 
 type SanityImageProps = {
   value: SanityImageSource & {
@@ -64,23 +64,17 @@ const SanityImage: React.FC<SanityImageProps> = ({ value }) => {
 const TourDetailLago = ({ slug }: { slug: string }) => {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment);
-  const [product, setProduct] = useState<TourDetailProduct | null>(null);
   const [visible, setVisible] = useState(false);
   const [activeKeys, setActiveKeys] = useState<string[]>([]);
   const { isMobile, isTablet, isMdScreen, isXlScreen, isXxlScreen } = useViewport();
 
-  useEffect(() => {
-    (async () => {
-      const product = await sanityFetch<TourDetailProduct>({
-        query: GetProductBySlug,
-        tags: ['product'],
-        qParams: { slug, type: 'tour' },
-      });
-      setProduct(product);
-    })();
-  }, [slug]);
+  const { data: product, isLoading } = useSanityQuery<TourDetailProduct>({
+    query: GetProductBySlug,
+    tags: ['product'],
+    qParams: { slug, type: 'tour' },
+  });
 
-  if (!product) {
+  if (!product || isLoading) {
     return <SkeletonLoader />;
   }
 
@@ -91,9 +85,11 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
     ['4/3', isXlScreen],
     ['3/2', isXxlScreen],
   ]);
+
   const ratio = Array.from(screenWidths.entries()).find(([, cond]) => cond)?.[0] || '2/1';
+
   const breadcrumbs = pathSegments.map((segment, index) => {
-    const href = '/' + pathSegments.slice(0, index + 1).join('/');
+    const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
     const text = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
     return { text, link: href };
   });
@@ -201,20 +197,27 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
                 }}
                 alt={product?.name || ''}
               />
-              <AspectRatioImage src={product?.imageUrl} alt={product?.name || ''} aspectRatio={ratio} priority />
-              <NextImage
-                onClick={() => setVisible(true)}
-                src="/assets/images/tour/icon-zoom.svg"
-                width={48}
-                height={48}
-                alt="icon zoom"
-              />
+              <section style={{ display: 'relative' }}>
+                <AspectRatioImage
+                  src={product?.imageUrl}
+                  alt={product?.name || ''}
+                  aspectRatio={isMobile ? '21/9' : ratio}
+                  priority
+                />
+                <NextImage
+                  onClick={() => setVisible(true)}
+                  src="/assets/images/tour/icon-zoom.svg"
+                  width={48}
+                  height={48}
+                  alt="icon zoom"
+                />
+              </section>
             </div>
             <div className="tour-detail-book-now">
               <div className="wrapper">
                 {customFeature.rating && (
                   <div className="rating">
-                    <RatingStar percentage={(parseInt(customFeature.rating) / 5) * 100} />
+                    <RatingStar percentage={(Number.parseInt(customFeature.rating) / 5) * 100} />
                     <p>{customFeature.rating}</p> <span>(Based on 3 reviews)</span>
                   </div>
                 )}
@@ -244,7 +247,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
                 <div className="pricing">
                   <span>From</span>
                   <h4 className="price">
-                    SGD $339 <sup>$400</sup>
+                    {formatCurrency(+customPrices['discount-price'])} <sup>{formatCurrency(product.price)}</sup>
                   </h4>
                   <p className="option">
                     <strong>Twin-sharing</strong> (excludes processing fees & taxes if any)
@@ -256,27 +259,29 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
                   )}
                 </div>
 
-                <div className="button-group">
-                  {buttons.map((button, index) => (
-                    <button key={`button-${index}`} className="primary-button outline">
-                      <Link href={button.value} target="_blank">
-                        {button.key}
-                      </Link>
-                    </button>
-                  ))}
-                </div>
-                <div className="printout">
-                  <div>
-                    <span>Get a printout</span>
+                <div className="cta-group">
+                  <div className="button-group">
+                    {buttons.map((button, index) => (
+                      <button type="button" key={`button-${index}`} className="primary-button outline">
+                        <Link href={button.value} target="_blank">
+                          {button.key}
+                        </Link>
+                      </button>
+                    ))}
                   </div>
-                  <div>
-                    <span>Save a copy</span>
+                  <div className="printout">
+                    <div>
+                      <span>Get a printout</span>
+                    </div>
+                    <div>
+                      <span>Save a copy</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="tour-detail-additional-info wrapper">
+          <div className="grid grid-cols-3 gap-y-6 lg:grid-cols-6 tour-detail-additional-info wrapper">
             {product?.tourSummary?.map((summary, key) => (
               <div key={`summary-${key}`} className={`additional-item ${summary.isActive ? '' : 'not-active'}`}>
                 <div className="icon-wrapper">
@@ -290,49 +295,24 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
         </div>
       </div>
       <div className="tour-detail-extra wrapper">
-        <div>
+        {isTablet ? null : (
           <Anchor
             offsetTop={200}
             affix={!isMdScreen}
             showInkInFixed
             items={[
-              {
-                key: '1',
-                href: '#overview',
-                title: 'Overview',
-              },
-              {
-                key: '2',
-                href: '#itinerary',
-                title: 'Itinerary',
-              },
-              // {
-              //   key: '3',
-              //   href: '#transportation',
-              //   title: 'Transportation',
-              // },
-              {
-                key: '4',
-                href: '#accommodation',
-                title: 'Accommodation',
-              },
-              // {
-              //   key: '5',
-              //   href: '#reviews',
-              //   title: 'Reviews',
-              // },
-              {
-                key: '6',
-                href: '#things-to-note',
-                title: 'Things to Note',
-              },
-            ]}
+              product?.overview ? { key: '1', href: '#overview', title: 'Overview' } : null,
+              product?.itinerary ? { key: '2', href: '#itinerary', title: 'Itinerary' } : null,
+              product?.transportation ? { key: '3', href: '#transportation', title: 'Transportation' } : null,
+              product?.accommodation ? { key: '4', href: '#accommodation', title: 'Accommodation' } : null,
+              product?.reviews ? { key: '5', href: '#reviews', title: 'Reviews' } : null,
+              product?.thingsToNote ? { key: '6', href: '#things-to-note', title: 'Things to Note' } : null,
+            ].filter((item) => item !== null)}
           />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 32 }}>
+        )}
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           {product?.overview && (
             <div id="overview">
-              {' '}
               <PortableText value={product?.overview} components={components} />
             </div>
           )}
@@ -340,7 +320,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
             <div id="itinerary">
               <div className="itinerary-title">
                 <h5>Day-by-day Details</h5>
-                <button onClick={toggleExpandAll} className="primary-button outline">
+                <button type="button" onClick={toggleExpandAll} className="primary-button outline">
                   {activeKeys.length === allPanelKeys.length ? 'COLLAPSE ALL' : 'EXPAND ALL +'}
                 </button>
               </div>
@@ -357,14 +337,12 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
               ))}
             </div>
           )}
-
           {product?.accommodation && (
             <div id="accommodation">
               <h5>Accommodation Info</h5>
               {product?.accommodation && <PortableText value={product?.accommodation} components={components} />}
             </div>
           )}
-
           {product?.thingsToNote && (
             <div id="things-to-note">
               <h5>Important Notes</h5>
@@ -375,6 +353,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
           )}
         </div>
       </div>
+
       <div
         style={{
           backgroundImage: `url('/assets/images/home/bg-malaysia-flags.webp')`,
@@ -386,7 +365,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
           bottom: 0,
           zIndex: -1,
         }}
-      ></div>
+      />
     </div>
   );
 };
