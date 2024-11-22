@@ -1,16 +1,16 @@
 'use client';
 
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
-
 import HotDealsCard from '@/components/hot-deals-card';
-import { Pagination } from 'swiper/modules';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { useProducts } from '@/hooks/local/use-products';
+import { Entries } from '@/resources/content-block-registry';
+import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
-import { Entries } from '@/resources/content-block-registry';
+import React from 'react';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperOptions } from 'swiper/types';
 
 const hotDealsSwiperSetting: SwiperOptions = {
   modules: [Pagination],
@@ -36,24 +36,12 @@ const hotDealsSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const HotDealsCarousel = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+const HotDealsCarousel = ({ block, entries }: { block: GetContentBlockResult; entries: Entries }) => {
   const categories = block?.categories;
   const title = block?.title;
   const description = block?.description;
-  const productEntries = entries?.products;
-  const categorySlugs = categories?.map((category) => category?.slug?.current);
 
-  const products = productEntries
-    ?.filter((product) =>
-      categorySlugs?.some((categorySlug) =>
-        product.categories?.some((category) => category.slug?.current === categorySlug)
-      )
-    )
-    .map((product) => ({
-      ...product,
-      categories:
-        product.categories?.filter((category) => !categorySlugs?.includes(category?.slug?.current || '')) || null,
-    }));
+  const products = useProducts({ entries, categories });
 
   if (!products) {
     return <SkeletonLoader />;

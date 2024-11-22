@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
-
-import { Navigation } from 'swiper/modules';
+import { useProducts } from '@/hooks/local/use-products';
+import { Entries } from '@/resources/content-block-registry';
 import { GetContentBlockResult } from '@/sanity/sanity.types';
+import AspectRatioImage from '@elements/aspect-ratio-image';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
-import AspectRatioImage from '@elements/aspect-ratio-image';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { Entries } from '@/resources/content-block-registry';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { SwiperOptions } from 'swiper/types';
 
 const destinationSwiperSetting: SwiperOptions = {
   modules: [Navigation],
@@ -39,23 +38,12 @@ const destinationSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const DestinationCarousel = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+const DestinationCarousel = ({ block, entries }: { block: GetContentBlockResult; entries: Entries }) => {
   const categories = block?.categories;
   const imageUrl = block?.imageUrl;
   const description = block?.description;
-  const productEntries = entries?.products;
-  const categorySlugs = categories?.map((category) => category?.slug?.current);
 
-  const products = productEntries
-    ?.filter((product) =>
-      categorySlugs?.some((categorySlug) =>
-        product.categories?.some((category) => category.slug?.current === categorySlug)
-      )
-    )
-    .map((product) => ({
-      ...product,
-      categories: product.categories?.filter((category) => !categorySlugs?.includes(category?.slug?.current)) || null,
-    }));
+  const products = useProducts({ entries, categories });
 
   if (!products) {
     return <SkeletonLoader />;
