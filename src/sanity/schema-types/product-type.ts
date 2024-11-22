@@ -285,6 +285,7 @@ export const productType = defineType({
       name: 'overview',
       title: 'Overview',
       type: 'array',
+      description: 'Add images in supported formats (excluding SVG)',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
@@ -346,6 +347,7 @@ export const productType = defineType({
     defineField({
       name: 'accommodation',
       title: 'Accommodation',
+      description: 'Add images in supported formats (excluding SVG)',
       type: 'array',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
@@ -365,6 +367,7 @@ export const productType = defineType({
       name: 'thingsToNote',
       title: 'Things to Note',
       type: 'array',
+      description: 'Add images in supported formats (excluding SVG)',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',

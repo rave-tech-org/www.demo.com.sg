@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import MainLayout from '@components/layout/main-layout';
-import { overpass, kapelka } from '@/resources/font';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-
-import '@/styles/global.scss';
 import ReactQueryProvider from '@/elements/react-query-provider';
+import { kapelka, overpass } from '@/resources/font';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import MainLayout from '@components/layout/main-layout';
+import type { Metadata } from 'next';
+import '@/styles/global.scss';
+import '@/styles/tailwind.css';
 
 export const metadata: Metadata = {
   title: 'Lago Travel',

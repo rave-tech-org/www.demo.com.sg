@@ -6,6 +6,7 @@
   .tour-detail-main-info {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .tour-detail-image-wrapper {
@@ -13,33 +14,39 @@
     width: 50%;
 
     @media (max-width: $breakpoint-lg) {
-      width: 90%;
-      margin: 0 auto;
-      .aspect-ratio-container {
-        img {
-          border-radius: 10px;
-        }
-      }
+      width: 100%;
     }
+
     .aspect-ratio-container {
       img {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
+
+        @media (max-width: $breakpoint-lg) {
+          border-radius: 0;
+        }
       }
     }
     img {
       position: absolute;
-      bottom: 4rem;
+      bottom: 2rem;
       right: 2rem;
+      cursor: pointer;
     }
   }
   .tour-detail-book-now {
     flex: 1;
     padding: 1.5rem 3.5rem;
+
+    @media (max-width: $breakpoint-lg) {
+      padding: 2rem 1rem;
+    }
+
     .location-label {
       display: flex;
       align-items: center;
       margin-left: -0.25rem;
+      margin-bottom: 0.5rem;
       span {
         color: $text-danger;
         font-weight: $bold-font-weight;
@@ -67,7 +74,7 @@
         text-decoration: underline;
         color: $muted-text-color;
         font-weight: $bold-font-weight;
-        margin-left: .5rem;
+        margin-left: 0.5rem;
       }
     }
     .pricing {
@@ -81,7 +88,7 @@
         sup {
           color: $text-danger;
           text-decoration: line-through;
-          opacity: .8;
+          opacity: 0.8;
           font-size: $font-body;
         }
       }
@@ -100,24 +107,48 @@
           color: $text-danger;
           text-decoration: underline;
           font-style: italic;
-          opacity: .8;
+          opacity: 0.8;
         }
       }
     }
-    .button-group {
+    .cta-group {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-      .primary-button {
-        min-width: 141px;
-        padding: .5rem 2rem;
+      flex-direction: column;
+      width: fit-content;
+      max-width: 800px;
+
+      @media (max-width: $breakpoint-lg) {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+        width: 100%;
+
+        @media (max-width: $breakpoint-lg) {
+          justify-content: space-between;
+          flex-wrap: nowrap;
+        }
+
+        .primary-button {
+          min-width: 141px;
+          padding: 0.5rem 2rem;
+
+          @media (max-width: $breakpoint-lg) {
+            min-width: 100px;
+            padding: 0.5rem 1rem;
+          }
+        }
       }
     }
     .printout {
-      padding-left: 15%;
       padding-top: 1rem;
       display: flex;
+      justify-content: center;
       gap: 1rem;
       & > div {
         display: flex;
@@ -133,19 +164,15 @@
   }
 
   .tour-detail-additional-info {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     padding-top: 4rem;
     padding-bottom: 4rem;
-    gap: 4rem;
     .additional-item {
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: center;
       &.not-active {
-        opacity: .6;
+        opacity: 0.6;
       }
       p {
         color: $book-now-color;
@@ -175,20 +202,22 @@
   .tour-detail-extra {
     padding-top: 4rem;
     display: flex;
-    gap: 3rem;
+    gap: 4rem;
     .tour-detail-panel {
       padding: 1rem;
       margin-left: 10rem;
     }
+
     @media (max-width: $breakpoint-md) {
       flex-wrap: wrap;
+      gap: 3rem;
     }
   }
 
   .ant-anchor {
     width: 160px;
     &::before {
-      border-inline-start: 2px solid rgba(5, 5, 5, .3) !important;
+      border-inline-start: 2px solid rgba(5, 5, 5, 0.3) !important;
       left: 12rem !important;
     }
     .ant-anchor-link {
@@ -236,7 +265,7 @@
     border: 0;
     background: #fff;
     .ant-collapse-header {
-      background-color: rgba(17, 125, 194, .1);
+      background-color: rgba(17, 125, 194, 0.1);
       flex-direction: row-reverse;
       border-radius: 10px !important;
 
@@ -248,8 +277,8 @@
       border: 1px solid #e3e3e3;
       border-radius: 10px !important;
       margin-bottom: 1rem;
-      &.ant-collapse-item-active{
-        padding-bottom: .4rem;
+      &.ant-collapse-item-active {
+        padding-bottom: 0.4rem;
         .ant-collapse-header {
           border-bottom: 1px solid #d9d9d9;
         }
@@ -260,18 +289,15 @@
     }
     .ant-collapse-content {
       border-top: 0;
-
-      
     }
     .ant-collapse-header-text {
       color: $primary-color;
       font-weight: $bold-font-weight;
-      letter-spacing: .5px;
+      letter-spacing: 0.5px;
     }
   }
 
   #overview {
-    padding-top: 2rem;
     h5 {
       color: $primary-color;
       font-weight: $heading-font-weight;
@@ -282,6 +308,7 @@
       padding-bottom: 2rem;
     }
   }
+
   #itinerary {
     padding-top: 2rem;
     margin-bottom: 2rem;
@@ -294,7 +321,7 @@
     }
     .primary-button {
       min-width: 141px;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
     }
     h5 {
       color: $primary-color;
@@ -315,14 +342,14 @@
         }
         .swiper-button-prev {
           color: #fff;
-          &::after{
+          &::after {
             font-size: 1.5rem;
             font-weight: $bold-font-weight;
           }
         }
         .swiper-button-next {
           color: #fff;
-          &::after{
+          &::after {
             font-size: 1.5rem;
             font-weight: $bold-font-weight;
           }
@@ -361,7 +388,7 @@
     }
   }
   .important-note {
-    background: rgb(195, 153, 107, .2);
+    background: rgb(195, 153, 107, 0.2);
     padding: 1.5rem 2.5rem;
     border-radius: 10px;
     h6 {
@@ -375,7 +402,7 @@
       }
     }
     ol {
-      list-style:decimal;
+      list-style: decimal;
       strong {
         display: block;
       }
