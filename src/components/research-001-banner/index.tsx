@@ -18,7 +18,6 @@ export default function ResearchZeroZeroOneBanner<
   const custom = transformObject<ResearchZeroZeroOneBannerCustomAttributesProps>(block?.customAttributes);
   const ctaText = custom['cta-text'];
 
-  console.log(data);
   const { cardHeight, cardWidth, gap, numberSize } = config;
 
   const isInitializedRef = useRef(false);
