@@ -34,7 +34,7 @@ const DestinationDetailLago = ({
       value: '/',
     },
     {
-      key: 'EXPLORE OTHER DESTINATIONS',
+      key: 'EXPLORE OTHER DESTINATION',
       value: '/',
     },
   ];
