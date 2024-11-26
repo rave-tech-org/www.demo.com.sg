@@ -138,6 +138,14 @@ export const productType = defineType({
     }),
 
     defineField({
+      name: 'helpIcon',
+      title: 'Help Icon',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: ({ parent }) => parent?.productType !== 'destination',
+    }),
+
+    defineField({
       name: 'bookingUrl',
       title: 'Booking URL',
       type: 'url',
