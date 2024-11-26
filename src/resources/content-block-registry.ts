@@ -3,6 +3,7 @@ import ContentBackground from '@/components/content-background';
 import DestinationCarousel from '@/components/destination-carousel';
 import HotDealsCarousel from '@/components/hot-deals-carousel';
 import NavigationMenu from '@/components/layout/navigation-menu';
+import ResearchZeroZeroOneBanner from '@/components/research-001-banner';
 import SeeMoreArticles from '@/components/see-more-articles';
 import TestimonialCarousel from '@/components/testimonial-carousel';
 import TourSearchResult from '@/components/tour-search-result';
@@ -37,6 +38,7 @@ const contentBlockRegistry = new Map<
   ['see-more-articles', SeeMoreArticles],
   ['social-link', NavigationMenu],
   ['tour-search-and-result', TourSearchResult],
+  ['research-001-banner', ResearchZeroZeroOneBanner],
 ]);
 
 export default contentBlockRegistry;
