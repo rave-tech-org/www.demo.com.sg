@@ -55,9 +55,7 @@ const ProductCarousel = ({ title = 'Explore Our Tour Packages', products }: Prod
           <Swiper {...productCarouselSwiperSetting}>
             {products.map((product, index) => (
               <SwiperSlide key={index}>
-                {/*  */}
                 <ProductCarouselCard {...product} />
-                {/*  */}
               </SwiperSlide>
             ))}
           </Swiper>
