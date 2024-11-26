@@ -1,8 +1,10 @@
 import DestinationDetailLago from '@/components/destination-detail-lago';
 import { DestinationProduct } from '@/components/destination-detail-lago/type';
+import { ModifiedProduct } from '@/components/product-carousel/type';
 import { PostType } from '@/components/see-more-articles/type';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GetPosts, GetProductBySlug, GetProductsByCategory } from '@/sanity/lib/queries/cms';
+// import { Product } from '@/sanity/sanity.types';
 
 export default async function DestinationPage({ params }: { params: { slug: string } }) {
   const slug = params?.slug as string;
@@ -19,7 +21,7 @@ export default async function DestinationPage({ params }: { params: { slug: stri
     tags: ['post'],
   });
 
-  const products = await sanityFetch<DestinationProduct>({
+  const relatedProducts = await sanityFetch<ModifiedProduct[]>({
     query: GetProductsByCategory,
     tags: ['product'],
     qParams: { categorySlug: 'penang' },
@@ -31,5 +33,12 @@ export default async function DestinationPage({ params }: { params: { slug: stri
     return { text, link: href };
   });
   breadcrumbs.unshift({ text: 'Home', link: '/' });
-  return <DestinationDetailLago product={product} breadcrumbs={breadcrumbs} posts={posts} />;
+  return (
+    <DestinationDetailLago
+      product={product}
+      relatedProducts={relatedProducts}
+      breadcrumbs={breadcrumbs}
+      posts={posts}
+    />
+  );
 }

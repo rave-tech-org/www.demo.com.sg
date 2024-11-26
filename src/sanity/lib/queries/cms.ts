@@ -205,6 +205,7 @@ export const GetProductBySlug = defineQuery(`
     duration,
     description,
     "imageUrl": image.asset->url,
+    "helpIconImageUrl": helpIcon.asset->url,
     landArea,
     averageClimate,
     travelDuration,
