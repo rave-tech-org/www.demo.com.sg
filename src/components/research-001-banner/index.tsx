@@ -315,7 +315,7 @@ export default function ResearchZeroZeroOneBanner<
   });
 
   return (
-    <Fragment>
+    <div className="research-001-banner-wrapper">
       <div className="indicator" />
 
       <div id="demo">
@@ -404,6 +404,6 @@ export default function ResearchZeroZeroOneBanner<
       </div>
 
       <div className="cover" />
-    </Fragment>
+    </div>
   );
 }

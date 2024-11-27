@@ -11,7 +11,6 @@ export default async function ContentBlockPage({ params }: { params: { slug: str
     qParams: { slug: params?.slug || 'home-banner' },
   });
 
-  console.log(block);
   const entries = await useEntries();
 
   const Component = contentBlockRegistry.get(block?.slug?.current || '');
