@@ -1,8 +1,7 @@
 'use client';
 
-import { Entries } from '@/hooks/local/use-entries';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { useProducts } from '@/hooks/local/use-products';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
@@ -38,7 +37,7 @@ const destinationSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const ExploreDestination = ({ block, entries }: { block: GetContentBlockResult; entries: Entries }) => {
+const ExploreDestination = ({ block, entries }: ContentBlockRegistry) => {
   const categories = block?.categories;
   const imageUrl = block?.imageUrl;
   const description = block?.description;

@@ -2,9 +2,8 @@
 
 import HotDealsCard from '@/components/hot-deals-card';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { Entries } from '@/hooks/local/use-entries';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { useProducts } from '@/hooks/local/use-products';
-import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
 import React from 'react';
@@ -36,7 +35,7 @@ const hotDealsSwiperSetting: SwiperOptions = {
   spaceBetween: 30,
 };
 
-const HotDeals = ({ block, entries }: { block: GetContentBlockResult; entries: Entries }) => {
+const HotDeals = ({ block, entries }: ContentBlockRegistry) => {
   const categories = block?.categories;
   const title = block?.title;
   const description = block?.description;

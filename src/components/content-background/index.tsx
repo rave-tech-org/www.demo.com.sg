@@ -1,15 +1,15 @@
 'use client';
 
 import useViewport from '@/hooks/client/use-viewport';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import AspectRatioImage from '@elements/aspect-ratio-image';
+import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
 import { CustomContentBackgroundAttribute } from './type';
-import ViewIn from '@elements/view-in';
 
-const ContentBackground = ({ block }: { block: GetContentBlockResult }) => {
+const ContentBackground = ({ block }: ContentBlockRegistry) => {
   const customAttributes = block?.customAttributes;
   const imageUrl = block?.imageUrl || '';
   const { isMobile, isTablet } = useViewport();

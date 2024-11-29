@@ -46,7 +46,7 @@ export const useContentBlocks = async () => {
 
   const registry = new Map<
     string,
-    ({ block }: { block: GetContentBlockResult; entries: Entries }) => Promise<React.JSX.Element> | React.JSX.Element
+    ({ block, entries }: ContentBlockRegistry) => Promise<React.JSX.Element> | React.JSX.Element
   >();
 
   await Promise.all(
@@ -62,9 +62,11 @@ export const useContentBlocks = async () => {
     })
   );
 
-  console.info('Skipping content-blocks:', skippedSlugs);
+  console.info('Skipped content-blocks:', skippedSlugs);
   console.log('Components found for these content-blocks:', foundComponentsSlugs);
   console.warn('Components not found for these content-blocks:', notFoundComponentsSlugs);
 
   return registry;
 };
+
+export type ContentBlockRegistry = { block: GetContentBlockResult; entries: Entries };

@@ -2,8 +2,7 @@
 
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { Entries } from '@/hooks/local/use-entries';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { RightOutlined } from '@ant-design/icons';
 import HotDealsCard from '@components/hot-deals-card';
 import { Checkbox, Collapse, CollapseProps, GetProps, Input, Pagination, Select, Slider } from 'antd';
@@ -15,7 +14,7 @@ const CheckboxGroup = Checkbox.Group;
 
 const { Search } = Input;
 
-const TourSearchResult = ({ entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+const TourSearchResult = ({ entries }: ContentBlockRegistry) => {
   const [destinationCheckedList, setDestinationCheckedList] = useState<string[]>([]);
   const [hotDealsCheckedList, setHotDealsCheckedList] = useState<string[]>([]);
 

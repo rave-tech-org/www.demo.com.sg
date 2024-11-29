@@ -1,7 +1,6 @@
 'use client';
 
-import { Entries } from '@/hooks/local/use-entries';
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
@@ -27,7 +26,7 @@ const bannerSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const HomeBanner = ({ block }: { block: GetContentBlockResult; entries: Entries }) => {
+const HomeBanner = ({ block }: ContentBlockRegistry) => {
   const customAttributes = block?.customAttributes;
   const listItems = block?.listItems;
   const custom = transformObject<CustomBannerAttribute>(customAttributes);

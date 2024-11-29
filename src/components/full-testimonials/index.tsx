@@ -1,7 +1,6 @@
 'use client';
 
-import type { Entries } from '@/hooks/local/use-entries';
-import type { GetContentBlockResult } from '@/sanity/sanity.types';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import TestimonialCard from '@components/testimonial-card';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
@@ -32,7 +31,7 @@ const testimonialSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const FullTestimonials = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+const FullTestimonials = ({ block, entries }: ContentBlockRegistry) => {
   const title = block?.title;
   const description = block?.description;
   const testimonialEntries = entries?.testimonials;
