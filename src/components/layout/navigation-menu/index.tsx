@@ -1,10 +1,10 @@
 'use client';
 
-import NextImage from '@elements/next-image';
-import Select from '@elements/select';
-import Link from 'next/link';
+import DropDown from '@/elements/dropdown';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
+import NextImage from '@elements/next-image';
+import Link from 'next/link';
 
 const NavigationMenu = () => {
   const navigation = useNavigation();
@@ -53,8 +53,9 @@ const NavigationMenu = () => {
             <ul>
               {navigationMenuItems?.map((item, key) => (
                 <li key={`menu-item-${key}`}>
-                  <Select
+                  <DropDown
                     items={item.subMenu}
+                    isSelect
                     label={
                       <Link href={item.marks?.href || '/'}>
                         <h6>{item.text}</h6>
@@ -72,7 +73,7 @@ const NavigationMenu = () => {
               <span>{findDesc?.text}</span>
             </Link>
 
-            <Select
+            <DropDown
               labelRender={(label) => (
                 <Link href="/">
                   <NextImage
@@ -86,6 +87,7 @@ const NavigationMenu = () => {
               )}
               panelClassName="mobile-language-select"
               items={languageOptions}
+              defaultSelected={languageOptions[0]}
               isSelect
             />
           </div>

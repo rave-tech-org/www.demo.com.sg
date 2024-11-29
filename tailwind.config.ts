@@ -111,6 +111,7 @@ const config = {
         },
       });
     }),
+    require('tailwindcss-motion'),
   ],
 } satisfies Config;
 

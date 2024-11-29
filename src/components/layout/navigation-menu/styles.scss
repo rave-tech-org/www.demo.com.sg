@@ -75,6 +75,19 @@
         }
       }
     }
+
+    #generic-dropdown {
+      .dropdown-control {
+        width: 100%;
+        h3 {
+          text-transform: uppercase;
+          font-weight: $heading-font-weight;
+        }
+        svg {
+          color: $primary-color;
+        }
+      }
+    }
   }
 }
 
@@ -83,5 +96,11 @@
   .select-panel {
     width: 12.5rem;
     margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  div.ant-dropdown:not(.ant-dropdown-hidden) {
+    z-index: 10000;
   }
 }
