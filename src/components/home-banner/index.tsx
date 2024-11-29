@@ -1,6 +1,6 @@
 'use client';
 
-import { Entries } from '@/resources/content-block-registry';
+import { Entries } from '@/hooks/local/use-entries';
 import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
 import ViewIn from '@elements/view-in';
@@ -27,7 +27,7 @@ const bannerSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const BannerCarousel = ({ block }: { block: GetContentBlockResult; entries: Entries }) => {
+const HomeBanner = ({ block }: { block: GetContentBlockResult; entries: Entries }) => {
   const customAttributes = block?.customAttributes;
   const listItems = block?.listItems;
   const custom = transformObject<CustomBannerAttribute>(customAttributes);
@@ -73,4 +73,4 @@ const BannerCarousel = ({ block }: { block: GetContentBlockResult; entries: Entr
   );
 };
 
-export default BannerCarousel;
+export default HomeBanner;

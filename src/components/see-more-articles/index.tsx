@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { CustomSeeMoreAttributes } from './type';
 import ViewIn from '@/elements/view-in';
-import { PortableText } from 'next-sanity';
+import { Entries } from '@/hooks/local/use-entries';
 import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
-import { Entries } from '@/resources/content-block-registry';
+import { PortableText } from 'next-sanity';
+import Link from 'next/link';
+import { CustomSeeMoreAttributes } from './type';
 
 const SeeMoreArticles = async ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
   const description = block?.description;

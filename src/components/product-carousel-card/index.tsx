@@ -1,3 +1,5 @@
+'use client';
+
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';

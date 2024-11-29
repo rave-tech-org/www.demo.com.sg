@@ -1,4 +1,4 @@
-import { ModifiedProduct } from '@/components/hot-deals-carousel/type';
+import { ModifiedProduct } from '@/components/hot-deals/type';
 import { Product } from '@/sanity/sanity.types';
 
 export type TourDetailItineraryProduct = Omit<ModifiedProduct, 'itinerary'> & {

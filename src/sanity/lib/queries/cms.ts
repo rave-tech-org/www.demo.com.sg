@@ -341,3 +341,28 @@ export const GetCategories = defineQuery(`
     }
   }
 `);
+
+export const GetContentBlocks = defineQuery(`
+  *[_type == "contentBlock"] {
+    _id,
+    slug,
+    blockType,
+    title,
+    description,
+    image,
+    "imageUrl": image.asset->url,
+    "fileUrl": file.asset->url,
+    customAttributes,
+    listItems[]{
+      title,
+      slug,
+      description,
+      image,
+      "imageUrl": image.asset->url,
+    },
+    "categories": categoryBlock[]->{
+      _id,
+      slug,
+    }
+  }
+`);

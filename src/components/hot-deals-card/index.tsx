@@ -1,13 +1,14 @@
-import { useState } from 'react';
+'use client';
+
+import { GetProductsResult } from '@/sanity/sanity.types';
+import { formatCurrency, transformObject } from '@/utils';
 import AspectRatioImage from '@elements/aspect-ratio-image';
-import { animated, useSpring } from '@react-spring/web';
 import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';
-
-import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
-import { formatCurrency, transformObject } from '@/utils';
+import { animated, useSpring } from '@react-spring/web';
 import Link from 'next/link';
-import { GetProductsResult } from '@/sanity/sanity.types';
+import { useState } from 'react';
+import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
 
 const HotDealsCard = (props: GetProductsResult[number]) => {
   const [hovered, setHovered] = useState(false);

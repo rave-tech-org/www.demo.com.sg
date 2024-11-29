@@ -1,5 +1,5 @@
+import { useContentBlocks } from '@/hooks/local/use-content-blocks';
 import { useEntries } from '@/hooks/local/use-entries';
-import contentBlockRegistry from '@/resources/content-block-registry';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GetContentBlockBySlug } from '@/sanity/lib/queries/cms';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
@@ -11,8 +11,8 @@ export default async function ContentBlockPage({ params }: { params: { slug: str
     qParams: { slug: params?.slug || 'home-banner' },
   });
 
-  const entries = await useEntries();
+  const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);
 
-  const Component = contentBlockRegistry.get(block?.slug?.current || '');
+  const Component = contentBlock.get(block?.slug?.current || '');
   return <main className="block-wrapper">{Component ? <Component entries={entries} block={block} /> : null}</main>;
 }

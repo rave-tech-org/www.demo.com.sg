@@ -1,4 +1,4 @@
-import type { Entries } from '@/resources/content-block-registry';
+import { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
 
 export interface ResearchZeroZeroOneBannerProps<B = GetContentBlockResult, E = Entries> {

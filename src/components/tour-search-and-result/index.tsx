@@ -2,7 +2,7 @@
 
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { Entries } from '@/resources/content-block-registry';
+import { Entries } from '@/hooks/local/use-entries';
 import { GetContentBlockResult } from '@/sanity/sanity.types';
 import { RightOutlined } from '@ant-design/icons';
 import HotDealsCard from '@components/hot-deals-card';
