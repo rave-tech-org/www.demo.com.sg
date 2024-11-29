@@ -1610,6 +1610,89 @@ export type GetCategoriesResult = Array<{
     slug: Slug | null;
   } | null;
 }>;
+// Variable: GetContentBlocks
+// Query: *[_type == "contentBlock"] {    _id,    slug,    blockType,    title,    description,    image,    "imageUrl": image.asset->url,    "fileUrl": file.asset->url,    customAttributes,    listItems[]{      title,      slug,      description,      image,      "imageUrl": image.asset->url,    },    "categories": categoryBlock[]->{      _id,      slug,    }  }
+export type GetContentBlocksResult = Array<{
+  _id: string;
+  slug: Slug | null;
+  blockType: 'basic' | 'categoryBlock' | 'list' | 'post' | 'testimonial' | null;
+  title: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: 'span';
+      _key: string;
+    }>;
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+    listItem?: 'bullet' | 'number';
+    markDefs?: Array<{
+      href?: string;
+      _type: 'link';
+      _key: string;
+    }>;
+    level?: number;
+    _type: 'block';
+    _key: string;
+  }> | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  } | null;
+  imageUrl: string | null;
+  fileUrl: string | null;
+  customAttributes: Array<{
+    key?: string;
+    value?: string;
+    _type: 'attribute';
+    _key: string;
+  }> | null;
+  listItems: Array<{
+    title: string | null;
+    slug: Slug | null;
+    description: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<{
+        href?: string;
+        _type: 'link';
+        _key: string;
+      }>;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }> | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: 'image';
+    } | null;
+    imageUrl: string | null;
+  }> | null;
+  categories: Array<{
+    _id: string;
+    slug: Slug | null;
+  }> | null;
+}>;
 
 // Query TypeMap
 import '@sanity/client';
@@ -1632,5 +1715,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "product"] {\n    _id,\n    name,\n    slug,\n    price,\n    productType,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsResult;
     '\n  *[_type == "contentBlock"][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    "fileUrl": file.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlockResult;
     '\n  *[_type == "category"] {\n    _id,\n    name,\n    slug,\n    parentCategory-> {\n      slug\n    }\n  }\n': GetCategoriesResult;
+    '\n  *[_type == "contentBlock"] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    "fileUrl": file.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlocksResult;
   }
 }

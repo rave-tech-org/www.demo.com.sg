@@ -1,5 +1,5 @@
-import type { Entries } from '@/resources/content-block-registry';
 import type { Slug } from '@/sanity/sanity.types';
+import { Entries } from './use-entries';
 
 type Props = {
   entries: Entries;

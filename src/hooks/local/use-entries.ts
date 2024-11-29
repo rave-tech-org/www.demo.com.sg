@@ -35,3 +35,10 @@ export const useEntries = async () => {
     posts,
   };
 };
+
+export type Entries = {
+  categories: GetCategoriesResult;
+  products: GetProductsResult;
+  testimonials: GetTestimonialsResult;
+  posts: GetPostsResult;
+};

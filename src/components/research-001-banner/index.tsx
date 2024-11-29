@@ -1,6 +1,6 @@
 'use client';
 
-import type { Entries } from '@/resources/content-block-registry';
+import { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
 import { gsap } from 'gsap';

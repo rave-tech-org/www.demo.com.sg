@@ -1,8 +1,8 @@
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import TravelInterestCard from '@components/travel-interest-card';
 import { PortableText } from 'next-sanity';
 
-const TravelInterestGroup = ({ block }: { block: GetContentBlockResult }) => {
+const TravelInterestGroup = ({ block }: ContentBlockRegistry) => {
   const title = block?.title;
   const listItems = block?.listItems;
   const description = block?.description;

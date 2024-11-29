@@ -1,9 +1,8 @@
 'use client';
 
-import { ListItemBlock } from '@/components/banner-carousel/type';
 import NextImage from '@/elements/next-image';
 import useNavigation from '@/hooks/local/use-navigation';
-import { FOOTER_MENU, SOCIAL_LINK } from '@/resources/constant';
+import { FOOTER_MENU } from '@/resources/constant';
 import { useSanityQuery } from '@/sanity/lib/client';
 import { GetFooterLayout } from '@/sanity/lib/queries/cms';
 import { ContentBlock } from '@/sanity/sanity.types';

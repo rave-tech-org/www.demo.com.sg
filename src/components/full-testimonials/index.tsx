@@ -1,15 +1,13 @@
 'use client';
 
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
-
-import { GetContentBlockResult } from '@/sanity/sanity.types';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import TestimonialCard from '@components/testimonial-card';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
-import TestimonialCard from '@components/testimonial-card';
-import { Entries } from '@/resources/content-block-registry';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { SwiperOptions } from 'swiper/types';
 
 const testimonialSwiperSetting: SwiperOptions = {
   slidesPerView: 1.4,
@@ -33,7 +31,7 @@ const testimonialSwiperSetting: SwiperOptions = {
   spaceBetween: 8,
 };
 
-const TestimonialCarousel = ({ block, entries }: { block: GetContentBlockResult; entries?: Entries }) => {
+const FullTestimonials = ({ block, entries }: ContentBlockRegistry) => {
   const title = block?.title;
   const description = block?.description;
   const testimonialEntries = entries?.testimonials;
@@ -68,4 +66,4 @@ const TestimonialCarousel = ({ block, entries }: { block: GetContentBlockResult;
   );
 };
 
-export default TestimonialCarousel;
+export default FullTestimonials;

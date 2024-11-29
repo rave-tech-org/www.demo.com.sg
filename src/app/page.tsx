@@ -1,6 +1,6 @@
 import SkeletonLoader from '@/elements/skeleton-loader';
+import { useContentBlocks } from '@/hooks/local/use-content-blocks';
 import { useEntries } from '@/hooks/local/use-entries';
-import contentBlockRegistry from '@/resources/content-block-registry';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GetPage, GetPageMeta } from '@/sanity/lib/queries/cms';
 import type { GetPageResult, Page } from '@/sanity/sanity.types';
@@ -27,12 +27,12 @@ export default async function Home() {
     qParams: { name: 'home-page' },
   });
 
-  const entries = await useEntries();
+  const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);
 
   return (
     <main>
       {homePage?.layout?.map((block, index) => {
-        const Component = contentBlockRegistry.get(block.slug?.current || '');
+        const Component = contentBlock.get(block.slug?.current || '');
         return (
           <Suspense key={`home-page-${index}`} fallback={<SkeletonLoader />}>
             {Component ? <Component block={block} entries={entries} /> : null}
