@@ -16,7 +16,7 @@ function DropDown({
   label,
   placement = 'bottomRight',
   isSelect = false,
-  panelClassName,
+  panelClassName = '',
   controlClassName = '',
   labelRender,
   defaultSelected,
