@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import Drawer from '@/elements/drawer';
-import SkeletonLoader from '@/elements/skeleton-loader';
 import Collapse from '@/elements/collapse';
-import Link from 'next/link';
-import NextImage from '@/elements/next-image';
+import Drawer from '@/elements/drawer';
 import { MenuBurger } from '@/elements/icons/menu-burger';
-import Select from '@/elements/select';
+import NextImage from '@/elements/next-image';
+import SkeletonLoader from '@/elements/skeleton-loader';
+import Link from 'next/link';
+import React, { useState } from 'react';
+// import Select from '@/elements/select';
+import DropDown from '@/elements/dropdown';
 import useNavigation from '@/hooks/local/use-navigation';
 import { ContentBlock } from '@/sanity/sanity.types';
 
@@ -83,7 +84,7 @@ export const MobileNavigation: React.FC = () => {
                     }
                   >
                     {item.subMenu.map((menu, key) => (
-                      <h5 key={`submenu-item-${key}`} onClick={menu.onClickItem}>
+                      <h5 key={`submenu-item-${key}`} onClick={menu.onClick}>
                         {menu.label}
                       </h5>
                     ))}
@@ -100,7 +101,7 @@ export const MobileNavigation: React.FC = () => {
             <span>{findDesc?.text}</span>
           </Link>
 
-          <Select
+          <DropDown
             labelRender={(label) => (
               <Link href="/">
                 <NextImage
@@ -114,6 +115,7 @@ export const MobileNavigation: React.FC = () => {
             )}
             panelClassName="mobile-language-select"
             items={languageOptions}
+            defaultSelected={languageOptions[0]}
             isSelect
           />
         </div>

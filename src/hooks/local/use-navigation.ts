@@ -1,8 +1,8 @@
+import { NAVIGATION_MENU, NAVIGATION_MENU_FIND, NAVIGATION_MENU_LANGUAGE, SOCIAL_LINK } from '@/resources/constant';
 import { useSanityQuery } from '@/sanity/lib/client';
 import { GetHeaderLayout } from '@/sanity/lib/queries/cms';
-import { buildMenu } from '@/utils/build-menu';
-import { NAVIGATION_MENU, NAVIGATION_MENU_FIND, NAVIGATION_MENU_LANGUAGE, SOCIAL_LINK } from '@/resources/constant';
 import { GetPageResult } from '@/sanity/sanity.types';
+import { buildMenu } from '@/utils/build-menu';
 
 const useNavigation = () => {
   const { data: menuLayout, ...rest } = useSanityQuery<GetPageResult>({
@@ -23,10 +23,9 @@ const useNavigation = () => {
       text: item.text,
       marks: item?.marks,
       subMenu: item.subMenu.map((sub) => ({
+        key: sub.text,
         label: sub.text,
-        value: sub.text,
-        onClickItem: () => {
-          // todo: implement more reliable approach
+        onClick: () => {
           window.location.href = sub.marks?.href || '/';
         },
       })),
@@ -44,9 +43,10 @@ const useNavigation = () => {
   const languageOptions =
     languageMenu?.map((item) => {
       return {
+        key: item.text,
         label: item.text,
-        value: item.text,
-        onClickItem: () => {},
+        // value: item.text,
+        onClick: () => {},
       };
     }) || [];
 
