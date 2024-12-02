@@ -129,14 +129,14 @@ const DestinationDetailLago = ({
       >
         <div className="destination-help-group-content wrapper">
           <div className="flex max-md:flex-col max-md:gap-y-4 mx-auto w-full justify-center items-center">
-            <div className="image-wrapper">
+            {/* <div className="image-wrapper">
               <Image
                 src={product.helpIconImageUrl || '/assets/images/destination/bear.png'}
                 alt={product.name || ''}
                 width={256}
                 height={256}
               />
-            </div>
+            </div> */}
             <div className="text-wrapper">
               <div className="upper-content">
                 <h5>Can&apos;t find what you are looking for?</h5>

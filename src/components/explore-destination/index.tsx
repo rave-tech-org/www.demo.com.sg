@@ -80,7 +80,7 @@ const ExploreDestination = ({ block, entries }: ContentBlockRegistry) => {
                     <div className="content">
                       <p>{product.name}</p>
                     </div>
-                    <div className="image">
+                    {/* <div className="image">
                       <AspectRatioImage
                         src="/assets/images/home/label-destination.webp"
                         alt="Default Destination Image"
@@ -88,7 +88,7 @@ const ExploreDestination = ({ block, entries }: ContentBlockRegistry) => {
                         priority
                         objFit="contain"
                       />
-                    </div>
+                    </div> */}
                   </Link>
                 </SwiperSlide>
               ))}

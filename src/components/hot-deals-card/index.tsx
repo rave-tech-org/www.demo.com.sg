@@ -32,7 +32,7 @@ const HotDealsCard = (props: GetProductsResult[number]) => {
       <Link href={`/tour/${slug?.current}`}>
         <div className="card-image-container black-opacity-background">
           <AspectRatioImage src={imageUrl || ''} alt={name || ''} aspectRatio="1/1" priority />
-          <animated.div className="special-card-label" style={springStyle}>
+          {/* <animated.div className="special-card-label" style={springStyle}>
             <AspectRatioImage
               src="/assets/images/tour/special-card-label.webp"
               alt="Default Tour Image"
@@ -40,7 +40,7 @@ const HotDealsCard = (props: GetProductsResult[number]) => {
               priority
               objFit="contain"
             />
-          </animated.div>
+          </animated.div> */}
         </div>
 
         <div className="card-content">
