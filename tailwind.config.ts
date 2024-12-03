@@ -9,20 +9,54 @@ const config = {
   theme: {
     extend: {
       colors: {
-        primary: '#117dc2',
-        secondary: '#1e1e1e',
-        accent: '#1b75bb',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
         text: '#333',
-        muted: '#888888',
-        border: '#e0e0e0',
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        border: 'hsl(var(--border))',
         danger: ' #ec1c24',
         'tag-success': 'rgba(0, 254, 30, 0.2)',
         'tag-primary': ' rgba(0, 254, 251, 0.2)',
         'tag-special': 'rgba(236, 28, 36, 0.2)',
         rating: '#ffc107',
         'book-now': '#c3996b',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
       },
-
       fontFamily: {
         default: ['var(--font-overpass)', ...fontFamily.sans],
         secondary: ['var(--font-kapelka)', ...fontFamily.sans],
@@ -31,7 +65,12 @@ const config = {
         '3xl': '2056px',
       },
       borderWidth: {
-        1: '1px',
+        '1': '1px',
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -112,6 +151,7 @@ const config = {
       });
     }),
     require('tailwindcss-motion'),
+    require('tailwindcss-animate'),
   ],
 } satisfies Config;
 
