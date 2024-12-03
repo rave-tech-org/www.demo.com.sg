@@ -2,12 +2,11 @@
 
 import { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
-import { Swiper } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import { EffectFade, Mousewheel, Pagination } from 'swiper/modules';
-import { useEffect } from 'react';
 import { ResearchZeroZeroTwoBannerProps } from './type';
 import { PortableText } from 'next-sanity';
 
@@ -16,78 +15,60 @@ export default function ResearchZeroZeroTwoBanner<
   E = Entries,
 >({ block }: ResearchZeroZeroTwoBannerProps<B, E>) {
   const data = block?.listItems || [];
-  //   console.log(data);
-
-  useEffect(() => {
-    Swiper.use([Mousewheel, Pagination, EffectFade]);
-
-    const swiper = new Swiper('.swiper-container', {
-      direction: 'vertical',
-      effect: 'fade',
-      speed: 1000,
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      mousewheel: {
-        invert: false,
-        forceToAxis: false,
-        thresholdDelta: 50,
-        sensitivity: 1,
-      },
-      on: {
-        slideChange: function () {
-          const swiperInstance = this as unknown as Swiper;
-
-          swiperInstance.slides.forEach((slide) => {
+  return (
+    <div className="research-002-banner-wrapper">
+      <Swiper
+        modules={[Mousewheel, Pagination, EffectFade]}
+        className="swiper-container"
+        direction="vertical"
+        effect="fade"
+        speed={1000}
+        loop={true}
+        pagination={{
+          clickable: true,
+          el: '.swiper-pagination',
+        }}
+        mousewheel={{
+          invert: false,
+          forceToAxis: false,
+          thresholdDelta: 50,
+          sensitivity: 1,
+        }}
+        onSlideChange={(swiper) => {
+          swiper.slides.forEach((slide) => {
             const background = (slide as HTMLElement).querySelector('.background');
             if (background) {
               background.classList.remove('animation');
             }
           });
 
-          const activeSlide = swiperInstance.slides[swiperInstance.activeIndex] as HTMLElement;
+          const activeSlide = swiper.slides[swiper.activeIndex] as HTMLElement;
           const background = activeSlide.querySelector('.background');
           if (background) {
             background.classList.add('animation');
           }
-        },
-      },
-    });
-
-    return () => {
-      swiper.destroy();
-    };
-  }, []);
-
-  return (
-    <div className="research-002-banner-wrapper">
-      <div className="swiper-container">
-        <div className="swiper-wrapper">
-          {data.map((item, index) => {
-            return (
-              <div className="swiper-slide" key={index}>
-                <div className="content" data-content="one">
-                  <h1>{item.title}</h1>
-                  <div>
-                    <PortableText value={item.description ?? []} />
-                  </div>
-                </div>
-                <div
-                  className="background"
-                  style={{
-                    backgroundImage: `url(${item.imageUrl})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: '50% 40%',
-                  }}
-                ></div>
+        }}
+      >
+        {data.map((item, index) => (
+          <SwiperSlide key={index}>
+            <div className="content" data-content="one">
+              <h1>{item.title}</h1>
+              <div>
+                <PortableText value={item.description ?? []} />
               </div>
-            );
-          })}
-        </div>
+            </div>
+            <div
+              className="background"
+              style={{
+                backgroundImage: `url(${item.imageUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: '50% 40%',
+              }}
+            ></div>
+          </SwiperSlide>
+        ))}
         <div className="swiper-pagination"></div>
-      </div>
+      </Swiper>
 
       <div className="footer">
         <div className="feature">
