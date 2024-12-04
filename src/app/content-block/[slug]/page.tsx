@@ -23,7 +23,7 @@ export default async function ContentBlockPage({ params }: { params: { slug: str
 
   const contentBlocks = await sanityFetch<GetContentBlocksResult>({
     query: GetContentBlocks,
-    tags: ['content-blocks'],
+    tags: ['contentBlock'],
   });
 
   const contentBlockSlugList: contentBlockSlugItem[] = [];
