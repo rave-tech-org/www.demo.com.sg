@@ -62,7 +62,6 @@ export function useSanityQuery<QueryResponse>({
   return useQuery<QueryResponse, Error>({
     queryKey: tags,
     queryFn: () => sanityFetch<QueryResponse>({ query, qParams, tags, isDraft }),
-    gcTime: 0,
     ...options,
   });
 }
