@@ -4,6 +4,7 @@ export const contentBlockType = defineType({
   name: 'contentBlock',
   title: 'Content Block',
   type: 'document',
+  liveEdit: false,
   groups: [
     { name: 'detail', title: 'Detail' },
     { name: 'list', title: 'List' },

@@ -32,7 +32,7 @@ export async function sanityFetch<QueryResponse>({
   query,
   qParams = {},
   tags,
-  isDraft = false,
+  isDraft = true,
 }: {
   query: string;
   qParams?: QueryParams;
@@ -43,11 +43,15 @@ export async function sanityFetch<QueryResponse>({
     throw new Error('The `SANITY_API_READ_TOKEN` environment variable is required.');
   }
   const currentClient = isDraft ? previewClient : client;
+  console.log(isDraft, currentClient, '===');
   return currentClient.fetch<QueryResponse>(query, qParams, {
-    cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
+    cache: process.env.NODE_ENV === 'development' && isDraft ? 'no-store' : 'force-cache',
     next: { tags },
   });
 }
+
+// If array exists (more than 1), set isDraft true
+// And do this to get data  isDraft ? [1] : [0]
 
 export function useSanityQuery<QueryResponse>({
   query,
@@ -57,7 +61,7 @@ export function useSanityQuery<QueryResponse>({
   options,
 }: SanityFetchProps & { options?: UseQueryOptions<QueryResponse, Error> }): UseQueryResult<QueryResponse, Error> {
   return useQuery<QueryResponse, Error>({
-    queryKey: tags,
+    queryKey: [...tags, { isDraft }],
     queryFn: () => sanityFetch<QueryResponse>({ query, qParams, tags, isDraft }),
     ...options,
   });
