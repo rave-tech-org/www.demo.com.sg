@@ -47,7 +47,7 @@ export async function sanityFetch<QueryResponse>({
   }
   const currentClient = isDraft ? previewClient : client;
   return currentClient.fetch<QueryResponse>(query, qParams, {
-    cache: process.env.NODE_ENV === 'development' && isDraft ? 'no-store' : 'force-cache',
+    cache: process.env.NODE_ENV === 'development' ? 'no-store' : isDraft ? 'no-store' : 'force-cache',
     next: { tags },
   });
 }
