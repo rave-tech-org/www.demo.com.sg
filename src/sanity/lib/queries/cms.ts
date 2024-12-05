@@ -101,6 +101,7 @@ export const GetHeaderLayout = defineQuery(`
   }
 `);
 
+// *[_type == "page" && slug.current == "footer-layout" && _id in path("drafts.**")]
 export const GetFooterLayout = defineQuery(`
   *[_type == "page" && slug.current == "footer-layout"][0] {
     _id,
