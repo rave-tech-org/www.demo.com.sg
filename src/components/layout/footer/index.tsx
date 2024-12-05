@@ -11,10 +11,11 @@ import { PageType } from '@components/layout/main-layout/type';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
 
-const Footer = () => {
-  const navigation = useNavigation();
+const Footer = ({ isDraft = true }: { isDraft?: boolean }) => {
+  const navigation = useNavigation({ isDraft });
   const { data: footerLayout } = useSanityQuery<PageType>({
     query: GetFooterLayout,
+    isDraft,
     tags: ['page', 'footerLayout'],
   });
 

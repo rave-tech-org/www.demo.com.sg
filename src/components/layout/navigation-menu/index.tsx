@@ -6,8 +6,8 @@ import useNavigation from '@/hooks/local/use-navigation';
 import NextImage from '@elements/next-image';
 import Link from 'next/link';
 
-const NavigationMenu = () => {
-  const navigation = useNavigation();
+const NavigationMenu = ({ isDraft = true }: { isDraft?: boolean }) => {
+  const navigation = useNavigation({ isDraft });
   if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
 
   const {

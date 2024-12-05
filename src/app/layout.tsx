@@ -7,8 +7,8 @@ import '@/styles/global.scss';
 import '@/styles/tailwind.css';
 
 export const metadata: Metadata = {
-  title: 'Lago Travel',
-  description: 'Lago Travel',
+  title: 'Demo Travel',
+  description: 'Demo Travel',
 };
 
 export default function RootLayout({

@@ -7,18 +7,16 @@ import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import Link from 'next/link';
 import React, { useState } from 'react';
-// import Select from '@/elements/select';
 import DropDown from '@/elements/dropdown';
 import useNavigation from '@/hooks/local/use-navigation';
-import { ContentBlock } from '@/sanity/sanity.types';
 
-export const MobileNavigation: React.FC = () => {
+export const MobileNavigation = ({ isDraft = true }: { isDraft?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => setIsOpen((prev) => !prev);
   const handleClose = () => setIsOpen(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation({ isDraft });
   if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
 
   if (!navigation) {

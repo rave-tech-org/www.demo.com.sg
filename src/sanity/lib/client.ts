@@ -2,7 +2,10 @@ import { ClientPerspective, createClient, QueryParams } from 'next-sanity';
 import { projectId, dataset, apiVersion } from './env';
 import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
-export const token = typeof process === 'undefined' ? '' : process.env.SANITY_API_READ_TOKEN!;
+export const token =
+  typeof process === 'undefined'
+    ? ''
+    : process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN! || process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN!;
 
 const clientConfig = {
   projectId,
@@ -44,7 +47,7 @@ export async function sanityFetch<QueryResponse>({
   }
   const currentClient = isDraft ? previewClient : client;
   return currentClient.fetch<QueryResponse>(query, qParams, {
-    cache: process.env.NODE_ENV === 'development' ? 'no-store' : 'force-cache',
+    cache: process.env.NODE_ENV === 'development' && isDraft ? 'no-store' : 'force-cache',
     next: { tags },
   });
 }
@@ -59,6 +62,7 @@ export function useSanityQuery<QueryResponse>({
   return useQuery<QueryResponse, Error>({
     queryKey: tags,
     queryFn: () => sanityFetch<QueryResponse>({ query, qParams, tags, isDraft }),
+    gcTime: 0,
     ...options,
   });
 }

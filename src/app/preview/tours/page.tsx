@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 export async function generateMetadata(): Promise<Metadata> {
   const toursPage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
     query: GetPageMeta,
+    isDraft: true,
     tags: ['page'],
     qParams: { name: 'tour-search-page' },
   });
@@ -23,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Tours() {
   const toursPage = await sanityFetch<GetPageResult>({
     query: GetPage,
+    isDraft: true,
     tags: ['page', 'contentBlock'],
     qParams: { name: 'tour-search-page' },
   });

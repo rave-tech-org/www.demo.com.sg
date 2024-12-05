@@ -8,32 +8,33 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const toursPage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
+  const homePage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
     query: GetPageMeta,
     tags: ['page'],
-    qParams: { name: 'tour-search-page' },
+    isDraft: true,
+    qParams: { name: 'home-page' },
   });
 
   return {
-    title: toursPage?.metaTitle || 'Demo Travel',
-    description: toursPage?.metaDescription || 'Demo Travel',
+    title: homePage?.metaTitle || 'Lago Travel',
+    description: homePage?.metaDescription || 'Lago Travel',
   };
 }
 
-export default async function Tours() {
-  const toursPage = await sanityFetch<GetPageResult>({
+export default async function Home() {
+  const homePage = await sanityFetch<GetPageResult>({
     query: GetPage,
     tags: ['page', 'contentBlock'],
-    qParams: { name: 'tour-search-page' },
+    isDraft: true,
+    qParams: { name: 'home-page' },
   });
 
   const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);
 
   return (
     <main>
-      {toursPage?.layout?.map((block, index) => {
+      {homePage?.layout?.map((block, index) => {
         const Component = contentBlock.get(block.slug?.current || '');
-
         return (
           <Suspense key={`home-page-${index}`} fallback={<SkeletonLoader />}>
             {Component ? <Component block={block} entries={entries} /> : null}
