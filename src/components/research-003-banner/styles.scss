@@ -1,0 +1,37 @@
+.research-003-banner {
+  .slider {
+    perspective: 300px;
+    perspective-origin: 50% 50%;
+  }
+
+  .card {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 50%;
+    height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: #000;
+  }
+
+  .copy {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  h1 span {
+    position: relative;
+    display: inline-block;
+    font-size: 6vw;
+  }
+
+  @media (max-width: 500px) {
+    .slider {
+      top: 27vh;
+    }
+    .card {
+      height: 300px;
+    }
+  }
+}
