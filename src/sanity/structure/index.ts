@@ -1,33 +1,26 @@
+import { DocumentTextIcon, ImageIcon, ImagesIcon, PackageIcon, TagIcon } from '@sanity/icons';
 import type { StructureResolver } from 'sanity/structure';
-import { TagIcon, PackageIcon, UserIcon, DocumentIcon, DashboardIcon } from '@sanity/icons';
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .id('root')
     .title('Content')
-    .items([
-      S.listItem()
-        .title('CMS')
-        .icon(DocumentIcon)
-        .child(
-          S.list()
-            .title('Pages')
-            .items([
-              S.listItem().title('Pages').schemaType('page').child(S.documentTypeList('page').title('All Pages')),
 
-              S.listItem()
-                .title('Content Blocks')
-                .schemaType('contentBlock')
-                .child(S.documentTypeList('contentBlock').title('All Content Blocks')),
-              S.listItem()
-                .title('Testimonial')
-                .schemaType('testimonial')
-                .child(S.documentTypeList('testimonial').title('All Testimonials')),
-              S.listItem().title('Post').schemaType('post').child(S.documentTypeList('post').title('All Posts')),
-            ])
-        ),
+    .items([
+      S.listItem().title('Pages').schemaType('page').child(S.documentTypeList('page').title('All Pages')),
+
+      S.listItem()
+        .title('Content Blocks')
+        .schemaType('contentBlock')
+        .child(S.documentTypeList('contentBlock').title('All Content Blocks')),
 
       S.divider(),
+
+      S.listItem()
+        .title('Testimonial')
+        .schemaType('testimonial')
+        .child(S.documentTypeList('testimonial').title('All Testimonials')),
+      S.listItem().title('Post').schemaType('post').child(S.documentTypeList('post').title('All Posts')),
 
       S.listItem()
         .title('Package Lists')
@@ -89,4 +82,22 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.divider(),
+
+      S.listItem()
+        .title('Media')
+        .icon(ImageIcon)
+        .child(
+          S.list()
+            .title('All Media')
+            .items([
+              S.listItem()
+                .title('Images')
+                .icon(ImagesIcon)
+                .child(S.documentList().title('All Images').filter('_type == "sanity.imageAsset"')),
+              S.listItem()
+                .icon(DocumentTextIcon)
+                .title('Files')
+                .child(S.documentList().title('All Files').filter('_type == "sanity.fileAsset"')),
+            ])
+        ),
     ]);
