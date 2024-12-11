@@ -1,4 +1,4 @@
-import { DocumentTextIcon, ImageIcon, ImagesIcon, PackageIcon, TagIcon } from '@sanity/icons';
+import { DashboardIcon, DocumentTextIcon, ImageIcon, ImagesIcon, PackageIcon, TagIcon } from '@sanity/icons';
 import type { StructureResolver } from 'sanity/structure';
 
 export const structure: StructureResolver = (S) =>
@@ -84,11 +84,11 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       S.listItem()
-        .title('Media')
+        .title('Assets')
         .icon(ImageIcon)
         .child(
           S.list()
-            .title('All Media')
+            .title('All Assets')
             .items([
               S.listItem()
                 .title('Images')
@@ -99,5 +99,17 @@ export const structure: StructureResolver = (S) =>
                 .title('Files')
                 .child(S.documentList().title('All Files').filter('_type == "sanity.fileAsset"')),
             ])
+        ),
+
+      S.listItem()
+        .title('Manage Assets')
+        .icon(DashboardIcon)
+        .child(
+          S.component()
+            .title('Assets Manager opened in a new tab')
+            .component(() => {
+              window.open('/studio/media');
+              return null;
+            })
         ),
     ]);

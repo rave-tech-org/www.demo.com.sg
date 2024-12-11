@@ -17,7 +17,7 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
-  plugins: [media(), structureTool({ defaultDocumentNode, structure }), visionTool({ defaultApiVersion: apiVersion })],
+  plugins: [structureTool({ defaultDocumentNode, structure }), visionTool({ defaultApiVersion: apiVersion }), media()],
   icon: RocketIcon,
   studio: {
     components: {
