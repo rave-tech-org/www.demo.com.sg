@@ -1,6 +1,8 @@
-import { defineType, defineField } from 'sanity';
+import { BlockContentIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const contentBlockType = defineType({
+  icon: BlockContentIcon,
   name: 'contentBlock',
   title: 'Content Block',
   type: 'document',
@@ -26,23 +28,30 @@ export const contentBlockType = defineType({
       },
       initialValue: 'basic',
       validation: (Rule) => Rule.required(),
+      description: 'Select the type of block. This will determine the structure and content options for the block.',
     }),
+
     defineField({
       name: 'title',
       title: 'Title',
       group: 'detail',
       type: 'string',
+      description: 'Provide a title for the content block. This title will be displayed at the top of the block.',
     }),
+
     defineField({
       name: 'slug',
       title: 'Slug',
       group: 'detail',
       type: 'slug',
+      validation: (Rule) => Rule.required().error('Slug is required'),
       options: {
         source: 'title',
         maxLength: 96,
       },
+      description: 'This is the URL slug for the content block, which will be used for component rendering.',
     }),
+
     defineField({
       name: 'customAttributes',
       title: 'Custom Attributes',
@@ -59,12 +68,14 @@ export const contentBlockType = defineType({
               title: 'Key',
               type: 'string',
               validation: (Rule) => Rule.required(),
+              description: 'Enter the key for the custom attribute (e.g., "btn-text", "btn-href").',
             },
             {
               name: 'value',
               title: 'Value',
               type: 'string',
               validation: (Rule) => Rule.required(),
+              description: 'Enter the value for the custom attribute (e.g., "/", "To Homepage").',
             },
           ],
           preview: {
@@ -80,21 +91,29 @@ export const contentBlockType = defineType({
           },
         },
       ],
+      description: 'Add any custom attributes for the content block, such as for styling or JavaScript.',
     }),
+
     defineField({
       name: 'description',
       title: 'Description',
       group: 'detail',
       type: 'array',
       of: [{ type: 'block' }],
+      description:
+        'Enter a description for the content block. This can include details about the content and its purpose.',
     }),
+
     defineField({
       name: 'image',
       title: 'Image',
       group: 'detail',
       type: 'image',
       options: { hotspot: true },
+      description:
+        'Upload an image to be displayed with the content block. This image will be featured within the block.',
     }),
+
     defineField({
       name: 'file',
       title: 'File',
@@ -102,7 +121,9 @@ export const contentBlockType = defineType({
       options: {
         accept: 'application/pdf,video/*,image/*',
       },
+      description: 'Upload a file associated with the content block. This could be a PDF, video, or image file.',
     }),
+
     defineField({
       name: 'listItems',
       title: 'List of Items',
@@ -116,6 +137,7 @@ export const contentBlockType = defineType({
               name: 'title',
               title: 'Title',
               type: 'string',
+              description: 'Provide a title for each item in the list.',
             }),
             defineField({
               name: 'slug',
@@ -125,24 +147,30 @@ export const contentBlockType = defineType({
                 source: 'title',
                 maxLength: 96,
               },
+              description: 'This is the URL slug for the list item.',
             }),
             defineField({
               name: 'description',
               title: 'Description',
               type: 'array',
               of: [{ type: 'block' }],
+              description: 'Provide a detailed description for the list item.',
             }),
             defineField({
               name: 'image',
               title: 'Image',
               type: 'image',
               options: { hotspot: true },
+              description: 'Upload an image to be associated with this list item.',
             }),
           ],
         },
       ],
       hidden: ({ parent }) => parent.blockType !== 'list',
+      description:
+        'This field is for adding items to a list block. It can include titles, slugs, descriptions, and images for each item.',
     }),
+
     defineField({
       name: 'categoryBlock',
       title: 'Category List',
@@ -150,8 +178,8 @@ export const contentBlockType = defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
       hidden: ({ parent }) => parent.blockType !== 'categoryBlock',
+      description:
+        'Select categories to associate with this content block. These categories will be used to group related content.',
     }),
   ],
 });
-
-export default contentBlockType;
