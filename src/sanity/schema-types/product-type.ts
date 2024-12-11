@@ -25,12 +25,14 @@ export const productType = defineType({
         layout: 'dropdown',
       },
       validation: (Rule) => Rule.required(),
+      description: 'Specify the type of product, such as a tour, transport, destination, or ticket.',
     }),
 
     defineField({
       name: 'name',
       title: 'Product Name',
       type: 'string',
+      description: 'Enter the name of the product.',
       validation: (Rule) => Rule.required().error('Product name is required'),
     }),
 
@@ -40,6 +42,7 @@ export const productType = defineType({
       type: 'slug',
       options: { source: 'name' },
       validation: (Rule) => Rule.required().error('Slug is required to generate a URL'),
+      description: "A URL-friendly version of the product name, used to generate the product's link.",
     }),
 
     defineField({
@@ -52,6 +55,7 @@ export const productType = defineType({
           to: [{ type: 'category' }],
         },
       ],
+      description: 'Select at least one category that best fits this product.',
       validation: (Rule) => Rule.required().min(1).error('At least one category is required'),
     }),
 
@@ -62,6 +66,7 @@ export const productType = defineType({
       group: 'tourDetails',
       validation: (Rule) => Rule.min(0).error('Price must be a positive number'),
       hidden: ({ parent }) => parent?.productType !== 'tour',
+      description: 'The price of the product, applicable only for tours.',
     }),
 
     defineField({
@@ -86,11 +91,13 @@ export const productType = defineType({
         },
       ],
       group: 'tourDetails',
+      description: 'Define custom pricing options with a key-value pair.',
       hidden: ({ parent }) => parent?.productType !== 'tour',
     }),
 
     defineField({
       name: 'departureDateRanges',
+      description: 'Specify the range of departure dates for the tour.',
       title: 'Departure Date Ranges',
       type: 'array',
       of: [
@@ -116,6 +123,7 @@ export const productType = defineType({
 
     defineField({
       name: 'duration',
+      description: 'Enter the duration of the tour in hours or days.',
       title: 'Duration (Hours or Days)',
       type: 'string',
       validation: (Rule) => Rule.required(),
@@ -128,6 +136,7 @@ export const productType = defineType({
       title: 'Description',
       type: 'array',
       of: [{ type: 'block' }],
+      description: 'Provide a description of the product.',
     }),
 
     defineField({
@@ -135,6 +144,7 @@ export const productType = defineType({
       title: 'Image',
       type: 'image',
       options: { hotspot: true },
+      description: 'Upload an image for the product.',
     }),
 
     defineField({
@@ -143,6 +153,7 @@ export const productType = defineType({
       type: 'image',
       options: { hotspot: true },
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Upload an icon for the destination product, visible only for destination products.',
     }),
 
     defineField({
@@ -150,6 +161,7 @@ export const productType = defineType({
       title: 'Booking URL',
       type: 'url',
       hidden: ({ parent }) => parent?.productType !== 'tour',
+      description: 'Enter the URL where customers can book the tour.',
     }),
 
     defineField({
@@ -173,6 +185,7 @@ export const productType = defineType({
           },
         },
       ],
+      description: 'Define key features for the product using key-value pairs.',
     }),
 
     defineField({
@@ -181,6 +194,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Enter the name of the area related to the destination product.',
     }),
 
     defineField({
@@ -189,6 +203,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Provide the size of the land area of the destination.',
     }),
 
     defineField({
@@ -197,6 +212,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Specify the duration of the typical travel to this destination.',
     }),
 
     defineField({
@@ -205,6 +221,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Describe the average climate conditions of the destination.',
     }),
 
     defineField({
@@ -213,6 +230,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Specify the peak season of the destination, when it is most popular.',
     }),
 
     defineField({
@@ -221,6 +239,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Provide the mid season timeframe for the destination.',
     }),
 
     defineField({
@@ -229,6 +248,7 @@ export const productType = defineType({
       type: 'string',
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Describe the monsoon season at the destination, if applicable.',
     }),
 
     defineField({
@@ -238,6 +258,7 @@ export const productType = defineType({
       of: [{ type: 'block' }],
       group: 'destinationDetails',
       hidden: ({ parent }) => parent?.productType !== 'destination',
+      description: 'Provide a travel guide in text form for the destination.',
     }),
 
     defineField({
@@ -287,13 +308,15 @@ export const productType = defineType({
       ],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
+      description: 'Provide a summary of the tour with title, description, and an image.',
     }),
 
     defineField({
       name: 'overview',
       title: 'Overview',
       type: 'array',
-      description: 'Add images in supported formats (excluding SVG)',
+      description:
+        'Provide a general overview of the tour. This can include text and images (excluding SVG) to give potential customers a preview of what to expect.',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
@@ -341,6 +364,8 @@ export const productType = defineType({
       ],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
+      description:
+        'Provide the detailed itinerary for the tour, including titles, descriptions, and images for each item. This helps to structure the day-by-day breakdown of the tour.',
     }),
 
     defineField({
@@ -350,12 +375,14 @@ export const productType = defineType({
       to: [{ type: 'category' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
+      description: 'Specify the transportation options available for the tour, such as bus, plane, or private vehicle.',
     }),
 
     defineField({
       name: 'accommodation',
       title: 'Accommodation',
-      description: 'Add images in supported formats (excluding SVG)',
+      description:
+        'Add images and descriptions of the accommodation provided during the tour. Supported image formats (excluding SVG).',
       type: 'array',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
@@ -365,6 +392,8 @@ export const productType = defineType({
     defineField({
       name: 'reviews',
       title: 'Reviews',
+      description:
+        'Add reviews from past customers or testimonials for the tour. This helps potential customers understand the experiences of others.',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'testimonial' }, { type: 'post' }] }],
       group: 'tourDetails',
@@ -375,7 +404,8 @@ export const productType = defineType({
       name: 'thingsToNote',
       title: 'Things to Note',
       type: 'array',
-      description: 'Add images in supported formats (excluding SVG)',
+      description:
+        'Provide additional important information or notes related to the tour, such as special requirements or suggestions. Add images in supported formats (excluding SVG).',
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',

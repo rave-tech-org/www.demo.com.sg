@@ -1,15 +1,17 @@
+import { CommentIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const testimonialType = defineType({
   name: 'testimonial',
   title: 'Testimonial',
+  icon: CommentIcon,
   type: 'document',
   fields: [
     defineField({
       name: 'name',
       title: 'Name',
       type: 'string',
-      description: 'Full name of the person giving the testimonial',
+      description: 'Full name of the person giving the testimonial.',
       validation: (Rule) => Rule.required().min(2).max(50),
     }),
 
@@ -21,13 +23,14 @@ export const testimonialType = defineType({
         source: 'name',
         maxLength: 96,
       },
+      description: 'The URL-friendly version of the name, used for reference.',
     }),
 
     defineField({
       name: 'testimonialText',
       title: 'Testimonial Text',
       type: 'text',
-      description: 'The main testimonial content',
+      description: 'The main testimonial content provided by the person.',
       validation: (Rule) => Rule.required().min(10).max(500),
     }),
 
@@ -35,7 +38,7 @@ export const testimonialType = defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
-      description: 'Photo of the person giving the testimonial',
+      description: 'A photo of the person giving the testimonial.',
       options: {
         hotspot: true,
       },
@@ -45,7 +48,7 @@ export const testimonialType = defineType({
       name: 'rating',
       title: 'Rating',
       type: 'number',
-      description: 'Rating out of 5 (optional)',
+      description: 'Rating out of 5 provided by the person (optional).',
       validation: (Rule) => Rule.min(1).max(5),
     }),
 
@@ -54,7 +57,7 @@ export const testimonialType = defineType({
       title: 'Date Time',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
-      description: 'Date and time when the testimonial was given',
+      description: 'The date and time when the testimonial was given.',
       options: {
         dateFormat: 'YYYY-MM-DD',
       },
@@ -65,7 +68,7 @@ export const testimonialType = defineType({
       title: 'Product',
       type: 'reference',
       to: [{ type: 'product' }],
-      description: 'Select the product this testimonial is related to',
+      description: 'Select the product this testimonial is related to.',
       options: {
         disableNew: true,
       },
