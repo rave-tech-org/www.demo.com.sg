@@ -8,6 +8,7 @@ import useViewport from '@/hooks/client/use-viewport';
 import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 import Footer from '@/components/layout/footer';
 import { ConfigProvider } from 'antd';
+import GoogleTranslate from '@/components/google-translate';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const pathname = usePathname();
