@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { useEffect } from 'react';
 import './styles.scss';
 import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import Image from 'next/image';
 
 export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentBlockRegistry) {
   useEffect(() => {
@@ -94,7 +95,11 @@ export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentB
           if (!e.imageUrl) return null;
           return (
             <div className="card" key={index}>
-              <img src={e.imageUrl} alt={`Slide ${index}`} className="size-full object-cover opacity-[0.75] absolute" />
+              <Image
+                src={e.imageUrl}
+                alt={`Slide ${index}`}
+                className="size-full object-cover opacity-[0.75] absolute"
+              />
               <div className="absolute centered w-full copy">
                 <h1 className="relative text-center uppercase text-[#dfe1c8]">{e.title}</h1>
               </div>
