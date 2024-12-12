@@ -1,6 +1,6 @@
-import { ClientPerspective, createClient, QueryParams } from 'next-sanity';
-import { projectId, dataset, apiVersion } from './env';
-import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query';
+import { ClientPerspective, QueryParams, createClient } from 'next-sanity';
+import { apiVersion, dataset, projectId } from './env';
 
 export const token =
   typeof process === 'undefined'

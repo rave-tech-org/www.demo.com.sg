@@ -2,7 +2,9 @@ import ReactQueryProvider from '@/elements/react-query-provider';
 import { kapelka, overpass } from '@/resources/font';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import MainLayout from '@components/layout/main-layout';
+import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/styles/global.scss';
 import '@/styles/tailwind.css';
 
@@ -20,9 +22,19 @@ export default function RootLayout({
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
         <ReactQueryProvider>
-          <AntdRegistry>
-            <MainLayout>{children}</MainLayout>
-          </AntdRegistry>
+          <NuqsAdapter>
+            <AntdRegistry>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    fontFamily: 'var(--font-overpass)',
+                  },
+                }}
+              >
+                <MainLayout>{children}</MainLayout>
+              </ConfigProvider>
+            </AntdRegistry>
+          </NuqsAdapter>
         </ReactQueryProvider>
       </body>
     </html>

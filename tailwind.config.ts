@@ -9,14 +9,10 @@ const config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
+        primary: '#FFBB0F',
+        secondary: '#1e1e1e',
+        gold: '#bc956f',
+
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
