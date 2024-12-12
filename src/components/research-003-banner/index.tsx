@@ -96,6 +96,8 @@ export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentB
           return (
             <div className="card" key={index}>
               <Image
+                width={1000}
+                height={1000}
                 src={e.imageUrl}
                 alt={`Slide ${index}`}
                 className="size-full object-cover opacity-[0.75] absolute"
