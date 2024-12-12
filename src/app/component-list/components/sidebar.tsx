@@ -21,7 +21,7 @@ type Props = {
   componentSlug: string;
 };
 
-export default function RecentSlugs({ setComponentSlug, filteredContentBlocks, componentSlug }: Props) {
+export default function Sidebar({ setComponentSlug, filteredContentBlocks, componentSlug }: Props) {
   const [recentlySlugs, setRecentlySlugs] = useLocalStorage<string[]>('recent-slugs', ['home-banner']);
 
   const [menuStyle, setMenuStyle] = useLocalStorage('menu-style', {

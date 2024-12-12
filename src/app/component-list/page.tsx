@@ -6,7 +6,7 @@ import type { GetContentBlocksResult } from '@/sanity/sanity.types';
 import dynamic from 'next/dynamic';
 import { useQueryState } from 'nuqs';
 
-const RecentSlugs = dynamic(() => import('./components/recent-slugs'), {
+const Sidebar = dynamic(() => import('./components/sidebar'), {
   ssr: false,
 });
 
@@ -42,8 +42,7 @@ export default function ComponentListPage() {
         </div>
       </div>
 
-      {/* Sticky Sidebar */}
-      <RecentSlugs
+      <Sidebar
         filteredContentBlocks={filteredContentBlocks}
         componentSlug={componentSlug}
         setComponentSlug={setComponentSlug}
