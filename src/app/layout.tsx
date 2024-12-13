@@ -7,6 +7,7 @@ import type { Metadata } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/styles/global.scss';
 import '@/styles/tailwind.css';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Demo Travel',
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: Props) {
         <ReactQueryProvider>
           <NuqsAdapter>
             <AntdRegistry>
-              <MainLayout>{children}</MainLayout>
+              <Suspense>
+                <MainLayout>{children}</MainLayout>
+              </Suspense>
             </AntdRegistry>
           </NuqsAdapter>
         </ReactQueryProvider>
