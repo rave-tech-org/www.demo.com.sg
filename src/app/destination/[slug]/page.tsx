@@ -13,6 +13,7 @@ export default async function DestinationPage({
   searchParams: SearchParams;
   params: { slug: string };
 }) {
+  const isDraft = !!searchParams?.isDraft;
   const slug = params?.slug as string;
   const pathname = `/destination/${slug}`;
   const pathSegments = pathname.split('/').filter((segment) => segment);
@@ -20,20 +21,20 @@ export default async function DestinationPage({
     query: GetProductBySlug,
     tags: ['product'],
     qParams: { slug, type: 'destination' },
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
   const posts = await sanityFetch<PostType[]>({
     query: GetPosts,
     tags: ['post'],
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
   const relatedProducts = await sanityFetch<ModifiedProduct[]>({
     query: GetProductsByCategory,
     tags: ['product'],
     qParams: { categorySlug: 'penang' },
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
   const breadcrumbs = pathSegments.map((segment, index) => {

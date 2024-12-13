@@ -12,17 +12,16 @@ export default async function ComponentList({
   searchParams: SearchParams;
   params: { slug: string };
 }) {
+  const isDraft = !!searchParams?.isDraft;
+
   const block = await sanityFetch<GetContentBlockResult>({
     query: GetContentBlockBySlug,
     tags: ['contentBlock'],
     qParams: { slug: params?.slug || 'home-banner' },
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
-  const [entries, contentBlock] = await Promise.all([
-    useEntries({ isDraft: !!searchParams?.isDraft }),
-    useContentBlocks({ isDraft: !!searchParams?.isDraft }),
-  ]);
+  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
 
   const Component = contentBlock.get(block?.slug?.current || '');
   return <main className="block-wrapper">{Component ? <Component entries={entries} block={block} /> : null}</main>;

@@ -25,17 +25,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function Home({ searchParams }: Props) {
+  const isDraft = !!searchParams?.isDraft;
   const homePage = await sanityFetch<GetPageResult>({
     query: GetPage,
     tags: ['page', 'contentBlock'],
     qParams: { name: 'home-page' },
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
-  const [entries, contentBlock] = await Promise.all([
-    useEntries({ isDraft: !!searchParams?.isDraft }),
-    useContentBlocks({ isDraft: !!searchParams?.isDraft }),
-  ]);
+  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
 
   return (
     <main>

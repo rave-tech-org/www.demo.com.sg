@@ -25,17 +25,15 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 export default async function Tours({ searchParams }: Props) {
+  const isDraft = !!searchParams?.isDraft;
   const toursPage = await sanityFetch<GetPageResult>({
     query: GetPage,
     tags: ['page', 'contentBlock'],
     qParams: { name: 'tour-search-page' },
-    isDraft: !!searchParams?.isDraft,
+    isDraft,
   });
 
-  const [entries, contentBlock] = await Promise.all([
-    useEntries({ isDraft: !!searchParams?.isDraft }),
-    useContentBlocks({ isDraft: !!searchParams?.isDraft }),
-  ]);
+  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
 
   return (
     <main>
