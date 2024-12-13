@@ -1,5 +1,6 @@
 import ReactQueryProvider from '@/elements/react-query-provider';
 import { kapelka, overpass } from '@/resources/font';
+import type { SearchParams } from '@/types/shared';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import MainLayout from '@components/layout/main-layout';
 import { ConfigProvider } from 'antd';
@@ -13,11 +14,11 @@ export const metadata: Metadata = {
   description: 'Demo Travel',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type Props = { children: React.ReactNode; searchParams: SearchParams };
+
+export default function RootLayout({ children, searchParams }: Props) {
+  const isDraft = !!searchParams?.isDraft;
+
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
@@ -31,7 +32,7 @@ export default function RootLayout({
                   },
                 }}
               >
-                <MainLayout>{children}</MainLayout>
+                <MainLayout isDraft={isDraft}>{children}</MainLayout>
               </ConfigProvider>
             </AntdRegistry>
           </NuqsAdapter>

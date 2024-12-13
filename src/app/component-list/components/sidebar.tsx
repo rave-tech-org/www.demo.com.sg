@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import { CloseOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { Select } from 'antd';
+import { Select, Switch } from 'antd';
 import Link from 'next/link';
 import type { Options } from 'nuqs';
 import { Fragment } from 'react';
@@ -18,10 +18,21 @@ type Props = {
     value: string | ((old: string) => string | null) | null,
     options?: Options
   ) => Promise<URLSearchParams>;
+  setIsDraft: (
+    value: boolean | ((old: boolean) => boolean | null) | null,
+    options?: Options
+  ) => Promise<URLSearchParams>;
   componentSlug: string;
+  isDraft: boolean;
 };
 
-export default function Sidebar({ setComponentSlug, filteredContentBlocks, componentSlug }: Props) {
+export default function Sidebar({
+  setComponentSlug,
+  setIsDraft,
+  isDraft,
+  filteredContentBlocks,
+  componentSlug,
+}: Props) {
   const [recentlySlugs, setRecentlySlugs] = useLocalStorage<string[]>('recent-slugs', ['home-banner']);
 
   const [menuStyle, setMenuStyle] = useLocalStorage('menu-style', {
@@ -36,7 +47,10 @@ export default function Sidebar({ setComponentSlug, filteredContentBlocks, compo
           'p-6': menuStyle.open,
         })}
       >
-        <h1>Select components</h1>
+        <h1>Preview Draft</h1>
+        <Switch defaultChecked={isDraft} onChange={(e) => setIsDraft(e)} />
+
+        <h1 className="mt-4">Select components</h1>
         <Select
           value={componentSlug}
           showSearch

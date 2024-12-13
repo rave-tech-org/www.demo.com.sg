@@ -27,10 +27,10 @@ export const loadComponent = async (slug: string) => {
 
 const slugsToSkip: string[] = [];
 
-export const useContentBlocks = async () => {
+export const useContentBlocks = async ({ isDraft }: { isDraft?: boolean }) => {
   const contentBlocks = await sanityFetch<GetContentBlocksResult>({
     query: GetContentBlocks,
-    isDraft: true,
+    isDraft,
     tags: ['contentBlock'],
   });
 

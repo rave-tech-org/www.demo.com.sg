@@ -5,13 +5,13 @@ import useNavigation from '@/hooks/local/use-navigation';
 import { FOOTER_MENU } from '@/resources/constant';
 import { useSanityQuery } from '@/sanity/lib/client';
 import { GetFooterLayout } from '@/sanity/lib/queries/cms';
-import { ContentBlock } from '@/sanity/sanity.types';
+import type { ContentBlock } from '@/sanity/sanity.types';
 import { buildMenu } from '@/utils';
-import { PageType } from '@components/layout/main-layout/type';
+import type { PageType } from '@components/layout/main-layout/type';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
 
-const Footer = ({ isDraft = true }: { isDraft?: boolean }) => {
+const Footer = ({ isDraft }: { isDraft?: boolean }) => {
   const navigation = useNavigation({ isDraft });
   const { data: footerLayout } = useSanityQuery<PageType>({
     query: GetFooterLayout,

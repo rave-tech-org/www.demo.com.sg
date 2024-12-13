@@ -61,7 +61,7 @@ const SanityImage: React.FC<SanityImageProps> = ({ value }) => {
   );
 };
 
-const TourDetailLago = ({ slug }: { slug: string }) => {
+const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) => {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment);
   const [visible, setVisible] = useState(false);
@@ -72,6 +72,7 @@ const TourDetailLago = ({ slug }: { slug: string }) => {
     query: GetProductBySlug,
     tags: ['product'],
     qParams: { slug, type: 'tour' },
+    isDraft,
   });
 
   if (!product || isLoading) {
