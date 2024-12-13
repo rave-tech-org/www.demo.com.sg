@@ -1,5 +1,6 @@
 'use client';
 
+import GoogleTranslate from '@/components/google-translate';
 import DropDown from '@/elements/dropdown';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
@@ -73,7 +74,7 @@ const NavigationMenu = ({ isDraft }: { isDraft?: boolean }) => {
               <span>{findDesc?.text}</span>
             </Link>
 
-            <DropDown
+            {/* <DropDown
               labelRender={(label) => (
                 <Link href="/">
                   <NextImage
@@ -89,7 +90,8 @@ const NavigationMenu = ({ isDraft }: { isDraft?: boolean }) => {
               items={languageOptions}
               defaultSelected={languageOptions[0]}
               isSelect
-            />
+            /> */}
+            <GoogleTranslate />
           </div>
         </div>
       </div>
