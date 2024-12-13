@@ -10,8 +10,10 @@ import { buildMenu } from '@/utils';
 import type { PageType } from '@components/layout/main-layout/type';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-const Footer = ({ isDraft }: { isDraft?: boolean }) => {
+const Footer = () => {
+  const isDraft = !!useSearchParams().get('isDraft');
   const navigation = useNavigation({ isDraft });
   const { data: footerLayout } = useSanityQuery<PageType>({
     query: GetFooterLayout,

@@ -8,9 +8,11 @@ import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 
-export const MobileNavigation = ({ isDraft }: { isDraft?: boolean }) => {
+export const MobileNavigation = () => {
+  const isDraft = !!useSearchParams().get('isDraft');
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => setIsOpen((prev) => !prev);

@@ -47,7 +47,7 @@ export default function Sidebar({
           'p-6': menuStyle.open,
         })}
       >
-        <h1>Preview Draft</h1>
+        <h1>Draft Mode</h1>
         <Switch defaultChecked={isDraft} onChange={(e) => setIsDraft(e)} />
 
         <h1 className="mt-4">Select components</h1>

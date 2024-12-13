@@ -6,20 +6,15 @@ import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
 import NextImage from '@elements/next-image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-const NavigationMenu = ({ isDraft }: { isDraft?: boolean }) => {
+const NavigationMenu = () => {
+  const isDraft = !!useSearchParams().get('isDraft');
   const navigation = useNavigation({ isDraft });
   if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
 
-  const {
-    leftSocials,
-    rightSocials,
-    findDesc,
-    findElement,
-    navigationMenuItems,
-    languageOptions,
-    navigationMenuBlock,
-  } = navigation.data;
+  const { leftSocials, rightSocials, findDesc, findElement, navigationMenuItems, navigationMenuBlock } =
+    navigation.data;
 
   const imageUrl = navigationMenuBlock?.imageUrl;
 
@@ -74,23 +69,6 @@ const NavigationMenu = ({ isDraft }: { isDraft?: boolean }) => {
               <span>{findDesc?.text}</span>
             </Link>
 
-            {/* <DropDown
-              labelRender={(label) => (
-                <Link href="/">
-                  <NextImage
-                    src="/assets/images/header/icon-globe-lang.svg"
-                    width={24}
-                    height={24}
-                    alt="icon globe lang"
-                  />
-                  <span>{label}</span>
-                </Link>
-              )}
-              panelClassName="mobile-language-select"
-              items={languageOptions}
-              defaultSelected={languageOptions[0]}
-              isSelect
-            /> */}
             <GoogleTranslate />
           </div>
         </div>

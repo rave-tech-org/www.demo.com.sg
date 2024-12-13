@@ -3,7 +3,6 @@ import { kapelka, overpass } from '@/resources/font';
 import type { SearchParams } from '@/types/shared';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import MainLayout from '@components/layout/main-layout';
-import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/styles/global.scss';
@@ -14,26 +13,16 @@ export const metadata: Metadata = {
   description: 'Demo Travel',
 };
 
-type Props = { children: React.ReactNode; searchParams: SearchParams };
+type Props = { children: React.ReactNode };
 
-export default function RootLayout({ children, searchParams }: Props) {
-  const isDraft = !!searchParams?.isDraft;
-
+export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
         <ReactQueryProvider>
           <NuqsAdapter>
             <AntdRegistry>
-              <ConfigProvider
-                theme={{
-                  token: {
-                    fontFamily: 'var(--font-overpass)',
-                  },
-                }}
-              >
-                <MainLayout isDraft={isDraft}>{children}</MainLayout>
-              </ConfigProvider>
+              <MainLayout>{children}</MainLayout>
             </AntdRegistry>
           </NuqsAdapter>
         </ReactQueryProvider>
