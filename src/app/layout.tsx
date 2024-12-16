@@ -1,38 +1,31 @@
 import ReactQueryProvider from '@/elements/react-query-provider';
 import { kapelka, overpass } from '@/resources/font';
+import type { SearchParams } from '@/types/shared';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import MainLayout from '@components/layout/main-layout';
-import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '@/styles/global.scss';
 import '@/styles/tailwind.css';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Demo Travel',
   description: 'Demo Travel',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type Props = { children: React.ReactNode };
+
+export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
         <ReactQueryProvider>
           <NuqsAdapter>
             <AntdRegistry>
-              <ConfigProvider
-                theme={{
-                  token: {
-                    fontFamily: 'var(--font-overpass)',
-                  },
-                }}
-              >
+              <Suspense>
                 <MainLayout>{children}</MainLayout>
-              </ConfigProvider>
+              </Suspense>
             </AntdRegistry>
           </NuqsAdapter>
         </ReactQueryProvider>

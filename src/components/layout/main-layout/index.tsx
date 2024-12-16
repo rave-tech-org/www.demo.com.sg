@@ -1,21 +1,23 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import MainLayoutProps from './type';
-import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
-import NavigationMenu from '@/components/layout/navigation-menu';
-import useViewport from '@/hooks/client/use-viewport';
-import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 import Footer from '@/components/layout/footer';
+import MobileNavigation from '@/components/layout/mobile-navigation-menu';
+import NavigationMenu from '@/components/layout/navigation-menu';
+import SkeletonLoader from '@/elements/skeleton-loader';
+import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
+import useViewport from '@/hooks/client/use-viewport';
 import { ConfigProvider } from 'antd';
-import GoogleTranslate from '@/components/google-translate';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import type MainLayoutProps from './type';
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const isDraft = !!useSearchParams().get('isDraft');
   const pathname = usePathname();
+
   const isStudio = pathname.includes('studio');
-  const isContentBlock = pathname.includes('content-block');
+
   const isComponentList = pathname.includes('component-list');
-  const isPreview = pathname.includes('preview');
 
   const isSticky = useStickyByScroll(175);
   const stickyClassName = isSticky ? 'sticky main-header' : 'not-sticky main-header';
@@ -23,31 +25,34 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   const { isTablet } = useViewport();
 
-  if (isStudio || isContentBlock || isComponentList) {
-    return <>{children}</>;
-  }
+  if (isStudio || isComponentList) return children;
 
   return (
     <ConfigProvider
       theme={{
-        token: {
-          colorPrimary: '#FFBB0F',
-        },
+        token: { fontFamily: 'var(--font-overpass)', colorPrimary: '#FFBB0F' },
       }}
     >
-      <div id="main-layout" className="main-layout">
-        {isTablet ? (
-          <div className={stickyClassName}>
-            <MobileNavigation isDraft={isPreview} />
-          </div>
-        ) : (
-          <div className={stickyClassName}>
-            <NavigationMenu isDraft={isPreview} />
-          </div>
-        )}
-        <main className={mainContentClassName}>{children}</main>
-        <Footer isDraft={isPreview} />
-      </div>
+      <Suspense fallback={<SkeletonLoader />}>
+        <div id="main-layout" className="main-layout">
+          {!isComponentList && !isStudio && isDraft ? (
+            <div className="fixed left-0 top-0 px-2 pt-1 bg-primary text-black uppercase font-bold text-xl z-[9999]">
+              DRAFT MODE
+            </div>
+          ) : null}
+          {isTablet ? (
+            <div className={stickyClassName}>
+              <MobileNavigation />
+            </div>
+          ) : (
+            <div className={stickyClassName}>
+              <NavigationMenu />
+            </div>
+          )}
+          <main className={mainContentClassName}>{children}</main>
+          <Footer />
+        </div>
+      </Suspense>
     </ConfigProvider>
   );
 };

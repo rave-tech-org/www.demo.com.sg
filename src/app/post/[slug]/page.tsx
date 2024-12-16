@@ -2,16 +2,24 @@ import AspectRatioImage from '@/elements/aspect-ratio-image';
 import ViewIn from '@/elements/view-in';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GetPostBySlug } from '@/sanity/lib/queries/cms';
-import { Post } from '@/sanity/sanity.types';
+import type { Post } from '@/sanity/sanity.types';
+import type { SearchParams } from '@/types/shared';
 import { PortableText } from 'next-sanity';
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage({
+  params,
+  searchParams,
+}: {
+  searchParams: SearchParams;
+  params: { slug: string };
+}) {
   const slug = params?.slug as string;
 
   const post = await sanityFetch<Post & { imageUrl: string }>({
     query: GetPostBySlug,
     tags: ['post'],
     qParams: { slug },
+    isDraft: !!searchParams?.isDraft,
   });
 
   return (

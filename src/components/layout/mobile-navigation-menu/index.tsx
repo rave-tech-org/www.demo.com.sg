@@ -2,15 +2,17 @@
 
 import Collapse from '@/elements/collapse';
 import Drawer from '@/elements/drawer';
+import DropDown from '@/elements/dropdown';
 import { MenuBurger } from '@/elements/icons/menu-burger';
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import DropDown from '@/elements/dropdown';
 import useNavigation from '@/hooks/local/use-navigation';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import React, { useState } from 'react';
 
-export const MobileNavigation = ({ isDraft = true }: { isDraft?: boolean }) => {
+export const MobileNavigation = () => {
+  const isDraft = !!useSearchParams().get('isDraft');
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => setIsOpen((prev) => !prev);
@@ -41,7 +43,7 @@ export const MobileNavigation = ({ isDraft = true }: { isDraft?: boolean }) => {
         <Link href="/" className="main-logo">
           <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
         </Link>
-        <button onClick={() => handleToggle()}>
+        <button type="button" onClick={() => handleToggle()}>
           <MenuBurger width={32} height={32} />
         </button>
       </div>

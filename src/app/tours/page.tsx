@@ -4,14 +4,18 @@ import { useEntries } from '@/hooks/local/use-entries';
 import { sanityFetch } from '@/sanity/lib/client';
 import { GetPage, GetPageMeta } from '@/sanity/lib/queries/cms';
 import type { GetPageResult, Page } from '@/sanity/sanity.types';
+import type { SearchParams } from '@/types/shared';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-export async function generateMetadata(): Promise<Metadata> {
+type Props = { searchParams: SearchParams };
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const toursPage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
     query: GetPageMeta,
     tags: ['page'],
     qParams: { name: 'tour-search-page' },
+    isDraft: !!searchParams?.isDraft,
   });
 
   return {
@@ -20,14 +24,16 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Tours() {
+export default async function Tours({ searchParams }: Props) {
+  const isDraft = !!searchParams?.isDraft;
   const toursPage = await sanityFetch<GetPageResult>({
     query: GetPage,
     tags: ['page', 'contentBlock'],
     qParams: { name: 'tour-search-page' },
+    isDraft,
   });
 
-  const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);
+  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
 
   return (
     <main>
