@@ -1,6 +1,6 @@
 'use client';
 
-import { Entries } from '@/hooks/local/use-entries';
+import type { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
 import { gsap } from 'gsap';

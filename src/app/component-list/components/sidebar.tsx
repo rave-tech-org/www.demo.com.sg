@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import { CloseOutlined, HomeOutlined, MenuOutlined } from '@ant-design/icons';
 import { useLocalStorage } from '@uidotdev/usehooks';
-import { Select, Switch } from 'antd';
+import { Select } from 'antd';
 import Link from 'next/link';
 import type { Options } from 'nuqs';
 import { Fragment } from 'react';
@@ -18,18 +18,13 @@ type Props = {
     value: string | ((old: string) => string | null) | null,
     options?: Options
   ) => Promise<URLSearchParams>;
-  setIsDraft: (
-    value: boolean | ((old: boolean) => boolean | null) | null,
-    options?: Options
-  ) => Promise<URLSearchParams>;
+
   componentSlug: string;
-  isDraft: boolean;
 };
 
 export default function Sidebar({
   setComponentSlug,
-  setIsDraft,
-  isDraft,
+
   filteredContentBlocks,
   componentSlug,
 }: Props) {
@@ -47,9 +42,6 @@ export default function Sidebar({
           'p-6': menuStyle.open,
         })}
       >
-        <h1>Draft Mode</h1>
-        <Switch defaultChecked={isDraft} onChange={(e) => setIsDraft(e)} />
-
         <h1 className="mt-4">Select components</h1>
         <Select
           value={componentSlug}

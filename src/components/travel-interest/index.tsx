@@ -1,4 +1,4 @@
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import TravelInterestCard from '@components/travel-interest-card';
 import { PortableText } from 'next-sanity';
 

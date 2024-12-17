@@ -1,15 +1,14 @@
 'use client';
 
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { useProducts } from '@/hooks/local/use-products';
-import AspectRatioImage from '@elements/aspect-ratio-image';
 import SkeletonLoader from '@elements/skeleton-loader';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
+import type { SwiperOptions } from 'swiper/types';
 
 const destinationSwiperSetting: SwiperOptions = {
   modules: [Navigation],

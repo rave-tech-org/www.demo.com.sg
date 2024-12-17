@@ -1,17 +1,12 @@
 'use client';
 
 import ProductCarouselCard from '@/components/product-carousel-card';
-
 import SkeletonLoader from '@/elements/skeleton-loader';
-
+import type { GetProductsByCategoryResult } from '@/sanity/sanity.types';
 import ViewIn from '@elements/view-in';
-import React from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { Product } from '@/sanity/sanity.types';
-import { SwiperOptions } from 'swiper/types';
-import { ModifiedProduct } from './type';
+import type { SwiperOptions } from 'swiper/types';
 
 const productCarouselSwiperSetting: SwiperOptions = {
   modules: [Pagination],
@@ -39,7 +34,7 @@ const productCarouselSwiperSetting: SwiperOptions = {
 
 interface ProductCarouseInterface {
   title: string;
-  products: ModifiedProduct[];
+  products: GetProductsByCategoryResult;
 }
 
 const ProductCarousel = ({ title = 'Explore Our Tour Packages', products }: ProductCarouseInterface) => {

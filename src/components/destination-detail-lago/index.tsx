@@ -1,17 +1,13 @@
 import AspectRatioImage from '@/elements/aspect-ratio-image';
 import RightChevron from '@/elements/icons/right-chevron';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { PostType } from '@components/see-more-articles/type';
+import type { GetPostsResult, GetProductBySlugResult, GetProductsByCategoryResult } from '@/sanity/sanity.types';
+import { transformObject } from '@/utils';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import TravelInterestCard from '../travel-interest-card';
-
-import { ModifiedProduct } from '@/components/product-carousel/type';
-import { CustomFeatures, DestinationProduct, DestinationRelatedProduct } from './type';
-
-import { transformObject } from '@/utils';
-import Image from 'next/image';
 import ProductCarousel from '../product-carousel';
+import TravelInterestCard from '../travel-interest-card';
+import type { CustomFeatures } from './type';
 
 const DestinationDetailLago = ({
   product,
@@ -19,10 +15,10 @@ const DestinationDetailLago = ({
   breadcrumbs,
   posts,
 }: {
-  product: DestinationProduct;
-  relatedProducts: ModifiedProduct[];
+  product: GetProductBySlugResult;
+  relatedProducts: GetProductsByCategoryResult;
   breadcrumbs?: { text: string; link: string }[];
-  posts?: PostType[];
+  posts: GetPostsResult;
 }) => {
   if (!product) {
     return <SkeletonLoader />;
@@ -96,7 +92,7 @@ const DestinationDetailLago = ({
         </div>
 
         <div className="lago-content-background">
-          <AspectRatioImage src={product.imageUrl} alt={product.name || ''} aspectRatio="3/1" priority />
+          <AspectRatioImage src={product.imageUrl ?? ''} alt={product.name || ''} aspectRatio="3/1" priority />
           {product.description && (
             <div className="content">
               <div className="destination-slogan">{customFeature.slogan}</div>

@@ -1,8 +1,6 @@
-import { BlockContentIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const contentBlockType = defineType({
-  icon: BlockContentIcon,
   name: 'contentBlock',
   title: 'Content Block',
   type: 'document',

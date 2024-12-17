@@ -1,5 +1,5 @@
 import type { Slug } from '@/sanity/sanity.types';
-import { Entries } from './use-entries';
+import type { Entries } from './use-entries';
 
 type Props = {
   entries: Entries;

@@ -1,10 +1,9 @@
 'use client';
 
-import gsap from 'gsap';
-import { useEffect } from 'react';
-import './styles.scss';
 import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import gsap from 'gsap';
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentBlockRegistry) {
   useEffect(() => {

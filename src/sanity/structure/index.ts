@@ -1,4 +1,15 @@
-import { DashboardIcon, DocumentTextIcon, ImageIcon, ImagesIcon, PackageIcon, TagIcon } from '@sanity/icons';
+import {
+  BlockContentIcon,
+  CommentIcon,
+  DashboardIcon,
+  DocumentIcon,
+  DocumentTextIcon,
+  ImageIcon,
+  ImagesIcon,
+  PackageIcon,
+  StringIcon,
+  TagIcon,
+} from '@sanity/icons';
 import type { StructureResolver } from 'sanity/structure';
 
 export const structure: StructureResolver = (S) =>
@@ -7,20 +18,30 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
 
     .items([
-      S.listItem().title('Pages').schemaType('page').child(S.documentTypeList('page').title('All Pages')),
+      S.listItem()
+        .title('Pages')
+        .icon(DocumentIcon)
+        .schemaType('page')
+        .child(S.documentTypeList('page').title('All Pages')),
 
       S.listItem()
         .title('Content Blocks')
         .schemaType('contentBlock')
+        .icon(BlockContentIcon)
         .child(S.documentTypeList('contentBlock').title('All Content Blocks')),
 
       S.divider(),
 
       S.listItem()
         .title('Testimonial')
+        .icon(CommentIcon)
         .schemaType('testimonial')
         .child(S.documentTypeList('testimonial').title('All Testimonials')),
-      S.listItem().title('Post').schemaType('post').child(S.documentTypeList('post').title('All Posts')),
+      S.listItem()
+        .title('Post')
+        .schemaType('post')
+        .icon(StringIcon)
+        .child(S.documentTypeList('post').title('All Posts')),
 
       S.listItem()
         .title('Package Lists')

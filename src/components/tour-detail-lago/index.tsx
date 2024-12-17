@@ -6,8 +6,8 @@ import RightChevron from '@/elements/icons/right-chevron';
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useViewport from '@/hooks/client/use-viewport';
-import { client, useSanityQuery } from '@/sanity/lib/client';
-import { GetProductBySlug } from '@/sanity/lib/queries/cms';
+import { client } from '@/sanity/lib/client';
+import type { GetProductBySlugResult } from '@/sanity/sanity.types';
 import { formatCurrency, transformObject } from '@/utils';
 import { CaretRightOutlined } from '@ant-design/icons';
 import type { CustomCategoryAttributes, CustomFeatures, CustomPrices } from '@components/hot-deals-card/type';
@@ -21,7 +21,6 @@ import { useState } from 'react';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { SwiperOptions } from 'swiper/types';
-import type { TourDetailProduct } from './type';
 
 type SanityImageProps = {
   value: SanityImageSource & {
@@ -61,21 +60,14 @@ const SanityImage: React.FC<SanityImageProps> = ({ value }) => {
   );
 };
 
-const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) => {
+const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment);
   const [visible, setVisible] = useState(false);
   const [activeKeys, setActiveKeys] = useState<string[]>([]);
   const { isMobile, isTablet, isMdScreen, isXlScreen, isXxlScreen } = useViewport();
 
-  const { data: product, isLoading } = useSanityQuery<TourDetailProduct>({
-    query: GetProductBySlug,
-    tags: ['product'],
-    qParams: { slug, type: 'tour' },
-    isDraft,
-  });
-
-  if (!product || isLoading) {
+  if (!product) {
     return <SkeletonLoader />;
   }
 
@@ -136,7 +128,7 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
               <Swiper {...tourItinerarySwiperSettingconst}>
                 {it.imageUrls?.map((imageUrl, index) => (
                   <SwiperSlide key={index}>
-                    <AspectRatioImage src={imageUrl} alt={product?.name || ''} aspectRatio="7/4" priority />
+                    <AspectRatioImage src={imageUrl ?? ''} alt={product?.name || ''} aspectRatio="7/4" priority />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -159,10 +151,10 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
   const customFeature = transformObject<CustomFeatures>(product?.features);
   const customPrices = transformObject<CustomPrices>(product?.customPrices);
 
-  const categories = product.categories?.filter((category) => category.slug.current !== 'tour');
+  const categories = product.categories?.filter((category) => category?.slug?.current !== 'tour');
 
   return (
-    <div className="tour-detail-lago">
+    <article className="tour-detail-lago">
       <div
         style={{
           backgroundImage: `url('/assets/images/home/bg-topo-print.svg')`,
@@ -188,10 +180,10 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
               <Image
                 width={200}
                 style={{ display: 'none' }}
-                src={product?.imageUrl}
+                src={product?.imageUrl ?? ''}
                 preview={{
                   visible,
-                  src: product?.imageUrl,
+                  src: product?.imageUrl ?? '',
                   onVisibleChange: (value) => {
                     setVisible(value);
                   },
@@ -200,7 +192,7 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
               />
               <section style={{ display: 'relative' }}>
                 <AspectRatioImage
-                  src={product?.imageUrl}
+                  src={product?.imageUrl ?? ''}
                   alt={product?.name || ''}
                   aspectRatio={isMobile ? '21/9' : ratio}
                   priority
@@ -304,9 +296,9 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
             items={[
               product?.overview ? { key: '1', href: '#overview', title: 'Overview' } : null,
               product?.itinerary ? { key: '2', href: '#itinerary', title: 'Itinerary' } : null,
-              product?.transportation ? { key: '3', href: '#transportation', title: 'Transportation' } : null,
+              // product?.transportation ? { key: '3', href: '#transportation', title: 'Transportation' } : null,
               product?.accommodation ? { key: '4', href: '#accommodation', title: 'Accommodation' } : null,
-              product?.reviews ? { key: '5', href: '#reviews', title: 'Reviews' } : null,
+              // product?.reviews ? { key: '5', href: '#reviews', title: 'Reviews' } : null,
               product?.thingsToNote ? { key: '6', href: '#things-to-note', title: 'Things to Note' } : null,
             ].filter((item) => item !== null)}
           />
@@ -367,7 +359,7 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
           zIndex: -1,
         }}
       />
-    </div>
+    </article>
   );
 };
 

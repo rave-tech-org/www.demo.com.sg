@@ -1,9 +1,9 @@
 import ViewIn from '@/elements/view-in';
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { CustomSeeMoreAttributes } from './type';
+import type { CustomSeeMoreAttributes } from './type';
 
 const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
   const description = block?.description;
