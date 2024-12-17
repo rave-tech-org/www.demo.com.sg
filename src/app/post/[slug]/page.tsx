@@ -14,13 +14,15 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <ViewIn variant="slideUp" delay={200}>
       <div className="lago-content-background">
-        <AspectRatioImage
-          src={post.imageUrl ?? ''}
-          alt={post.title || ''}
-          aspectRatio="2/1"
-          hasBlackOpacityBackground
-          priority
-        />
+        {post.imageUrl ? (
+          <AspectRatioImage
+            src={post.imageUrl ?? ''}
+            alt={post.title || ''}
+            aspectRatio="2/1"
+            hasBlackOpacityBackground
+            priority
+          />
+        ) : null}
         <div className="content">
           <h3>{post.title}</h3>
         </div>

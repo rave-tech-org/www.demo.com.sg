@@ -1,5 +1,4 @@
 import { DisableDraftMode } from '@/components/disable-draft-mode';
-import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
 import { kapelka, overpass } from '@/resources/font';
 import { SanityLive } from '@/sanity/lib/live';
@@ -10,7 +9,7 @@ import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
-import { Fragment, Suspense } from 'react';
+import { Fragment } from 'react';
 import '@/styles/global.scss';
 import '@/styles/tailwind.css';
 

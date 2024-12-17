@@ -128,7 +128,9 @@ const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
               <Swiper {...tourItinerarySwiperSettingconst}>
                 {it.imageUrls?.map((imageUrl, index) => (
                   <SwiperSlide key={index}>
-                    <AspectRatioImage src={imageUrl ?? ''} alt={product?.name || ''} aspectRatio="7/4" priority />
+                    {imageUrl ? (
+                      <AspectRatioImage src={imageUrl ?? ''} alt={product?.name || ''} aspectRatio="7/4" priority />
+                    ) : null}
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -177,26 +179,30 @@ const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
         <div className="tour-detail-banner">
           <div className="tour-detail-main-info">
             <div className="tour-detail-image-wrapper">
-              <Image
-                width={200}
-                style={{ display: 'none' }}
-                src={product?.imageUrl ?? ''}
-                preview={{
-                  visible,
-                  src: product?.imageUrl ?? '',
-                  onVisibleChange: (value) => {
-                    setVisible(value);
-                  },
-                }}
-                alt={product?.name || ''}
-              />
-              <section style={{ display: 'relative' }}>
-                <AspectRatioImage
-                  src={product?.imageUrl ?? ''}
+              {product.imageUrl ? (
+                <Image
+                  width={200}
+                  style={{ display: 'none' }}
+                  src={product?.imageUrl}
+                  preview={{
+                    visible,
+                    src: product?.imageUrl,
+                    onVisibleChange: (value) => {
+                      setVisible(value);
+                    },
+                  }}
                   alt={product?.name || ''}
-                  aspectRatio={isMobile ? '21/9' : ratio}
-                  priority
                 />
+              ) : null}
+              <section style={{ display: 'relative' }}>
+                {product.imageUrl ? (
+                  <AspectRatioImage
+                    src={product?.imageUrl}
+                    alt={product?.name || ''}
+                    aspectRatio={isMobile ? '21/9' : ratio}
+                    priority
+                  />
+                ) : null}
                 <NextImage
                   onClick={() => setVisible(true)}
                   src="/assets/images/tour/icon-zoom.svg"

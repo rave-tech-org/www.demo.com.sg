@@ -92,7 +92,9 @@ const DestinationDetailLago = ({
         </div>
 
         <div className="lago-content-background">
-          <AspectRatioImage src={product.imageUrl ?? ''} alt={product.name || ''} aspectRatio="3/1" priority />
+          {product.imageUrl ? (
+            <AspectRatioImage src={product.imageUrl ?? ''} alt={product.name || ''} aspectRatio="3/1" priority />
+          ) : null}
           {product.description && (
             <div className="content">
               <div className="destination-slogan">{customFeature.slogan}</div>
