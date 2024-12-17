@@ -5,7 +5,6 @@ import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 import NavigationMenu from '@/components/layout/navigation-menu';
 import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
 import useViewport from '@/hooks/client/use-viewport';
-import { ConfigProvider } from 'antd';
 import { usePathname } from 'next/navigation';
 import type MainLayoutProps from './type';
 
@@ -24,15 +23,13 @@ const MainLayout = ({ children, navigation }: MainLayoutProps) => {
   if (isStudio || isComponentList) return children;
 
   return (
-    <ConfigProvider theme={{ token: { fontFamily: 'var(--font-overpass)', colorPrimary: '#FFBB0F' } }}>
-      <div id="main-layout" className="main-layout">
-        <div className={stickyClassName}>
-          {isTablet ? <MobileNavigation navigation={navigation} /> : <NavigationMenu navigation={navigation} />}
-        </div>
-        <main className={mainContentClassName}>{children}</main>
-        <Footer navigation={navigation} />
+    <div id="main-layout" className="main-layout">
+      <div className={stickyClassName}>
+        {isTablet ? <MobileNavigation navigation={navigation} /> : <NavigationMenu navigation={navigation} />}
       </div>
-    </ConfigProvider>
+      <main className={mainContentClassName}>{children}</main>
+      <Footer navigation={navigation} />
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
-    structureTool({ defaultDocumentNode, structure }),
+    structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion }),
     media(),
     presentationTool({
@@ -26,6 +26,7 @@ export default defineConfig({
       previewUrl: {
         previewMode: {
           enable: '/api/draft-mode/enable',
+          disable: '/api/draft-mode/disable',
         },
       },
     }),

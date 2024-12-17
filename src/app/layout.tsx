@@ -1,11 +1,11 @@
 import { DisableDraftMode } from '@/components/disable-draft-mode';
-import ReactQueryProvider from '@/elements/react-query-provider';
 import SkeletonLoader from '@/elements/skeleton-loader';
 import useNavigation from '@/hooks/local/use-navigation';
 import { kapelka, overpass } from '@/resources/font';
 import { SanityLive } from '@/sanity/lib/live';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import MainLayout from '@components/layout/main-layout';
+import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
@@ -24,23 +24,23 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
       <body>
-        <ReactQueryProvider>
-          <NuqsAdapter>
-            <AntdRegistry>
-              <Suspense fallback={<SkeletonLoader />}>
-                <MainLayout navigation={navigation}>{children}</MainLayout>
-              </Suspense>
-            </AntdRegistry>
-          </NuqsAdapter>
-        </ReactQueryProvider>
+        <NuqsAdapter>
+          <AntdRegistry>
+            <ConfigProvider theme={{ token: { fontFamily: 'var(--font-overpass)', colorPrimary: '#FFBB0F' } }}>
+              <MainLayout navigation={navigation}>
+                {children}
 
-        <SanityLive />
-        {(await draftMode()).isEnabled && (
-          <Fragment>
-            <DisableDraftMode />
-            <VisualEditing />
-          </Fragment>
-        )}
+                <SanityLive />
+                {(await draftMode()).isEnabled && (
+                  <Fragment>
+                    <DisableDraftMode />
+                    <VisualEditing />
+                  </Fragment>
+                )}
+              </MainLayout>
+            </ConfigProvider>
+          </AntdRegistry>
+        </NuqsAdapter>
       </body>
     </html>
   );
