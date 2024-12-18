@@ -1,5 +1,5 @@
 import AspectRatioImage from '@elements/aspect-ratio-image';
-import { TravelInterestCardProps } from './type';
+import type { TravelInterestCardProps } from './type';
 
 const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCardProps) => {
   return (

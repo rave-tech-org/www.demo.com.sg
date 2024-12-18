@@ -802,11 +802,12 @@ export type GetPageResult = {
   }> | null;
 } | null;
 // Variable: GetPosts
-// Query: *[_type == "post"] {    _id,    title,    slug,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags  }
+// Query: *[_type == "post"] {    _id,    title,    slug,    price,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags  }
 export type GetPostsResult = Array<{
   _id: string;
   title: string | null;
   slug: Slug | null;
+  price: null;
   publishedDate: string | null;
   excerpt: string | null;
   imageUrl: string | null;
@@ -1101,7 +1102,7 @@ export type GetProductsByParentCategoriesResult = Array<{
   }> | null;
 }>;
 // Variable: GetContentBlockBySlug
-// Query: *[_type == "contentBlock" && slug.current == $slug][0] {    _id,    slug,    blockType,    title,    description,    image,    "imageUrl": image.asset->url,    customAttributes,    listItems[]{      title,      slug,      description,      image,      "imageUrl": image.asset->url,    },    "categories": categoryBlock[]->{      _id,      slug,    }  }
+// Query: *[_type == "contentBlock" && slug.current == $slug][0] {    _id,    slug,    blockType,    title,    description,    image,    "imageUrl": image.asset->url,    "fileUrl": file.asset->url,    customAttributes,    listItems[]{      title,      slug,      description,      image,      "imageUrl": image.asset->url,    },    "categories": categoryBlock[]->{      _id,      slug,    }  }
 export type GetContentBlockBySlugResult = {
   _id: string;
   slug: Slug | null;
@@ -1137,6 +1138,7 @@ export type GetContentBlockBySlugResult = {
     _type: 'image';
   } | null;
   imageUrl: string | null;
+  fileUrl: string | null;
   customAttributes: Array<{
     key?: string;
     value?: string;
@@ -1434,8 +1436,9 @@ export type GetProductsByTypeResult = Array<{
   }> | null;
 }>;
 // Variable: GetPostBySlug
-// Query: *[_type == "post" && slug.current == $slug][0]{    title,    slug,    price,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags,  }
+// Query: *[_type == "post" && slug.current == $slug][0]{    _id,    title,    slug,    price,    publishedDate,    excerpt,    "imageUrl": image.asset->url,    content,    tags,  }
 export type GetPostBySlugResult = {
+  _id: string;
   title: string | null;
   slug: Slug | null;
   price: null;
@@ -1710,17 +1713,17 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '\n  *[_type == "page" && slug.current == $name][0] {\n    _id,\n    slug,\n    metaTitle,\n    metaDescription,\n    metaKeywords\n  }\n': GetPageMetaResult;
     '\n  *[_type == "page" && slug.current == $name][0] {\n    _id,\n    title,\n    slug,\n    pageType,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      "fileUrl": file.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n      "categories": categoryBlock[]->{\n        _id,\n        slug,\n      }\n    },\n    variants[]->{\n      _id,\n      title,\n      slug\n    }\n  }\n': GetPageResult;
-    '\n  *[_type == "post"] {\n    _id,\n    title,\n    slug,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags\n  }\n': GetPostsResult;
+    '\n  *[_type == "post"] {\n    _id,\n    title,\n    slug,\n    price,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags\n  }\n': GetPostsResult;
     '\n  *[_type == "testimonial"]{\n    name,\n    slug,\n    testimonialText,\n    "imageUrl": image.asset->url,\n    rating,\n    dateTime,\n    product->{\n      name,\n      slug\n    }\n  }\n': GetTestimonialsResult;
     '\n  *[_type == "page" && slug.current == "header-layout"][0] {\n    _id,\n    title,\n    slug,\n    "imageUrl": image.asset->url,\n    description,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n    }\n  }\n': GetHeaderLayoutResult;
     '\n  *[_type == "page" && slug.current == "footer-layout"][0] {\n    _id,\n    title,\n    slug,\n    "imageUrl": image.asset->url,\n    description,\n    layout[]->{\n      _id,\n      slug,\n      blockType,\n      title,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n      customAttributes,\n      listItems[]{\n        title,\n        slug,\n        description,\n        image,\n        "imageUrl": image.asset->url,\n      },\n    }\n  }\n': GetFooterLayoutResult;
     '\n  *[_type == "category" && parentCategory->slug.current == $slug] {\n    _id,\n    name,\n    slug,\n    description\n  }\n': GetCategoriesByParentCategoryResult;
     '\n  *[_type == "category" && parentCategory->slug.current in $slugs] {\n    _id,\n    name,\n    slug,\n    description,\n    parentCategory-> {\n      _id,\n      slug,\n    }\n  }\n': GetCategoriesByParentCategoriesResult;
     '\n  *[_type == "product" && references(\n    *[_type == "category" && parentCategory->slug.current in $categories]._id\n  )] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByParentCategoriesResult;
-    '\n  *[_type == "contentBlock" && slug.current == $slug][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlockBySlugResult;
+    '\n  *[_type == "contentBlock" && slug.current == $slug][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    "fileUrl": file.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlockBySlugResult;
     '\n  *[_type == "product" && slug.current == $slug && productType == $type][0]{\n    name,\n    productType,\n    slug,\n    price,\n    customPrices,\n    availableDate,\n    duration,\n    description,\n    "imageUrl": image.asset->url,\n    "helpIconImageUrl": helpIcon.asset->url,\n    landArea,\n    averageClimate,\n    travelDuration,\n    peakSeason,\n    midSeason,\n    monsoonSeason,\n    travelGuide,\n    bookingUrl,\n    features,\n    overview,\n    itinerary[]{\n      title,\n      "imageUrls": images[].asset->url,\n      description\n    },\n    accommodation,\n    thingsToNote,\n    tourSummary[]{\n      "imageUrl": image.asset->url,\n      isActive,\n      title,\n      description\n    },\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    }\n  }\n': GetProductBySlugResult;
     '\n  *[_type == "product" && productType == $type]{\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByTypeResult;
-    '\n  *[_type == "post" && slug.current == $slug][0]{\n    title,\n    slug,\n    price,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags,\n  }\n': GetPostBySlugResult;
+    '\n  *[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    price,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags,\n  }\n': GetPostBySlugResult;
     '\n  *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByCategoryResult;
     '\n  *[_type == "product"] {\n    _id,\n    name,\n    slug,\n    price,\n    productType,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsResult;
     '\n  *[_type == "contentBlock"][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    "fileUrl": file.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlockResult;

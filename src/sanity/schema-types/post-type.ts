@@ -1,9 +1,7 @@
-import { StringIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const postType = defineType({
   name: 'post',
-  icon: StringIcon,
   title: 'Post',
   type: 'document',
   fields: [

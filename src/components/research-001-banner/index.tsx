@@ -1,11 +1,12 @@
 'use client';
 
-import { Entries } from '@/hooks/local/use-entries';
+import type { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import { transformObject } from '@/utils';
+import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { PortableText } from 'next-sanity';
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import type { ResearchZeroZeroOneBannerCustomAttributesProps, ResearchZeroZeroOneBannerProps } from './type';
 
 const config = { cardHeight: 300, cardWidth: 200, gap: 40, numberSize: 50 };
@@ -296,7 +297,7 @@ export default function ResearchZeroZeroOneBanner<
     return Promise.all(promises);
   };
 
-  useEffect(() => {
+  useGSAP(() => {
     if (!isInitializedRef.current) {
       isInitializedRef.current = true;
 

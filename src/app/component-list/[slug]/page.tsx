@@ -1,28 +1,26 @@
 import { useContentBlocks } from '@/hooks/local/use-content-blocks';
 import { useEntries } from '@/hooks/local/use-entries';
-import { sanityFetch } from '@/sanity/lib/client';
+import useNavigation from '@/hooks/local/use-navigation';
+import { sanityFetch } from '@/sanity/lib/live';
 import { GetContentBlockBySlug } from '@/sanity/lib/queries/cms';
-import type { GetContentBlockResult } from '@/sanity/sanity.types';
-import type { SearchParams } from '@/types/shared';
+import { TAG } from '@/sanity/lib/tag';
 
-export default async function ComponentList({
-  params,
-  searchParams,
-}: {
-  searchParams: SearchParams;
-  params: { slug: string };
-}) {
-  const isDraft = !!searchParams?.isDraft;
+export default async function ComponentList({ params }: { params: Promise<{ slug: string }> }) {
+  const [entries, contentBlock, navigation] = await Promise.all([useEntries(), useContentBlocks(), useNavigation()]);
 
-  const block = await sanityFetch<GetContentBlockResult>({
+  const { slug } = await params;
+
+  const { data: block } = await sanityFetch({
     query: GetContentBlockBySlug,
-    tags: ['contentBlock'],
-    qParams: { slug: params?.slug || 'home-banner' },
-    isDraft,
+    params: { slug: slug || 'home-banner' },
+    tag: TAG.contentBlock,
   });
 
-  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
-
   const Component = contentBlock.get(block?.slug?.current || '');
-  return <main className="block-wrapper">{Component ? <Component entries={entries} block={block} /> : null}</main>;
+
+  return (
+    <article className="block-wrapper">
+      {Component ? <Component entries={entries} navigation={navigation} block={block} /> : null}
+    </article>
+  );
 }

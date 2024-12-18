@@ -1,21 +1,15 @@
 import SkeletonLoader from '@/elements/skeleton-loader';
 import { useContentBlocks } from '@/hooks/local/use-content-blocks';
 import { useEntries } from '@/hooks/local/use-entries';
-import { sanityFetch } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { GetPage, GetPageMeta } from '@/sanity/lib/queries/cms';
-import type { GetPageResult, Page } from '@/sanity/sanity.types';
-import type { SearchParams } from '@/types/shared';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
-type Props = { searchParams: SearchParams };
-
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const toursPage = await sanityFetch<Pick<Page, 'metaTitle' | 'metaDescription' | 'metaKeywords'>>({
+export async function generateMetadata(): Promise<Metadata> {
+  const { data: toursPage } = await sanityFetch({
     query: GetPageMeta,
-    tags: ['page'],
-    qParams: { name: 'tour-search-page' },
-    isDraft: !!searchParams?.isDraft,
+    params: { name: 'tour-search-page' },
   });
 
   return {
@@ -24,19 +18,12 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   };
 }
 
-export default async function Tours({ searchParams }: Props) {
-  const isDraft = !!searchParams?.isDraft;
-  const toursPage = await sanityFetch<GetPageResult>({
-    query: GetPage,
-    tags: ['page', 'contentBlock'],
-    qParams: { name: 'tour-search-page' },
-    isDraft,
-  });
-
-  const [entries, contentBlock] = await Promise.all([useEntries({ isDraft }), useContentBlocks({ isDraft })]);
+export default async function Tours() {
+  const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);
+  const { data: toursPage } = await sanityFetch({ query: GetPage, params: { name: 'tour-search-page' } });
 
   return (
-    <main>
+    <article>
       {toursPage?.layout?.map((block, index) => {
         const Component = contentBlock.get(block.slug?.current || '');
 
@@ -46,6 +33,6 @@ export default async function Tours({ searchParams }: Props) {
           </Suspense>
         );
       })}
-    </main>
+    </article>
   );
 }

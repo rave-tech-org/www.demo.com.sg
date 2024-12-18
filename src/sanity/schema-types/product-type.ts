@@ -5,7 +5,6 @@ export const productType = defineType({
   name: 'product',
   title: 'Product',
   type: 'document',
-  icon: EarthGlobeIcon,
   groups: [
     { name: 'tourDetails', title: 'Tour Details' },
     { name: 'destinationDetails', title: 'Destination Details' },

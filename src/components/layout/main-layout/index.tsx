@@ -3,20 +3,15 @@
 import Footer from '@/components/layout/footer';
 import MobileNavigation from '@/components/layout/mobile-navigation-menu';
 import NavigationMenu from '@/components/layout/navigation-menu';
-import SkeletonLoader from '@/elements/skeleton-loader';
 import useStickyByScroll from '@/hooks/client/use-sticky-by-scroll';
 import useViewport from '@/hooks/client/use-viewport';
-import { ConfigProvider } from 'antd';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { usePathname } from 'next/navigation';
 import type MainLayoutProps from './type';
 
-const MainLayout = ({ children }: MainLayoutProps) => {
-  const isDraft = !!useSearchParams().get('isDraft');
+const MainLayout = ({ children, navigation }: MainLayoutProps) => {
   const pathname = usePathname();
 
   const isStudio = pathname.includes('studio');
-
   const isComponentList = pathname.includes('component-list');
 
   const isSticky = useStickyByScroll(175);
@@ -28,32 +23,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   if (isStudio || isComponentList) return children;
 
   return (
-    <ConfigProvider
-      theme={{
-        token: { fontFamily: 'var(--font-overpass)', colorPrimary: '#FFBB0F' },
-      }}
-    >
-      <Suspense fallback={<SkeletonLoader />}>
-        <div id="main-layout" className="main-layout">
-          {!isComponentList && !isStudio && isDraft ? (
-            <div className="fixed left-0 top-0 px-2 pt-1 bg-primary text-black uppercase font-bold text-xl z-[9999]">
-              DRAFT MODE
-            </div>
-          ) : null}
-          {isTablet ? (
-            <div className={stickyClassName}>
-              <MobileNavigation />
-            </div>
-          ) : (
-            <div className={stickyClassName}>
-              <NavigationMenu />
-            </div>
-          )}
-          <main className={mainContentClassName}>{children}</main>
-          <Footer />
-        </div>
-      </Suspense>
-    </ConfigProvider>
+    <div id="main-layout" className="main-layout">
+      <div className={stickyClassName}>
+        {isTablet ? <MobileNavigation navigation={navigation} /> : <NavigationMenu navigation={navigation} />}
+      </div>
+      <main className={mainContentClassName}>{children}</main>
+      <Footer navigation={navigation} />
+    </div>
   );
 };
 

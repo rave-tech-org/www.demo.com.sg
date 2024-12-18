@@ -51,6 +51,7 @@ export const GetPosts = defineQuery(`
     _id,
     title,
     slug,
+    price,
     publishedDate,
     excerpt,
     "imageUrl": image.asset->url,
@@ -179,6 +180,7 @@ export const GetContentBlockBySlug = defineQuery(`
     description,
     image,
     "imageUrl": image.asset->url,
+    "fileUrl": file.asset->url,
     customAttributes,
     listItems[]{
       title,
@@ -258,6 +260,7 @@ export const GetProductsByType = defineQuery(`
 
 export const GetPostBySlug = defineQuery(`
   *[_type == "post" && slug.current == $slug][0]{
+    _id,
     title,
     slug,
     price,

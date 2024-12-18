@@ -1,40 +1,29 @@
 import DestinationDetailLago from '@/components/destination-detail-lago';
-import type { DestinationProduct } from '@/components/destination-detail-lago/type';
-import type { ModifiedProduct } from '@/components/product-carousel/type';
-import type { PostType } from '@/components/see-more-articles/type';
-import { sanityFetch } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { GetPosts, GetProductBySlug, GetProductsByCategory } from '@/sanity/lib/queries/cms';
-import type { SearchParams } from '@/types/shared';
+import { TAG } from '@/sanity/lib/tag';
 
-export default async function DestinationPage({
-  params,
-  searchParams,
-}: {
-  searchParams: SearchParams;
-  params: { slug: string };
-}) {
-  const isDraft = !!searchParams?.isDraft;
-  const slug = params?.slug as string;
+export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
   const pathname = `/destination/${slug}`;
   const pathSegments = pathname.split('/').filter((segment) => segment);
-  const product = await sanityFetch<DestinationProduct>({
+
+  const { data: product } = await sanityFetch({
     query: GetProductBySlug,
-    tags: ['product'],
-    qParams: { slug, type: 'destination' },
-    isDraft,
+    params: { slug, type: 'destination' },
+    tag: TAG.product,
   });
 
-  const posts = await sanityFetch<PostType[]>({
+  const { data: posts } = await sanityFetch({
     query: GetPosts,
-    tags: ['post'],
-    isDraft,
+    tag: TAG.post,
   });
 
-  const relatedProducts = await sanityFetch<ModifiedProduct[]>({
+  const { data: relatedProducts } = await sanityFetch({
     query: GetProductsByCategory,
-    tags: ['product'],
-    qParams: { categorySlug: 'penang' },
-    isDraft,
+    params: { categorySlug: 'penang' },
+    tag: TAG.product,
   });
 
   const breadcrumbs = pathSegments.map((segment, index) => {
@@ -42,7 +31,9 @@ export default async function DestinationPage({
     const text = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
     return { text, link: href };
   });
+
   breadcrumbs.unshift({ text: 'Home', link: '/' });
+
   return (
     <DestinationDetailLago
       product={product}

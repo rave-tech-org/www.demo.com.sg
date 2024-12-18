@@ -1,13 +1,13 @@
 'use client';
 
 import useViewport from '@/hooks/client/use-viewport';
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { CustomContentBackgroundAttribute } from './type';
+import type { CustomContentBackgroundAttribute } from './type';
 
 const ContentBackground = ({ block }: ContentBlockRegistry) => {
   const customAttributes = block?.customAttributes;
@@ -33,7 +33,7 @@ const ContentBackground = ({ block }: ContentBlockRegistry) => {
           {block?.description && <PortableText value={block.description} />}
           <div className="button-group">
             {buttons.map((button, index) => (
-              <button key={`button-${index}`} className="primary-button">
+              <button type="button" key={`button-${index}`} className="primary-button">
                 <Link href={button.value} target="_blank">
                   {button.key}
                 </Link>

@@ -1,14 +1,14 @@
 'use client';
 
-import { Entries } from '@/hooks/local/use-entries';
 import type { GetContentBlockResult } from '@/sanity/sanity.types';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
-import { EffectFade, Mousewheel, Pagination } from 'swiper/modules';
-import { ResearchZeroZeroTwoBannerProps } from './type';
+import type { Entries } from '@/hooks/local/use-entries';
 import { PortableText } from 'next-sanity';
+import { EffectFade, Mousewheel, Pagination } from 'swiper/modules';
+import type { ResearchZeroZeroTwoBannerProps } from './type';
 
 export default function ResearchZeroZeroTwoBanner<
   B extends GetContentBlockResult = GetContentBlockResult,
