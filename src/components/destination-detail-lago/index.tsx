@@ -142,7 +142,7 @@ const DestinationDetailLago = ({
               </div>
               <div className="lower-content flex gap-x-4 max-md:flex-col max-md:gap-y-4">
                 {buttons.map((button, index) => (
-                  <button type="button" key={`button-${index}`} className="primary-button outline">
+                  <button type="button" key={`button-${index}`} className="primary-button outline-demo">
                     <Link href={button.value} target="_blank">
                       {button.key}
                     </Link>

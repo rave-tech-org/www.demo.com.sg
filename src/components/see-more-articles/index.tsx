@@ -47,7 +47,7 @@ const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
           </div>
 
           <div className="button-wrapper">
-            <button className="primary-button outline">
+            <button className="primary-button outline-demo">
               <p>{seeMoreButton?.label}</p>
             </button>
           </div>
