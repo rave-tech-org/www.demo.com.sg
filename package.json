@@ -17,6 +17,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@ant-design/nextjs-registry": "^1.0.2",
+    "@gsap/react": "^2.1.1",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",

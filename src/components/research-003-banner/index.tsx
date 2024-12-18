@@ -1,12 +1,12 @@
 'use client';
 
 import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Image from 'next/image';
-import { useEffect } from 'react';
 
 export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentBlockRegistry) {
-  useEffect(() => {
+  useGSAP(() => {
     let isAnimating = false;
 
     const splitTextIntoSpans = (selector: string): void => {
@@ -85,7 +85,7 @@ export default function ResearchZeroZeroThreeBanner({ entries, block }: ContentB
     return () => {
       document.removeEventListener('click', handleClick);
     };
-  }, []);
+  });
 
   return (
     <div className="research-003-banner relative min-h-screen bg-[#dfe1c8] overflow-hidden">
