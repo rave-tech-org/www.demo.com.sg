@@ -34,7 +34,7 @@ export const MobileNavigation = ({ navigation }: { navigation: Navigation }) => 
     <div className="mobile-navigation-container">
       <div className="mobile-control">
         <Link href="/" className="main-logo">
-          <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
+          <NextImage src={imageUrl} width={160} height={80} alt="Demo logo" />
         </Link>
         <button type="button" onClick={() => handleToggle()}>
           <MenuBurger width={32} height={32} />
@@ -61,7 +61,7 @@ export const MobileNavigation = ({ navigation }: { navigation: Navigation }) => 
         </div>
 
         <Link href="/" className="main-logo">
-          <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
+          <NextImage src={imageUrl} width={160} height={80} alt="Demo logo" />
         </Link>
 
         <div className="bottom-navigation">

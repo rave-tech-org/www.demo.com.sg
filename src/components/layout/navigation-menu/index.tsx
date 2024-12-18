@@ -39,7 +39,7 @@ const NavigationMenu = ({ navigation }: { navigation: Navigation }) => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="/">
-            <NextImage src={imageUrl || ''} width={160} height={80} alt="lago logo" />
+            <NextImage src={imageUrl || ''} width={160} height={80} alt="Demo logo" />
           </Link>
           <nav>
             <ul>

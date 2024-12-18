@@ -21,7 +21,7 @@ const ContentBackground = ({ block }: ContentBlockRegistry) => {
   }));
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-content-background">
+      <div className="demo-content-background">
         <AspectRatioImage
           src={imageUrl}
           alt="Banner Customise Tour"

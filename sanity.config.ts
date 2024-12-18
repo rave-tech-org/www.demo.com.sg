@@ -39,6 +39,6 @@ export default defineConfig({
     },
   },
   icon: RocketIcon,
-  title: 'Lago Travel Studio',
-  name: 'lago-travel-studio',
+  title: 'Demo Travel Studio',
+  name: 'demo-travel-studio',
 });

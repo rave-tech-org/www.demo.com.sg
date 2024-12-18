@@ -1,4 +1,4 @@
-import DestinationDetailLago from '@/components/destination-detail-lago';
+import DestinationDetailDemo from '@/components/destination-detail-demo';
 import { sanityFetch } from '@/sanity/lib/live';
 import { GetPosts, GetProductBySlug, GetProductsByCategory } from '@/sanity/lib/queries/cms';
 import { TAG } from '@/sanity/lib/tag';
@@ -35,7 +35,7 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
   breadcrumbs.unshift({ text: 'Home', link: '/' });
 
   return (
-    <DestinationDetailLago
+    <DestinationDetailDemo
       product={product}
       relatedProducts={relatedProducts}
       breadcrumbs={breadcrumbs}

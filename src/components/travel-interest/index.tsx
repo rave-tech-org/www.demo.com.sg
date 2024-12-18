@@ -13,11 +13,11 @@ const TravelInterestGroup = ({ block }: ContentBlockRegistry) => {
     imageUrl,
   }));
   return (
-    <div className="lago-travel-interest-group wrapper">
+    <div className="demo-travel-interest-group wrapper">
       {description && <PortableText value={description} />}
       <h3>{title}</h3>
       <div className="interest-cards-wrapper">
-        {cards?.map((card, key) => <TravelInterestCard key={`lago-travel-card-${key}`} {...card} />)}
+        {cards?.map((card, key) => <TravelInterestCard key={`demo-travel-card-${key}`} {...card} />)}
       </div>
     </div>
   );

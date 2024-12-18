@@ -49,7 +49,7 @@ const ExploreDestination = ({ block, entries }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-destination-carousel-wrapper">
+      <div className="demo-destination-carousel-wrapper">
         <div
           style={{
             backgroundImage: `url(${imageUrl})`,

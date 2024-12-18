@@ -25,7 +25,7 @@ const HotDealsCard = (props: GetProductsResult[number]) => {
 
   return (
     <div
-      className="lago-hot-deals-card-wrapper"
+      className="demo-hot-deals-card-wrapper"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

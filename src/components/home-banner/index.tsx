@@ -37,7 +37,7 @@ const HomeBanner = ({ block }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-banner-carousel-wrapper">
+      <div className="demo-banner-carousel-wrapper">
         <Swiper {...bannerSwiperSetting}>
           {listItems?.map((item, index) => (
             <SwiperSlide key={index}>

@@ -47,7 +47,7 @@ const HotDeals = ({ block, entries }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-hot-deals-carousel-wrapper">
+      <div className="demo-hot-deals-carousel-wrapper">
         <div className="wrapper">
           {description && <PortableText value={description} />}
           <h3>{title}</h3>

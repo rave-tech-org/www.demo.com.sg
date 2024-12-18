@@ -96,7 +96,7 @@ const TourSearchResult = ({ entries }: ContentBlockRegistry) => {
         });
 
   return (
-    <div className="lago-tour-search-result">
+    <div className="demo-tour-search-result">
       <div className="tour-search-header wrapper">
         <div className="result-info">
           <h5>Search results</h5>

@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { data: homePage } = await sanityFetch({ query: GetPageMeta, params: { name: 'home-page' }, tag: TAG.page });
-  return { title: homePage?.metaTitle || 'Lago Travel', description: homePage?.metaDescription || 'Lago Travel' };
+  return { title: homePage?.metaTitle || 'Demo Travel', description: homePage?.metaDescription || 'Demo Travel' };
 }
 
 export default async function Home() {

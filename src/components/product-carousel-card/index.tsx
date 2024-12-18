@@ -26,7 +26,7 @@ const ProductCarouselCard = (props: GetProductsByCategoryResult[number]) => {
 
   return (
     <div
-      className="lago-product-carousel-card-wrapper"
+      className="demo-product-carousel-card-wrapper"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

@@ -20,7 +20,7 @@ const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
   return (
     <ViewIn variant="slideUp" delay={200}>
       <div className="wrapper">
-        <div className="lago-see-more-articles">
+        <div className="demo-see-more-articles">
           {description && <PortableText value={description} />}
           <div className="group">
             {posts?.map((post, key) => (

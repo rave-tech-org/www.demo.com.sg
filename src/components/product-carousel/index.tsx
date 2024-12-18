@@ -44,7 +44,7 @@ const ProductCarousel = ({ title = 'Explore Our Tour Packages', products }: Prod
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-product-carousel-wrapper">
+      <div className="demo-product-carousel-wrapper">
         <div className="wrapper">
           <h5>{title}</h5>
           <Swiper {...productCarouselSwiperSetting}>

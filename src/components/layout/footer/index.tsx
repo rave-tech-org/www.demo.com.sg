@@ -20,7 +20,7 @@ const Footer = ({ navigation }: { navigation: Navigation }) => {
 
   return (
     <footer
-      className="lago-footer"
+      className="demo-footer"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
@@ -31,7 +31,7 @@ const Footer = ({ navigation }: { navigation: Navigation }) => {
       <div className="wrapper">
         <div className="main-footer">
           <Link className="logo" href="/">
-            <NextImage src={footerMenuBlock?.imageUrl || ''} width={140} height={140} alt="lago logo" />
+            <NextImage src={footerMenuBlock?.imageUrl || ''} width={140} height={140} alt="Demo logo" />
           </Link>
           <div className="list">
             {footerList?.map((item, key) => (

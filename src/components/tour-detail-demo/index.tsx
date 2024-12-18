@@ -60,7 +60,7 @@ const SanityImage: React.FC<SanityImageProps> = ({ value }) => {
   );
 };
 
-const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
+const TourDetailDemo = ({ product }: { product: GetProductBySlugResult }) => {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment);
   const [visible, setVisible] = useState(false);
@@ -156,7 +156,7 @@ const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
   const categories = product.categories?.filter((category) => category?.slug?.current !== 'tour');
 
   return (
-    <article className="tour-detail-lago">
+    <article className="tour-detail-demo">
       <div
         style={{
           backgroundImage: `url('/assets/images/home/bg-topo-print.svg')`,
@@ -369,4 +369,4 @@ const TourDetailLago = ({ product }: { product: GetProductBySlugResult }) => {
   );
 };
 
-export default TourDetailLago;
+export default TourDetailDemo;

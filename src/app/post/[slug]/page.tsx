@@ -13,7 +13,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-content-background">
+      <div className="demo-content-background">
         {post.imageUrl ? (
           <AspectRatioImage
             src={post.imageUrl ?? ''}
