@@ -57,7 +57,7 @@ const FullTestimonials = ({ block, entries }: ContentBlockRegistry) => {
           ))}
         </Swiper>
         <div className="button-wrapper">
-          <button className="primary-button outline">
+          <button className="primary-button outline-demo">
             <p>{title}</p>
           </button>
         </div>

@@ -263,7 +263,7 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
                 <div className="cta-group">
                   <div className="button-group">
                     {buttons.map((button, index) => (
-                      <button type="button" key={`button-${index}`} className="primary-button outline">
+                      <button type="button" key={`button-${index}`} className="primary-button outline-demo">
                         <Link href={button.value} target="_blank">
                           {button.key}
                         </Link>
@@ -321,7 +321,7 @@ const TourDetailLago = ({ slug, isDraft }: { slug: string; isDraft?: boolean }) 
             <div id="itinerary">
               <div className="itinerary-title">
                 <h5>Day-by-day Details</h5>
-                <button type="button" onClick={toggleExpandAll} className="primary-button outline">
+                <button type="button" onClick={toggleExpandAll} className="primary-button outline-demo">
                   {activeKeys.length === allPanelKeys.length ? 'COLLAPSE ALL' : 'EXPAND ALL +'}
                 </button>
               </div>
