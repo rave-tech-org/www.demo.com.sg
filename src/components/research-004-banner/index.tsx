@@ -2,78 +2,62 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import NextImage from '@/elements/next-image';
 
-// Tour interface
-interface Tour {
-  id: number;
-  title: string;
-  location: string;
-  image: string;
-}
-
-// Tour data
-const tours: Tour[] = [
-  {
-    id: 1,
-    title: 'Famara Beach',
-    location: 'Spain',
-    image:
-      'https://cdn.sanity.io/images/e7mpw8ak/demo-production/e3f1e533821763cc01bcb4062c1b8e4293c20aba-805x924.png?fit=max&w=1200&h=1200',
-  },
-  {
-    id: 2,
-    title: 'Bingin Beach',
-    location: 'Bali, Indonesia',
-    image:
-      'https://cdn.sanity.io/images/e7mpw8ak/demo-production/339acc36342f2158559bc42020bb21db2706d09f-2070x1380.jpg?fit=max&w=1200&h=1200',
-  },
-  {
-    id: 3,
-    title: 'Pipa Beach',
-    location: 'Brazil',
-    image:
-      'https://cdn.sanity.io/images/e7mpw8ak/demo-production/30e43e286d4151822ac4a9d36e3867e6b33a3269-2070x1380.jpg?fit=max&w=1200&h=1200',
-  },
-  {
-    id: 4,
-    title: 'Testing',
-    location: 'Somewhere',
-    image:
-      'https://cdn.sanity.io/images/e7mpw8ak/demo-production/6a244e32d6a1f3c54f7311d7bc34f333258d5300-4096x3072.jpg?fit=max&w=1200&h=1200',
-  },
-  {
-    id: 5,
-    title: 'Japan',
-    location: 'Japan',
-    image:
-      'https://cdn.sanity.io/images/e7mpw8ak/demo-production/0a91c4490e644b0679b027cbcec43623dbea9a92-1920x1080.jpg?fit=max&w=1200&h=1200',
-  },
-];
-
-interface BannerHomeProps {
+interface NavProps {
   horizontalNavigation?: boolean;
+  mapImage?: boolean;
 }
 
-const VerticalCarousel: React.FC<BannerHomeProps> = ({ horizontalNavigation = false }) => {
-  const [activeIndex, setActiveIndex] = useState(1); // Default active item
+type FourthBannerProps = NavProps & ContentBlockRegistry;
+
+const VerticalCarousel: React.FC<FourthBannerProps> = ({
+  horizontalNavigation = true,
+  entries,
+  block,
+  mapImage = true,
+}) => {
+  const ListItems: any = block?.listItems;
+
+  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % tours.length);
+    setActiveIndex((prev) => (prev + 1) % ListItems?.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + tours.length) % tours.length);
+    setActiveIndex((prev) => (prev - 1 + ListItems.length) % ListItems.length);
   };
+
+  const radius = 230;
 
   useEffect(() => {
     if (containerRef.current) {
-      gsap.to(containerRef.current.children, {
-        duration: 0.8,
-        opacity: (i: number) => (i === activeIndex ? 1 : 0.4),
-        scale: (i: number) => (i === activeIndex ? 1 : 0.8),
-        y: (i: number) => (i - activeIndex) * 150,
-        ease: 'power3.out',
+      const items = Array.from(containerRef.current.children);
+
+      const angleIncrement = 360 / ListItems.length; // equal spacing around the circle
+      const prevIndex = (activeIndex - 1 + ListItems.length) % ListItems.length;
+      const nextIndex = (activeIndex + 1) % ListItems.length;
+      items.forEach((item, index) => {
+        const angle = angleIncrement * (index - activeIndex) * (Math.PI / 180); // convert to radians
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        gsap.to(item, {
+          x,
+          y,
+          scale: index === activeIndex ? 1.2 : 0.8, // highlight active item
+          opacity:
+            index === activeIndex
+              ? 1 // active item full opacity
+              : index === prevIndex || index === nextIndex
+                ? 0.5 // surrounding items have half opacity
+                : 0, // all other items are fully hidden
+          duration: 0.8,
+          ease: 'power3.out',
+        });
       });
     }
   }, [activeIndex]);
@@ -82,42 +66,62 @@ const VerticalCarousel: React.FC<BannerHomeProps> = ({ horizontalNavigation = fa
     <div
       className="relative flex items-center justify-start h-screen overflow-hidden"
       style={{
-        backgroundImage: `url(${tours[activeIndex].image})`,
+        backgroundImage: `url(${ListItems[activeIndex].imageUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         transition: 'background 0.8s ease',
       }}
     >
-      {/* Navigation Buttons */}
+      {/* navigation buttons */}
       <button
         onClick={handlePrev}
-        className={`absolute  z-10 bg-black text-white px-4 py-2 rounded hover:bg-gray-700 ${horizontalNavigation ? 'bottom-0 right-[20%] rotate-[270deg]' : 'top-[40%]'}`}
+        className={`absolute  z-10 text-white ${horizontalNavigation ? 'bottom-0 right-[17%] rotate-180' : 'top-[30%] -rotate-90'}`}
       >
-        ▲
+        <NextImage
+          src={'/assets/images/home/long-arrow.svg'}
+          width={100}
+          height={100}
+          alt="arrow "
+          className="transition-opacity hover:opacity-70"
+        />
       </button>
 
       <button
         onClick={handleNext}
-        className={`absolute z-10 bg-black text-white px-4 py-2 rounded hover:bg-gray-700 ${horizontalNavigation ? 'bottom-0 right-[10%] rotate-[270deg]' : 'bottom-[40%] '}`}
+        className={`absolute z-10 text-white ${horizontalNavigation ? 'bottom-0 right-[5%] ' : 'bottom-[30%] rotate-90'}`}
       >
-        ▼
+        <NextImage
+          src={'/assets/images/home/long-arrow.svg'}
+          width={100}
+          height={100}
+          alt="arrow "
+          className="transition-opacity hover:opacity-70"
+        />
       </button>
 
-      {/* Carousel Container */}
-      <div ref={containerRef} className="relative w-64 h-[300px] flex flex-col items-center justify-center">
-        {tours.map((tour, index) => (
-          <div
-            key={tour.id}
-            className="absolute w-full flex flex-col items-center text-white"
-            style={{ top: '50%', transform: 'translateY(-50%)' }}
-          >
-            {/* <img
-              src={tour.image}
-              alt={tour.title}
-              className="w-40 h-40 object-cover rounded-full border-4 border-white"
-            /> */}
-            <h3 className="mt-4 text-2xl font-bold">{tour.title}</h3>
-            <p className="text-lg opacity-80">{tour.location}</p>
+      {/* half circle */}
+      <div className="border rounded-full w-[446px] h-[497px] absolute left-[-275px]" />
+
+      {/* content */}
+      <div ref={containerRef} className="relative w-96 h-96 rounded-full flex items-center justify-center left-[-30px]">
+        {ListItems?.map((tour: any, index: number) => (
+          <div key={index + 1} className="absolute h-8 flex flex-row items-center w-[400px] text-white gap-4">
+            <div
+              className={`${index === activeIndex ? 'font-bold outline outline-1 outline-offset-4 outline-white transform translate-x-[7px] mr-[13px]' : 'transform translate-x-[-27px] mr-8'} w-4 h-4 bg-white rounded-full`}
+            ></div>
+            <div className="flex flex-row gap-2 items-center">
+              <NextImage
+                src={tour.imageUrl}
+                alt={tour.title}
+                width={70}
+                height={70}
+                className={`${mapImage ? 'block' : 'hidden'} w-full h-full border-4 border-white`}
+              />
+              <div className="flex flex-col">
+                <h3 className="mt-0 text-2xl font-bold">{tour.title}</h3>
+                <p className="text-lg opacity-80">{tour.title}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
