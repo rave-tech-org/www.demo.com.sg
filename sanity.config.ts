@@ -1,6 +1,7 @@
-import { defaultDocumentNode } from '@/sanity/components/default-document-node';
 import { resolve } from '@/sanity/presentation/resolve';
 import { structure } from '@/sanity/structure';
+import CustomNavBar from '@/sanity/structure/custom-nav-bar';
+import CustomToolMenu from '@/sanity/structure/custom-tool-menu';
 import { RocketIcon } from '@sanity/icons';
 import { visionTool } from '@sanity/vision';
 import { defineConfig } from 'sanity';
@@ -31,6 +32,12 @@ export default defineConfig({
       },
     }),
   ],
+  studio: {
+    components: {
+      navbar: CustomNavBar,
+      toolMenu: CustomToolMenu,
+    },
+  },
   icon: RocketIcon,
   title: 'Lago Travel Studio',
   name: 'lago-travel-studio',

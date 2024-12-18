@@ -8,7 +8,8 @@ import MainLayout from '@components/layout/main-layout';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { VisualEditing } from 'next-sanity';
-import { draftMode } from 'next/headers';
+import { draftMode, headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Fragment, Suspense } from 'react';
 import '@/styles/global.scss';
@@ -20,6 +21,13 @@ type Props = { children: React.ReactNode };
 
 export default async function RootLayout({ children }: Props) {
   const navigation = await useNavigation();
+  const isDraft = (await headers()).get('isDraft');
+  const callbackPath = (await headers()).get('callbackPath');
+
+  if (isDraft) {
+    (await draftMode()).enable();
+    redirect(callbackPath ?? '/');
+  }
 
   return (
     <html lang="en" className={`${overpass.variable} ${kapelka.variable}`}>
