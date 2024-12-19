@@ -65,9 +65,9 @@ const VerticalCarousel: React.FC<FourthBannerProps> = ({
         const positionIndex = (index - activeIndex - 1 + ListItems.length) % ListItems.length;
 
         // adjust the angle to ensure active index starts at East (90°)
-        const angle = angleIncrement * positionIndex;
+        // const angle = angleIncrement * positionIndex;
 
-        const radians = (angle * Math.PI) / 180; // Convert to radians
+        // const radians = (angle * Math.PI) / 180; // Convert to radians
 
         const direction = activeIndex > prevIndex ? 1 : -1; // 1 for clockwise, -1 for counterclockwise
 
