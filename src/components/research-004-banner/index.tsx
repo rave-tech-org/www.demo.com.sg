@@ -1,9 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import NextImage from '@/elements/next-image';
+import { useGSAP } from '@gsap/react';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+gsap.registerPlugin(MotionPathPlugin);
 
 interface NavProps {
   horizontalNavigation?: boolean;
@@ -13,50 +16,87 @@ interface NavProps {
 type FourthBannerProps = NavProps & ContentBlockRegistry;
 
 const VerticalCarousel: React.FC<FourthBannerProps> = ({
-  horizontalNavigation = true,
+  horizontalNavigation = false,
   entries,
   block,
-  mapImage = true,
+  mapImage = false,
 }) => {
   const ListItems: any = block?.listItems;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  const [prevIndex, setPrevIndex] = useState(0);
 
   const handleNext = () => {
+    setPrevIndex(activeIndex);
     setActiveIndex((prev) => (prev + 1) % ListItems?.length);
   };
 
   const handlePrev = () => {
+    setPrevIndex(activeIndex);
     setActiveIndex((prev) => (prev - 1 + ListItems.length) % ListItems.length);
   };
 
-  const radius = 230;
+  // const radius = 250;
 
-  useEffect(() => {
-    if (containerRef.current) {
+  useGSAP(() => {
+    if (containerRef.current && svgRef.current) {
       const items = Array.from(containerRef.current.children);
-
       const angleIncrement = 360 / ListItems.length; // equal spacing around the circle
-      const prevIndex = (activeIndex - 1 + ListItems.length) % ListItems.length;
-      const nextIndex = (activeIndex + 1) % ListItems.length;
+
+      const circlePath = MotionPathPlugin.convertToPath('#holder', false)[0];
+      if (!circlePath) return;
+
+      // remove old paths if already appended
+      const existingPath = svgRef.current.querySelector('#circlePath');
+      if (existingPath) existingPath.remove();
+
+      // add the new path to the SVG
+      circlePath.id = 'circlePath';
+      svgRef.current.prepend(circlePath);
+
+      // const reversedItems = items.slice().reverse();
+
+      // animate each item along the circle
       items.forEach((item, index) => {
-        const angle = angleIncrement * (index - activeIndex) * (Math.PI / 180); // convert to radians
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
+        // calculate the position relative to the East (90°) position
+        const positionIndex = (index - activeIndex - 1 + ListItems.length) % ListItems.length;
+
+        // adjust the angle to ensure active index starts at East (90°)
+        const angle = angleIncrement * positionIndex;
+
+        const radians = (angle * Math.PI) / 180; // Convert to radians
+
+        const direction = activeIndex > prevIndex ? 1 : -1; // 1 for clockwise, -1 for counterclockwise
+
+        // define start and end positions along the path (normalize to path percentage)
+        const start = (positionIndex / ListItems.length) * direction;
+        const end = ((positionIndex + 1) / ListItems.length) * direction;
+
+        let opacity = 0;
+        if (index === activeIndex) {
+          opacity = 1;
+        } else if (
+          index === (activeIndex - 1 + ListItems.length) % ListItems.length ||
+          index === (activeIndex + 1) % ListItems.length
+        ) {
+          opacity = 0.5; //
+        }
 
         gsap.to(item, {
-          x,
-          y,
-          scale: index === activeIndex ? 1.2 : 0.8, // highlight active item
-          opacity:
-            index === activeIndex
-              ? 1 // active item full opacity
-              : index === prevIndex || index === nextIndex
-                ? 0.5 // surrounding items have half opacity
-                : 0, // all other items are fully hidden
-          duration: 0.8,
-          ease: 'power3.out',
+          motionPath: {
+            path: circlePath,
+            align: circlePath,
+            alignOrigin: [0.5, 0.5],
+            start,
+            end,
+          },
+          opacity: opacity,
+          duration: 0.5,
+          ease: 'power2.out',
+          overwrite: 'auto',
         });
       });
     }
@@ -64,7 +104,7 @@ const VerticalCarousel: React.FC<FourthBannerProps> = ({
 
   return (
     <div
-      className="relative flex items-center justify-start h-screen overflow-hidden"
+      className="research-004-banner relative flex items-center justify-start h-screen overflow-hidden"
       style={{
         backgroundImage: `url(${ListItems[activeIndex].imageUrl})`,
         backgroundSize: 'cover',
@@ -75,6 +115,7 @@ const VerticalCarousel: React.FC<FourthBannerProps> = ({
       {/* navigation buttons */}
       <button
         onClick={handlePrev}
+        id="prev"
         className={`absolute  z-10 text-white ${horizontalNavigation ? 'bottom-0 right-[17%] rotate-180' : 'top-[30%] -rotate-90'}`}
       >
         <NextImage
@@ -87,6 +128,7 @@ const VerticalCarousel: React.FC<FourthBannerProps> = ({
       </button>
 
       <button
+        id="next"
         onClick={handleNext}
         className={`absolute z-10 text-white ${horizontalNavigation ? 'bottom-0 right-[5%] ' : 'bottom-[30%] rotate-90'}`}
       >
@@ -99,15 +141,30 @@ const VerticalCarousel: React.FC<FourthBannerProps> = ({
         />
       </button>
 
-      {/* half circle */}
-      <div className="border rounded-full w-[446px] h-[497px] absolute left-[-275px]" />
-
+      <div
+        className="rail absolute"
+        style={{
+          // width: radius * 2,
+          // height: radius * 2,
+          width: '653px',
+          height: '686px',
+          border: '1px dashed rgba(255, 255, 255, 0.5)',
+          borderRadius: '50%',
+          left: '-392px',
+        }}
+      ></div>
+      <svg ref={svgRef} viewBox="0 0 300 300">
+        <circle id="holder" className="st0" cx="151" cy="151" r="150" />
+      </svg>
       {/* content */}
-      <div ref={containerRef} className="relative w-96 h-96 rounded-full flex items-center justify-center left-[-30px]">
+      <div
+        ref={containerRef}
+        className=" relative w-96 h-96 rounded-full flex items-center justify-center left-[-30px]"
+      >
         {ListItems?.map((tour: any, index: number) => (
           <div key={index + 1} className="absolute h-8 flex flex-row items-center w-[400px] text-white gap-4">
             <div
-              className={`${index === activeIndex ? 'font-bold outline outline-1 outline-offset-4 outline-white transform translate-x-[7px] mr-[13px]' : 'transform translate-x-[-27px] mr-8'} w-4 h-4 bg-white rounded-full`}
+              className={`${index === activeIndex ? 'font-bold outline outline-1 outline-offset-4 outline-white ' : 'mr-8'} w-4 h-4 bg-white rounded-full`}
             ></div>
             <div className="flex flex-row gap-2 items-center">
               <NextImage
