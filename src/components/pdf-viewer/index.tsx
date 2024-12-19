@@ -25,9 +25,9 @@ export default async function PdfViewer({ block, className, ...rest }: Props) {
 
     return (
       <iframe
-        className={cn('min-h-[50vh]', className)}
+        className={cn('min-h-[50vh] w-full', className)}
         {...rest}
-        src={`https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(block.fileUrl)}`}
+        src={`/pdfjs/web/viewer.html?file=${encodeURIComponent(block.fileUrl)}`}
       />
     );
   } catch (error) {

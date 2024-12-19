@@ -18,7 +18,7 @@ export const slugToComponentMap: Record<string, string> = {
 };
 
 export const loadComponent = async (slug: string) => {
-  const mappedSlug = slugToComponentMap[slug] || slug; // Resolve to actual slug if mapped
+  const mappedSlug = slug.includes('pdf') ? 'pdf-viewer' : slugToComponentMap[slug] || slug; // Resolve to actual slug if mapped
   try {
     const Component = (await import(`@/components/${mappedSlug}/index.tsx`)).default;
     return Component;
