@@ -2,10 +2,10 @@
 
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { RightOutlined } from '@ant-design/icons';
 import HotDealsCard from '@components/hot-deals-card';
-import { Checkbox, Collapse, CollapseProps, GetProps, Input, Pagination, Select, Slider } from 'antd';
+import { Checkbox, Collapse, type CollapseProps, type GetProps, Input, Pagination, Select, Slider } from 'antd';
 import { useState } from 'react';
 
 type SearchProps = GetProps<typeof Input.Search>;
@@ -96,7 +96,7 @@ const TourSearchResult = ({ entries }: ContentBlockRegistry) => {
         });
 
   return (
-    <div className="lago-tour-search-result">
+    <div className="demo-tour-search-result">
       <div className="tour-search-header wrapper">
         <div className="result-info">
           <h5>Search results</h5>

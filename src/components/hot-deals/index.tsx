@@ -2,14 +2,13 @@
 
 import HotDealsCard from '@/components/hot-deals-card';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { useProducts } from '@/hooks/local/use-products';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
-import React from 'react';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
+import type { SwiperOptions } from 'swiper/types';
 
 const hotDealsSwiperSetting: SwiperOptions = {
   modules: [Pagination],
@@ -48,7 +47,7 @@ const HotDeals = ({ block, entries }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-hot-deals-carousel-wrapper">
+      <div className="demo-hot-deals-carousel-wrapper">
         <div className="wrapper">
           {description && <PortableText value={description} />}
           <h3>{title}</h3>

@@ -1,19 +1,14 @@
 import { NAVIGATION_MENU, NAVIGATION_MENU_FIND, NAVIGATION_MENU_LANGUAGE, SOCIAL_LINK } from '@/resources/constant';
-import { useSanityQuery } from '@/sanity/lib/client';
-import { GetHeaderLayout } from '@/sanity/lib/queries/cms';
-import { GetPageResult } from '@/sanity/sanity.types';
+import { sanityFetch } from '@/sanity/lib/live';
+import { GetFooterLayout, GetHeaderLayout } from '@/sanity/lib/queries/cms';
+import { TAG } from '@/sanity/lib/tag';
 import { buildMenu } from '@/utils/build-menu';
 
-const useNavigation = ({ isDraft = false }: { isDraft?: boolean }) => {
-  const { data: menuLayout, ...rest } = useSanityQuery<GetPageResult>({
-    query: GetHeaderLayout,
-    isDraft,
-    tags: ['page', 'contentBlock'],
-  });
+const useNavigation = async () => {
+  const { data: menuLayout } = await sanityFetch({ query: GetHeaderLayout, tag: TAG.page });
+  const { data: footerLayout } = await sanityFetch({ query: GetFooterLayout, tag: TAG.page });
 
-  if (!menuLayout) {
-    return null;
-  }
+  if (!menuLayout || !footerLayout) return null;
 
   // header left side
   const navigationMenuBlock = menuLayout?.layout?.find((m) => m.slug?.current === NAVIGATION_MENU);
@@ -26,9 +21,7 @@ const useNavigation = ({ isDraft = false }: { isDraft?: boolean }) => {
       subMenu: item.subMenu.map((sub) => ({
         key: sub.text,
         label: sub.text,
-        onClick: () => {
-          window.location.href = sub.marks?.href || '/';
-        },
+        href: sub.marks?.href || '/',
       })),
     };
   });
@@ -47,7 +40,6 @@ const useNavigation = ({ isDraft = false }: { isDraft?: boolean }) => {
         key: item.text,
         label: item.text,
         // value: item.text,
-        onClick: () => {},
       };
     }) || [];
 
@@ -73,20 +65,20 @@ const useNavigation = ({ isDraft = false }: { isDraft?: boolean }) => {
   const footerSocialLink = getSocials(['facebook', 'instagram', 'tiktok', 'whatsapp', 'wechat']);
 
   return {
-    data: {
-      leftSocials,
-      rightSocials,
-      findDesc,
-      findElement,
-      languageOptions,
-      navigationMenuBlock,
-      navigationMenuItems,
-      menuLayout,
-      paymentLink,
-      footerSocialLink,
-    },
-    ...rest,
+    leftSocials,
+    rightSocials,
+    findDesc,
+    findElement,
+    languageOptions,
+    navigationMenuBlock,
+    navigationMenuItems,
+    menuLayout,
+    paymentLink,
+    footerSocialLink,
+    footerLayout,
   };
 };
 
 export default useNavigation;
+
+export type Navigation = Awaited<ReturnType<typeof useNavigation>>;

@@ -1,14 +1,14 @@
 'use client';
 
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import ViewIn from '@elements/view-in';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { SwiperOptions } from 'swiper/types';
-import { CustomBannerAttribute } from './type';
+import type { SwiperOptions } from 'swiper/types';
+import type { CustomBannerAttribute } from './type';
 
 const bannerSwiperSetting: SwiperOptions = {
   slidesPerView: 1.2,
@@ -37,7 +37,7 @@ const HomeBanner = ({ block }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-banner-carousel-wrapper">
+      <div className="demo-banner-carousel-wrapper">
         <Swiper {...bannerSwiperSetting}>
           {listItems?.map((item, index) => (
             <SwiperSlide key={index}>
@@ -61,7 +61,7 @@ const HomeBanner = ({ block }: ContentBlockRegistry) => {
           ))}
         </Swiper>
         {custom && (
-          <button className="primary-button">
+          <button type="button" className="primary-button">
             <Link href={href} target={target}>
               {buttonText}
             </Link>

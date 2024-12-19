@@ -1,7 +1,9 @@
-import { sanityFetch } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { GetContentBlocks } from '@/sanity/lib/queries/cms';
-import type { GetContentBlockResult, GetContentBlocksResult } from '@/sanity/sanity.types';
+import { TAG } from '@/sanity/lib/tag';
+import type { GetContentBlockBySlugResult } from '@/sanity/sanity.types';
 import type { Entries } from './use-entries';
+import type { Navigation } from './use-navigation';
 
 export const slugToComponentMap: Record<string, string> = {
   // It allows multiple slugs to reuse the same component by mapping them to a common component slug or path.
@@ -27,12 +29,8 @@ export const loadComponent = async (slug: string) => {
 
 const slugsToSkip: string[] = [];
 
-export const useContentBlocks = async ({ isDraft }: { isDraft?: boolean }) => {
-  const contentBlocks = await sanityFetch<GetContentBlocksResult>({
-    query: GetContentBlocks,
-    isDraft,
-    tags: ['contentBlock'],
-  });
+export const useContentBlocks = async () => {
+  const { data: contentBlocks } = await sanityFetch({ query: GetContentBlocks, tag: TAG.contentBlock });
 
   const skippedSlugs: string[] = [];
   const notFoundComponentsSlugs: string[] = [];
@@ -47,7 +45,7 @@ export const useContentBlocks = async ({ isDraft }: { isDraft?: boolean }) => {
 
   const registry = new Map<
     string,
-    ({ block, entries }: ContentBlockRegistry) => Promise<React.JSX.Element> | React.JSX.Element
+    ({ block, entries, navigation }: ContentBlockRegistry) => Promise<React.JSX.Element> | React.JSX.Element
   >();
 
   await Promise.all(
@@ -70,4 +68,4 @@ export const useContentBlocks = async ({ isDraft }: { isDraft?: boolean }) => {
   return registry;
 };
 
-export type ContentBlockRegistry = { block: GetContentBlockResult; entries: Entries };
+export type ContentBlockRegistry = { block: GetContentBlockBySlugResult; entries: Entries; navigation?: Navigation };

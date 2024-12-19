@@ -1,40 +1,26 @@
 'use client';
 
 import NextImage from '@/elements/next-image';
-import useNavigation from '@/hooks/local/use-navigation';
+import type { Navigation } from '@/hooks/local/use-navigation';
 import { FOOTER_MENU } from '@/resources/constant';
-import { useSanityQuery } from '@/sanity/lib/client';
-import { GetFooterLayout } from '@/sanity/lib/queries/cms';
-import type { ContentBlock } from '@/sanity/sanity.types';
 import { buildMenu } from '@/utils';
-import type { PageType } from '@components/layout/main-layout/type';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
-const Footer = () => {
-  const isDraft = !!useSearchParams().get('isDraft');
-  const navigation = useNavigation({ isDraft });
-  const { data: footerLayout } = useSanityQuery<PageType>({
-    query: GetFooterLayout,
-    isDraft,
-    tags: ['page', 'footerLayout'],
-  });
+const Footer = ({ navigation }: { navigation: Navigation }) => {
+  if (!navigation) return;
 
-  if (!navigation?.data || !footerLayout || navigation.isLoading) return null;
+  const { footerSocialLink, paymentLink, footerLayout } = navigation;
 
-  const {
-    data: { footerSocialLink, paymentLink },
-  } = navigation;
+  if (!footerLayout) return;
 
   const { imageUrl, description } = footerLayout;
   const footerMenuBlock = footerLayout?.layout?.find((m) => m.slug?.current === FOOTER_MENU);
   const footerList = buildMenu(footerMenuBlock?.description);
-  const { imageUrl: logoUrl } = footerMenuBlock as ContentBlock & { imageUrl?: string };
 
   return (
     <footer
-      className="lago-footer"
+      className="demo-footer"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
@@ -45,7 +31,7 @@ const Footer = () => {
       <div className="wrapper">
         <div className="main-footer">
           <Link className="logo" href="/">
-            <NextImage src={logoUrl || ''} width={140} height={140} alt="lago logo" />
+            <NextImage src={footerMenuBlock?.imageUrl || ''} width={140} height={140} alt="Demo logo" />
           </Link>
           <div className="list">
             {footerList?.map((item, key) => (

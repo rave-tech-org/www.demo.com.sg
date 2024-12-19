@@ -6,24 +6,17 @@ import DropDown from '@/elements/dropdown';
 import { MenuBurger } from '@/elements/icons/menu-burger';
 import NextImage from '@/elements/next-image';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import useNavigation from '@/hooks/local/use-navigation';
+import type { Navigation } from '@/hooks/local/use-navigation';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-export const MobileNavigation = () => {
-  const isDraft = !!useSearchParams().get('isDraft');
+export const MobileNavigation = ({ navigation }: { navigation: Navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => setIsOpen((prev) => !prev);
   const handleClose = () => setIsOpen(false);
 
-  const navigation = useNavigation({ isDraft });
-  if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
-
-  if (!navigation) {
-    return <SkeletonLoader />;
-  }
+  if (!navigation) return <SkeletonLoader />;
 
   const {
     leftSocials,
@@ -33,7 +26,7 @@ export const MobileNavigation = () => {
     navigationMenuItems,
     languageOptions,
     navigationMenuBlock,
-  } = navigation.data;
+  } = navigation;
 
   const imageUrl = navigationMenuBlock?.imageUrl || '';
 
@@ -41,7 +34,7 @@ export const MobileNavigation = () => {
     <div className="mobile-navigation-container">
       <div className="mobile-control">
         <Link href="/" className="main-logo">
-          <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
+          <NextImage src={imageUrl} width={160} height={80} alt="Demo logo" />
         </Link>
         <button type="button" onClick={() => handleToggle()}>
           <MenuBurger width={32} height={32} />
@@ -68,7 +61,7 @@ export const MobileNavigation = () => {
         </div>
 
         <Link href="/" className="main-logo">
-          <NextImage src={imageUrl} width={160} height={80} alt="lago logo" />
+          <NextImage src={imageUrl} width={160} height={80} alt="Demo logo" />
         </Link>
 
         <div className="bottom-navigation">
@@ -84,9 +77,9 @@ export const MobileNavigation = () => {
                     }
                   >
                     {item.subMenu.map((menu, key) => (
-                      <h5 key={`submenu-item-${key}`} onClick={menu.onClick}>
-                        {menu.label}
-                      </h5>
+                      <Link href={menu.href} key={`submenu-item-${key}`}>
+                        <h5>{menu.label}</h5>
+                      </Link>
                     ))}
                   </Collapse>
                 </li>

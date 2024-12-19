@@ -1,28 +1,24 @@
 import AspectRatioImage from '@/elements/aspect-ratio-image';
 import RightChevron from '@/elements/icons/right-chevron';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import { PostType } from '@components/see-more-articles/type';
+import type { GetPostsResult, GetProductBySlugResult, GetProductsByCategoryResult } from '@/sanity/sanity.types';
+import { transformObject } from '@/utils';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import TravelInterestCard from '../travel-interest-card';
-
-import { ModifiedProduct } from '@/components/product-carousel/type';
-import { CustomFeatures, DestinationProduct, DestinationRelatedProduct } from './type';
-
-import { transformObject } from '@/utils';
-import Image from 'next/image';
 import ProductCarousel from '../product-carousel';
+import TravelInterestCard from '../travel-interest-card';
+import type { CustomFeatures } from './type';
 
-const DestinationDetailLago = ({
+const DestinationDetailDemo = ({
   product,
   relatedProducts,
   breadcrumbs,
   posts,
 }: {
-  product: DestinationProduct;
-  relatedProducts: ModifiedProduct[];
+  product: GetProductBySlugResult;
+  relatedProducts: GetProductsByCategoryResult;
   breadcrumbs?: { text: string; link: string }[];
-  posts?: PostType[];
+  posts: GetPostsResult;
 }) => {
   if (!product) {
     return <SkeletonLoader />;
@@ -75,7 +71,7 @@ const DestinationDetailLago = ({
   ];
 
   return (
-    <div className="destination-detail-lago">
+    <div className="destination-detail-demo">
       <div
         style={{
           backgroundImage: `url('/assets/images/home/bg-topo-print.svg')`,
@@ -95,8 +91,10 @@ const DestinationDetailLago = ({
           </div>
         </div>
 
-        <div className="lago-content-background">
-          <AspectRatioImage src={product.imageUrl} alt={product.name || ''} aspectRatio="3/1" priority />
+        <div className="demo-content-background">
+          {product.imageUrl ? (
+            <AspectRatioImage src={product.imageUrl ?? ''} alt={product.name || ''} aspectRatio="3/1" priority />
+          ) : null}
           {product.description && (
             <div className="content">
               <div className="destination-slogan">{customFeature.slogan}</div>
@@ -109,9 +107,9 @@ const DestinationDetailLago = ({
         </div>
       </div>
       <div className="wrapper">
-        <div className="lago-travel-interest-group wrapper">
+        <div className="demo-travel-interest-group wrapper">
           <div className="interest-cards-wrapper">
-            {cards?.map((card, key) => <TravelInterestCard key={`lago-travel-card-${key}`} {...card} />)}
+            {cards?.map((card, key) => <TravelInterestCard key={`demo-travel-card-${key}`} {...card} />)}
           </div>
         </div>
       </div>
@@ -144,7 +142,7 @@ const DestinationDetailLago = ({
               </div>
               <div className="lower-content flex gap-x-4 max-md:flex-col max-md:gap-y-4">
                 {buttons.map((button, index) => (
-                  <button type="button" key={`button-${index}`} className="primary-button outline">
+                  <button type="button" key={`button-${index}`} className="primary-button outline-demo">
                     <Link href={button.value} target="_blank">
                       {button.key}
                     </Link>
@@ -156,7 +154,7 @@ const DestinationDetailLago = ({
         </div>
       </div>
       <div className="wrapper">
-        <div className="lago-see-more-articles">
+        <div className="demo-see-more-articles">
           <div className="travel-guide-title">{product.name && <h3>{product.name} Travel Guide</h3>}</div>
           <div className="travel-guide">{product.travelGuide && <PortableText value={product.travelGuide} />}</div>
           <div className="group max-md:!grid max-md:!grid-cols-2">
@@ -187,4 +185,4 @@ const DestinationDetailLago = ({
     </div>
   );
 };
-export default DestinationDetailLago;
+export default DestinationDetailDemo;

@@ -1,4 +1,4 @@
-.lago-see-more-articles {
+.demo-see-more-articles {
   padding-top: 4rem;
   padding-bottom: 4rem;
   h3 {
@@ -15,9 +15,10 @@
     display: flex;
     gap: 2rem;
     margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
     .item {
-      flex: 1;
-
+      width: 350px;
       .excerpt {
         span{
           display: block;
@@ -37,7 +38,7 @@
     justify-content: center;
     margin-top: 4rem;
   }
-  .primary-button.outline {
+  .primary-button.outline-demo {
     padding: .5rem 2rem;
   }
 }

@@ -1,9 +1,9 @@
 import ViewIn from '@/elements/view-in';
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import { transformObject } from '@/utils';
 import { PortableText } from 'next-sanity';
 import Link from 'next/link';
-import { CustomSeeMoreAttributes } from './type';
+import type { CustomSeeMoreAttributes } from './type';
 
 const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
   const description = block?.description;
@@ -20,7 +20,7 @@ const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
   return (
     <ViewIn variant="slideUp" delay={200}>
       <div className="wrapper">
-        <div className="lago-see-more-articles">
+        <div className="demo-see-more-articles">
           {description && <PortableText value={description} />}
           <div className="group">
             {posts?.map((post, key) => (
@@ -47,7 +47,7 @@ const SeeMoreArticles = async ({ block, entries }: ContentBlockRegistry) => {
           </div>
 
           <div className="button-wrapper">
-            <button className="primary-button outline">
+            <button className="primary-button outline-demo">
               <p>{seeMoreButton?.label}</p>
             </button>
           </div>

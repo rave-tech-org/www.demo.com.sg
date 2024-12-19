@@ -14,7 +14,7 @@ const NextImage: React.FC<NextImageProps> = ({ width, height, alt, src, ...props
       width={0}
       height={0}
       style={{ width, height }}
-      alt={alt || 'default lago image'}
+      alt={alt || 'default Demo image'}
       {...props}
     />
   );

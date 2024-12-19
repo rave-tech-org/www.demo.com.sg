@@ -1,19 +1,16 @@
 'use client';
 
+import type { GetProductsByCategoryResult } from '@/sanity/sanity.types';
+import { formatCurrency, transformObject } from '@/utils';
 import AspectRatioImage from '@elements/aspect-ratio-image';
 import RatingStar from '@elements/icons/rating-star';
 import NextImage from '@elements/next-image';
-import { animated, useSpring } from '@react-spring/web';
-import { useState } from 'react';
-
-import { formatCurrency, transformObject } from '@/utils';
+import { useSpring } from '@react-spring/web';
 import Link from 'next/link';
+import { useState } from 'react';
+import type { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
 
-import { GetProductsResult, Product } from '@/sanity/sanity.types';
-import { ModifiedProduct } from '../product-carousel/type';
-import { CustomCategoryAttributes, CustomFeatures, CustomPrices } from './type';
-
-const ProductCarouselCard = (props: ModifiedProduct) => {
+const ProductCarouselCard = (props: GetProductsByCategoryResult[number]) => {
   const [hovered, setHovered] = useState(false);
 
   const springStyle = useSpring({
@@ -21,6 +18,7 @@ const ProductCarouselCard = (props: ModifiedProduct) => {
     top: hovered ? 16 : 32,
     config: { tension: 100, friction: 20 },
   });
+
   const { name, features, customPrices: prices, categories, price, imageUrl, slug } = props;
 
   const customFeature = transformObject<CustomFeatures>(features);
@@ -28,22 +26,13 @@ const ProductCarouselCard = (props: ModifiedProduct) => {
 
   return (
     <div
-      className="lago-product-carousel-card-wrapper"
+      className="demo-product-carousel-card-wrapper"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <Link href={`/tour/${slug?.current}`}>
         <div className="card-image-container black-opacity-background">
           <AspectRatioImage src={imageUrl || ''} alt={name || ''} aspectRatio="1/1" priority />
-          {/* <animated.div className="special-card-label" style={springStyle}>
-            <AspectRatioImage
-              src="/assets/images/tour/special-card-label.webp"
-              alt="Default Tour Image"
-              aspectRatio="1/1"
-              priority
-              objFit="contain"
-            />
-          </animated.div> */}
         </div>
 
         <div className="card-content">
@@ -73,7 +62,7 @@ const ProductCarouselCard = (props: ModifiedProduct) => {
               <h6>Fr. {formatCurrency(price)}</h6>
               {customFeature?.rating && (
                 <div className="rating">
-                  <RatingStar percentage={(parseInt(customFeature.rating) / 5) * 100} />
+                  <RatingStar percentage={(Number.parseInt(customFeature.rating) / 5) * 100} />
                   <p>{customFeature.rating}</p>
                 </div>
               )}

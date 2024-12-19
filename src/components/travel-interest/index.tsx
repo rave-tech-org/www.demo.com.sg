@@ -1,4 +1,4 @@
-import { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
+import type { ContentBlockRegistry } from '@/hooks/local/use-content-blocks';
 import TravelInterestCard from '@components/travel-interest-card';
 import { PortableText } from 'next-sanity';
 
@@ -13,11 +13,11 @@ const TravelInterestGroup = ({ block }: ContentBlockRegistry) => {
     imageUrl,
   }));
   return (
-    <div className="lago-travel-interest-group wrapper">
+    <div className="demo-travel-interest-group wrapper">
       {description && <PortableText value={description} />}
       <h3>{title}</h3>
       <div className="interest-cards-wrapper">
-        {cards?.map((card, key) => <TravelInterestCard key={`lago-travel-card-${key}`} {...card} />)}
+        {cards?.map((card, key) => <TravelInterestCard key={`demo-travel-card-${key}`} {...card} />)}
       </div>
     </div>
   );

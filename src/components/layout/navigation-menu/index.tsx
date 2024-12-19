@@ -3,18 +3,14 @@
 import GoogleTranslate from '@/components/google-translate';
 import DropDown from '@/elements/dropdown';
 import SkeletonLoader from '@/elements/skeleton-loader';
-import useNavigation from '@/hooks/local/use-navigation';
+import type { Navigation } from '@/hooks/local/use-navigation';
 import NextImage from '@elements/next-image';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 
-const NavigationMenu = () => {
-  const isDraft = !!useSearchParams().get('isDraft');
-  const navigation = useNavigation({ isDraft });
-  if (!navigation?.data || navigation.isLoading) return <SkeletonLoader />;
+const NavigationMenu = ({ navigation }: { navigation: Navigation }) => {
+  if (!navigation) return <SkeletonLoader />;
 
-  const { leftSocials, rightSocials, findDesc, findElement, navigationMenuItems, navigationMenuBlock } =
-    navigation.data;
+  const { leftSocials, rightSocials, findDesc, findElement, navigationMenuItems, navigationMenuBlock } = navigation;
 
   const imageUrl = navigationMenuBlock?.imageUrl;
 
@@ -43,7 +39,7 @@ const NavigationMenu = () => {
       <div className="bottom-navigation-menu">
         <div className="wrapper">
           <Link href="/">
-            <NextImage src={imageUrl || ''} width={160} height={80} alt="lago logo" />
+            <NextImage src={imageUrl || ''} width={160} height={80} alt="Demo logo" />
           </Link>
           <nav>
             <ul>

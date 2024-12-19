@@ -1,5 +1,6 @@
-import { sanityFetch } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { GetCategories, GetPosts, GetProducts, GetTestimonials } from '@/sanity/lib/queries/cms';
+import { TAG } from '@/sanity/lib/tag';
 import type {
   GetCategoriesResult,
   GetPostsResult,
@@ -7,37 +8,13 @@ import type {
   GetTestimonialsResult,
 } from '@/sanity/sanity.types';
 
-export const useEntries = async ({ isDraft }: { isDraft?: boolean }) => {
-  const categories = await sanityFetch<GetCategoriesResult>({
-    query: GetCategories,
-    tags: ['category'],
-    isDraft,
-  });
+export const useEntries = async () => {
+  const { data: categories } = await sanityFetch({ query: GetCategories, tag: TAG.category });
+  const { data: products } = await sanityFetch({ query: GetProducts, tag: TAG.product });
+  const { data: testimonials } = await sanityFetch({ query: GetTestimonials, tag: TAG.testimonial });
+  const { data: posts } = await sanityFetch({ query: GetPosts, tag: TAG.post });
 
-  const products = await sanityFetch<GetProductsResult>({
-    query: GetProducts,
-    tags: ['product'],
-    isDraft,
-  });
-
-  const testimonials = await sanityFetch<GetTestimonialsResult>({
-    query: GetTestimonials,
-    tags: ['testimonial'],
-    isDraft,
-  });
-
-  const posts = await sanityFetch<GetPostsResult>({
-    query: GetPosts,
-    tags: ['post'],
-    isDraft,
-  });
-
-  return {
-    categories,
-    products,
-    testimonials,
-    posts,
-  };
+  return { categories, products, testimonials, posts };
 };
 
 export type Entries = {

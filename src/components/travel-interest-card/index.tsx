@@ -1,9 +1,9 @@
 import AspectRatioImage from '@elements/aspect-ratio-image';
-import { TravelInterestCardProps } from './type';
+import type { TravelInterestCardProps } from './type';
 
 const TravelInterestCard = ({ imageUrl, title, desc }: TravelInterestCardProps) => {
   return (
-    <div className="lago-travel-interest-card">
+    <div className="demo-travel-interest-card">
       <div className="image-circle-wrapper">
         <AspectRatioImage
           src={imageUrl || '/assets/images/tour/tour-default.webp'}

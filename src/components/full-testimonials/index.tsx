@@ -42,7 +42,7 @@ const FullTestimonials = ({ block, entries }: ContentBlockRegistry) => {
 
   return (
     <ViewIn variant="slideUp" delay={200}>
-      <div className="lago-testimonial-carousel-wrapper">
+      <div className="demo-testimonial-carousel-wrapper">
         {description && <PortableText value={description} />}
         <Swiper {...testimonialSwiperSetting}>
           {testimonialEntries.map((testimonial, index) => (
@@ -57,7 +57,7 @@ const FullTestimonials = ({ block, entries }: ContentBlockRegistry) => {
           ))}
         </Swiper>
         <div className="button-wrapper">
-          <button className="primary-button outline">
+          <button className="primary-button outline-demo">
             <p>{title}</p>
           </button>
         </div>

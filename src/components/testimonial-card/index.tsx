@@ -1,10 +1,9 @@
 import AspectRatioImage from '@/elements/aspect-ratio-image';
-import { TestimonialCardProps } from './type';
-import NextImage from '@/elements/next-image';
+import type { TestimonialCardProps } from './type';
 
 const TestimonialCard = ({ imageUrl, author, productName, desc }: TestimonialCardProps) => {
   return (
-    <div className="lago-testimonial-card">
+    <div className="demo-testimonial-card">
       <div className="image-wrapper">
         <AspectRatioImage
           src="/assets/images/home/icon-quote.webp"

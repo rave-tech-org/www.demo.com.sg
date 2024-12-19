@@ -1,8 +1,31 @@
 #google_translate_element {
+  width: 1.5rem;
+  height: 1.5rem;
   .goog-te-gadget-icon {
     display: none;
   }
   span {
     padding-top: none;
+  }
+  .goog-te-gadget-simple {
+    border: none;
+  }
+  a.VIpgJd-ZVi9od-xl07Ob-lTBxed {
+    span {
+      display: none;
+    }
+    &::before {
+      content: '';
+      background: url('../../../public/assets/images/language/language-select.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    &:hover {
+      &::before {
+        opacity: .8;
+      }
+    }
   }
 }
