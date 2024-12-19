@@ -1,0 +1,24 @@
+.not-found-page {
+  .data-1 {
+    p {
+      font-weight: 700 !important;
+      font-size: 60px !important;
+      z-index: 9999;
+    }
+  }
+  .data-2 {
+    p {
+      font-weight: 600 !important;
+      font-size: 40px !important;
+      z-index: 9999;
+    }
+    padding-bottom: 2rem;
+  }
+  .cta {
+    p {
+      font-weight: 600 !important;
+      font-size: 24px !important;
+      z-index: 9999;
+    }
+  }
+}
