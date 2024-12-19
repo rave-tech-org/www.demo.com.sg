@@ -1,3 +1,4 @@
+import { defaultDocumentNode } from '@/sanity/components/default-document-node';
 import { resolve } from '@/sanity/presentation/resolve';
 import { structure } from '@/sanity/structure';
 import CustomNavBar from '@/sanity/structure/custom-nav-bar';
@@ -19,7 +20,7 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
-    structureTool({ structure }),
+    structureTool({ structure, defaultDocumentNode }),
     visionTool({ defaultApiVersion: apiVersion }),
     media(),
     presentationTool({
