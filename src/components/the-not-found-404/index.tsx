@@ -18,29 +18,12 @@ const TheNotFoundPage = ({ block }: NotFoundPage) => {
 
   return (
     <div
-      className="not-found-page"
+      className="not-found-page main-bg"
       style={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        width: '100%',
-        objectFit: 'cover',
-        position: 'relative',
       }}
     >
-      <div
-        style={{
-          fontWeight: '800',
-          fontSize: '280px',
-          zIndex: 9999,
-        }}
-      >
-        404
-      </div>
+      <div className="hero-404">404</div>
       <span className="data-1">{data1 && <PortableText value={data1 || ''} />}</span>
       <span className="data-2">{data2 && <PortableText value={data2 || ''} />}</span>
       <Link
@@ -52,16 +35,7 @@ const TheNotFoundPage = ({ block }: NotFoundPage) => {
         }}
         className="bg-blue-500 hover:bg-blue-400"
       >
-        <span
-          style={{
-            color: '#FFFFFF',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-          className="cta"
-        >
-          {cta && <PortableText value={cta || ''} />}
-        </span>
+        <span className="cta">{cta && <PortableText value={cta || ''} />}</span>
       </Link>
     </div>
   );
