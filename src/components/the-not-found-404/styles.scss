@@ -1,0 +1,42 @@
+.not-found-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  width: 100%;
+  object-fit: cover;
+  position: relative;
+
+  .hero-404 {
+    font-weight: $heading-font-weight;
+    font-size: 17.5rem;
+    z-index: 9999;
+  }
+  .data-1 {
+    p {
+      font-weight: $bold-font-weight !important;
+      font-size: 3.75rem !important;
+      z-index: 9999;
+    }
+  }
+  .data-2 {
+    p {
+      font-weight: $bold-font-weight !important;
+      font-size: 2.5rem !important;
+      z-index: 9999;
+    }
+    padding-bottom: 2rem;
+  }
+  .cta {
+    p {
+      font-weight: 500 !important;
+      font-size: 1.5rem !important;
+      z-index: 9999;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
