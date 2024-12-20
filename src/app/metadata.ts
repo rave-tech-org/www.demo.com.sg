@@ -5,9 +5,6 @@ import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { ENDPOINTS, HEADERS, getUrl } from './urls';
 
-export const MAIN_TITLE = 'Demo Travel';
-export const MAIN_DESCRIPTION = 'Demo Travel';
-
 type Props = {
   description?: string | null;
   title?: string | null;
