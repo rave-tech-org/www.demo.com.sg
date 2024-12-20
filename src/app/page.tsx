@@ -1,14 +1,8 @@
 import { useContentBlocks } from '@/hooks/local/use-content-blocks';
 import { useEntries } from '@/hooks/local/use-entries';
 import { sanityFetch } from '@/sanity/lib/live';
-import { GetPage, GetPageMeta } from '@/sanity/lib/queries/cms';
+import { GetPage } from '@/sanity/lib/queries/cms';
 import { TAG } from '@/sanity/lib/tag';
-import type { Metadata } from 'next';
-
-export async function generateMetadata(): Promise<Metadata> {
-  const { data: homePage } = await sanityFetch({ query: GetPageMeta, params: { name: 'home-page' }, tag: TAG.page });
-  return { title: homePage?.metaTitle || 'Demo Travel', description: homePage?.metaDescription || 'Demo Travel' };
-}
 
 export default async function Home() {
   const [entries, contentBlock] = await Promise.all([useEntries(), useContentBlocks()]);

@@ -8,6 +8,7 @@ export const productType = defineType({
   groups: [
     { name: 'tourDetails', title: 'Tour Details' },
     { name: 'destinationDetails', title: 'Destination Details' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     defineField({
@@ -408,6 +409,33 @@ export const productType = defineType({
       of: [{ type: 'block' }, { type: 'image' }],
       group: 'tourDetails',
       hidden: ({ parent }) => parent?.productType !== 'tour',
+    }),
+
+    defineField({
+      name: 'metaTitle',
+      title: 'Meta Title',
+      type: 'string',
+      group: 'seo',
+      validation: (Rule) => Rule.max(60).warning('SEO titles are better when they’re under 60 characters.'),
+      description: 'Enter the meta title for SEO purposes. This will be shown in search engine results.',
+    }),
+    defineField({
+      name: 'metaDescription',
+      title: 'Meta Description',
+      type: 'text',
+      group: 'seo',
+      validation: (Rule) => Rule.max(160).warning('SEO descriptions are better when they’re under 160 characters.'),
+      description:
+        'Enter a brief meta description for SEO. This will be shown in search engine results under the title.',
+    }),
+    defineField({
+      name: 'metaKeywords',
+      title: 'Meta Keywords',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+      group: 'seo',
+      description: 'Enter keywords related to this page for SEO purposes.',
     }),
   ],
   preview: {

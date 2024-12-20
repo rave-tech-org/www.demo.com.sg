@@ -580,6 +580,9 @@ export type Product = {
         _key: string;
       }
   >;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: Array<string>;
 };
 
 export type Category = {
@@ -1185,7 +1188,7 @@ export type GetContentBlockBySlugResult = {
   }> | null;
 } | null;
 // Variable: GetProductBySlug
-// Query: *[_type == "product" && slug.current == $slug && productType == $type][0]{    name,    productType,    slug,    price,    customPrices,    availableDate,    duration,    description,    "imageUrl": image.asset->url,    "helpIconImageUrl": helpIcon.asset->url,    landArea,    averageClimate,    travelDuration,    peakSeason,    midSeason,    monsoonSeason,    travelGuide,    bookingUrl,    features,    overview,    itinerary[]{      title,      "imageUrls": images[].asset->url,      description    },    accommodation,    thingsToNote,    tourSummary[]{      "imageUrl": image.asset->url,      isActive,      title,      description    },    categories[]-> {      _id,      name,      slug,      customAttributes    }  }
+// Query: *[_type == "product" && slug.current == $slug && productType == $type][0]{    name,    productType,    slug,    price,    customPrices,    availableDate,    duration,    description,    "imageUrl": image.asset->url,    "helpIconImageUrl": helpIcon.asset->url,    landArea,    averageClimate,    travelDuration,    peakSeason,    midSeason,    monsoonSeason,    travelGuide,    bookingUrl,    features,    overview,    metaTitle,    metaDescription,    metaKeywords,    itinerary[]{      title,      "imageUrls": images[].asset->url,      description    },    accommodation,    thingsToNote,    tourSummary[]{      "imageUrl": image.asset->url,      isActive,      title,      description    },    categories[]-> {      _id,      name,      slug,      customAttributes    }  }
 export type GetProductBySlugResult = {
   name: string | null;
   productType: 'destination' | 'ticket' | 'tour' | 'transport' | null;
@@ -1282,6 +1285,9 @@ export type GetProductBySlugResult = {
         _key: string;
       }
   > | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaKeywords: Array<string> | null;
   itinerary: Array<{
     title: string | null;
     imageUrls: Array<string | null> | null;
@@ -1721,7 +1727,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "category" && parentCategory->slug.current in $slugs] {\n    _id,\n    name,\n    slug,\n    description,\n    parentCategory-> {\n      _id,\n      slug,\n    }\n  }\n': GetCategoriesByParentCategoriesResult;
     '\n  *[_type == "product" && references(\n    *[_type == "category" && parentCategory->slug.current in $categories]._id\n  )] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByParentCategoriesResult;
     '\n  *[_type == "contentBlock" && slug.current == $slug][0] {\n    _id,\n    slug,\n    blockType,\n    title,\n    description,\n    image,\n    "imageUrl": image.asset->url,\n    "fileUrl": file.asset->url,\n    customAttributes,\n    listItems[]{\n      title,\n      slug,\n      description,\n      image,\n      "imageUrl": image.asset->url,\n    },\n    "categories": categoryBlock[]->{\n      _id,\n      slug,\n    }\n  }\n': GetContentBlockBySlugResult;
-    '\n  *[_type == "product" && slug.current == $slug && productType == $type][0]{\n    name,\n    productType,\n    slug,\n    price,\n    customPrices,\n    availableDate,\n    duration,\n    description,\n    "imageUrl": image.asset->url,\n    "helpIconImageUrl": helpIcon.asset->url,\n    landArea,\n    averageClimate,\n    travelDuration,\n    peakSeason,\n    midSeason,\n    monsoonSeason,\n    travelGuide,\n    bookingUrl,\n    features,\n    overview,\n    itinerary[]{\n      title,\n      "imageUrls": images[].asset->url,\n      description\n    },\n    accommodation,\n    thingsToNote,\n    tourSummary[]{\n      "imageUrl": image.asset->url,\n      isActive,\n      title,\n      description\n    },\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    }\n  }\n': GetProductBySlugResult;
+    '\n  *[_type == "product" && slug.current == $slug && productType == $type][0]{\n    name,\n    productType,\n    slug,\n    price,\n    customPrices,\n    availableDate,\n    duration,\n    description,\n    "imageUrl": image.asset->url,\n    "helpIconImageUrl": helpIcon.asset->url,\n    landArea,\n    averageClimate,\n    travelDuration,\n    peakSeason,\n    midSeason,\n    monsoonSeason,\n    travelGuide,\n    bookingUrl,\n    features,\n    overview,\n    metaTitle,\n    metaDescription,\n    metaKeywords,\n    itinerary[]{\n      title,\n      "imageUrls": images[].asset->url,\n      description\n    },\n    accommodation,\n    thingsToNote,\n    tourSummary[]{\n      "imageUrl": image.asset->url,\n      isActive,\n      title,\n      description\n    },\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    }\n  }\n': GetProductBySlugResult;
     '\n  *[_type == "product" && productType == $type]{\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByTypeResult;
     '\n  *[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    price,\n    publishedDate,\n    excerpt,\n    "imageUrl": image.asset->url,\n    content,\n    tags,\n  }\n': GetPostBySlugResult;
     '\n  *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug]._id)] {\n    _id,\n    name,\n    slug,\n    price,\n    "imageUrl": image.asset->url,\n    categories[]-> {\n      _id,\n      name,\n      slug,\n      customAttributes\n    },\n    features,\n    customPrices\n  }\n': GetProductsByCategoryResult;

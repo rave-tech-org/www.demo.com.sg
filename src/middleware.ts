@@ -6,7 +6,7 @@ export const middleware = (req: NextRequest) => {
 
   if (req.nextUrl.searchParams.get('isDraft')) {
     res.headers.set('isDraft', 'true');
-    res.headers.set('callbackPath', path);
+    res.headers.set('path', path);
   } else res.headers.set('isDraft', '');
 
   return res;

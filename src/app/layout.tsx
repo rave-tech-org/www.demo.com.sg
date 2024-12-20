@@ -12,17 +12,22 @@ import { draftMode, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Fragment, Suspense } from 'react';
+import { getMetadata } from './metadata';
+import { HEADERS } from './urls';
+
 import '@/styles/global.scss';
 import '@/styles/tailwind.css';
 
-export const metadata: Metadata = { title: 'Demo Travel', description: 'Demo Travel' };
+export async function generateMetadata(): Promise<Metadata> {
+  return await getMetadata({});
+}
 
 type Props = { children: React.ReactNode };
 
 export default async function RootLayout({ children }: Props) {
   const navigation = await useNavigation();
-  const isDraft = (await headers()).get('isDraft');
-  const callbackPath = (await headers()).get('callbackPath');
+  const isDraft = (await headers()).get(HEADERS.isDraft);
+  const callbackPath = (await headers()).get(HEADERS.path);
 
   if (isDraft) {
     (await draftMode()).enable();

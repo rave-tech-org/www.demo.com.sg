@@ -218,6 +218,9 @@ export const GetProductBySlug = defineQuery(`
     bookingUrl,
     features,
     overview,
+    metaTitle,
+    metaDescription,
+    metaKeywords,
     itinerary[]{
       title,
       "imageUrls": images[].asset->url,

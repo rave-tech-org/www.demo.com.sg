@@ -1,19 +1,37 @@
+import { getMetadata } from '@/app/metadata';
 import DestinationDetailDemo from '@/components/destination-detail-demo';
 import { sanityFetch } from '@/sanity/lib/live';
 import { GetPosts, GetProductBySlug, GetProductsByCategory } from '@/sanity/lib/queries/cms';
 import { TAG } from '@/sanity/lib/tag';
+import type { Metadata } from 'next';
 
-export default async function DestinationPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+type Props = { params: Promise<{ slug: string }> };
 
-  const pathname = `/destination/${slug}`;
-  const pathSegments = pathname.split('/').filter((segment) => segment);
-
-  const { data: product } = await sanityFetch({
+const getData = async (slug: string) => {
+  const { data } = await sanityFetch({
     query: GetProductBySlug,
     params: { slug, type: 'destination' },
     tag: TAG.product,
   });
+  return data;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getData(slug);
+
+  return getMetadata({
+    imageUrl: product?.imageUrl,
+    title: product?.metaTitle ?? product?.name,
+    description: product?.metaDescription,
+    keywords: product?.metaKeywords,
+  });
+}
+
+export default async function DestinationPage({ params }: Props) {
+  const { slug } = await params;
+
+  const product = await getData(slug);
 
   const { data: posts } = await sanityFetch({
     query: GetPosts,
@@ -25,6 +43,9 @@ export default async function DestinationPage({ params }: { params: Promise<{ sl
     params: { categorySlug: 'penang' },
     tag: TAG.product,
   });
+
+  const pathname = `/destination/${slug}`;
+  const pathSegments = pathname.split('/').filter((segment) => segment);
 
   const breadcrumbs = pathSegments.map((segment, index) => {
     const href = `/${pathSegments.slice(0, index + 1).join('/')}`;

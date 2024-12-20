@@ -1,12 +1,6 @@
 import { sanityFetch } from '@/sanity/lib/live';
 import { GetCategories, GetPosts, GetProducts, GetTestimonials } from '@/sanity/lib/queries/cms';
 import { TAG } from '@/sanity/lib/tag';
-import type {
-  GetCategoriesResult,
-  GetPostsResult,
-  GetProductsResult,
-  GetTestimonialsResult,
-} from '@/sanity/sanity.types';
 
 export const useEntries = async () => {
   const { data: categories } = await sanityFetch({ query: GetCategories, tag: TAG.category });
@@ -17,9 +11,4 @@ export const useEntries = async () => {
   return { categories, products, testimonials, posts };
 };
 
-export type Entries = {
-  categories: GetCategoriesResult;
-  products: GetProductsResult;
-  testimonials: GetTestimonialsResult;
-  posts: GetPostsResult;
-};
+export type Entries = Awaited<ReturnType<typeof useEntries>>;
