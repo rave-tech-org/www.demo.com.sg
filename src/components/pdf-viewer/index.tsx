@@ -28,6 +28,7 @@ export default async function PdfViewer({ block, className, ...rest }: Props) {
         className={cn('min-h-[50vh] w-full', className)}
         {...rest}
         src={`/pdfjs/web/viewer.html?file=${encodeURIComponent(block.fileUrl)}`}
+        title="pdf viewer"
       />
     );
   } catch (error) {
