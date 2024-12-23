@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+const slugToRedirect = ['home', 'header', 'footer'];
+
 export default async function PageByPage({ params }: Props) {
   const { page } = await params;
 
-  if (page.includes('home') || page.includes('header') || page.includes('footer')) {
-    redirect('/');
-  }
+  if (slugToRedirect.includes(page)) redirect('/');
 
   const data = await getData(page);
   if (!data) notFound();
