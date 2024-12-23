@@ -1,10 +1,10 @@
 'use client';
 
+import { animated, config, useSpring } from '@react-spring/web';
 import { useState } from 'react';
-import { useSpring, animated, config } from '@react-spring/web';
 import useMeasure from 'react-use-measure';
-import { CollapseProps } from './type';
 import { DropdownArrow } from '../icons/dropdown-arrow';
+import { CollapseProps } from './type';
 
 export default function Collapse({ children, controlLabel = 'Expand' }: CollapseProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function Collapse({ children, controlLabel = 'Expand' }: Collapse
 
   return (
     <div id="generic-collapse-container">
-      <button onClick={() => setIsOpen((prev) => !prev)} className="generic-collapse-control">
+      <button type="button" onClick={() => setIsOpen((prev) => !prev)} className="generic-collapse-control">
         {controlLabel}
         <DropdownArrow className={`rotate-element ${isOpen ? 'on' : ''}`} />
       </button>
