@@ -1,5 +1,5 @@
-import localFont from 'next/font/local';
 import { Overpass } from 'next/font/google';
+import localFont from 'next/font/local';
 
 export const overpass = Overpass({
   weight: ['400', '500', '700', '900'],

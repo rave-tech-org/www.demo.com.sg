@@ -9,7 +9,14 @@ interface NextImageProps extends Omit<ImageProps, 'width' | 'height' | 'alt' | '
 
 const NextImage: React.FC<NextImageProps> = ({ width, height, alt, src, ...props }) => {
   return src ? (
-    <Image src={src} width={0} height={0} style={{ width, height }} alt={alt || 'default Altrix image'} {...props} />
+    <Image
+      src={src || ''}
+      width={0}
+      height={0}
+      style={{ width, height }}
+      alt={alt || 'default Demo image'}
+      {...props}
+    />
   ) : null;
 };
 
