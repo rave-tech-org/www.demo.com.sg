@@ -39,9 +39,9 @@ const Footer = ({ navigation }: { navigation: Navigation }) => {
                 <h6>{item.text}</h6>
                 <ul>
                   {item.subMenu.map((menu, key) => (
-                    <Link href={menu.marks?.href || ''} key={`footer-sub-menu-item-${key}`}>
-                      <li>{menu.text}</li>
-                    </Link>
+                    <li key={`footer-sub-menu-item-${key}`}>
+                      <Link href={menu.marks?.href || ''}>{menu.text}</Link>
+                    </li>
                   ))}
                 </ul>
               </div>

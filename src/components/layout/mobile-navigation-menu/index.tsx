@@ -46,15 +46,15 @@ export const MobileNavigation = ({ navigation }: { navigation: Navigation }) => 
           <div className="contacts">
             {leftSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
-                <NextImage src={item.imageUrl} width={24} height={24} alt={item.text} />
-                <span>{item.text}</span>
+                <NextImage src={item.imageUrl} width={24} height={24} alt="" />
+                <span className="!text-[#FFAA00]">{item.text}</span>
               </Link>
             ))}
           </div>
           <div className="socials">
             {rightSocials?.map((item, key) => (
               <Link key={`social-link-${key}`} href={item.href} target="_blank">
-                <NextImage src={item.imageUrl} width={32} height={32} alt={item.text} />
+                <NextImage src={item.imageUrl} width={32} height={32} alt="" />
               </Link>
             ))}
           </div>
@@ -91,7 +91,7 @@ export const MobileNavigation = ({ navigation }: { navigation: Navigation }) => 
         <div className="action-menu">
           <Link href={findDesc?.marks?.href || ''}>
             <NextImage src={findElement?.imageUrl} width={24} height={24} alt="icon search" />
-            <span>{findDesc?.text}</span>
+            <span className="!text-[#7f7f7f]">{findDesc?.text}</span>
           </Link>
 
           <DropDown
