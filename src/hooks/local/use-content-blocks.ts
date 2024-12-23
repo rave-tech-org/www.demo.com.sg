@@ -68,4 +68,8 @@ export const useContentBlocks = async () => {
   return registry;
 };
 
-export type ContentBlockRegistry = { block: GetContentBlockBySlugResult; entries: Entries; navigation?: Navigation };
+export type ContentBlockRegistry = {
+  block: GetContentBlockBySlugResult;
+  entries: Entries;
+  navigation: Navigation;
+};
